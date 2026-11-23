@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DRAKORIN — K-Drama Desktop Watchlist, Playlists &amp; Community</title>
+  <title>DRAKORIN — Seoul Desktop Watchlist, Playlists &amp; Community</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Poppins & Inter -->
+  <!-- Google Fonts: Poppins, Andika Basic & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Andika+Basic:wght@400;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcpDy4uAAAAALDh4aljxO7BrijRu_eXs22byJm7"></script> -->
 
   <script>
     tailwind.config = {
@@ -22,8 +24,8 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Poppins', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            display: ['Poppins', 'Inter', 'sans-serif'],
+            sans: ['Poppins', 'Andika Basic', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['Poppins', 'Andika Basic', 'Inter', 'sans-serif'],
           },
           animation: {
             'win-pop': 'winPop 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards',
@@ -59,7 +61,7 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      font-family: 'Poppins', 'Inter', sans-serif;
+      font-family: 'Poppins', 'Andika Basic', 'Inter', sans-serif;
     }
 
     /* ==================== BRIGHT SEOUL WALLPAPERS ==================== */
@@ -234,9 +236,9 @@
   </style>
 </head>
 
-<body id="kdrama-os-body" class="wp-seoul-morning theme-seoul-pop text-slate-800 dark:text-slate-100 transition-colors duration-300">
+<body id="drakorin-body" class="wp-seoul-morning theme-seoul-pop text-slate-800 dark:text-slate-100 transition-colors duration-300">
 
-  <!-- ==================== 1. EMAIL & PASSWORD LOGIN / REGISTER GATE ==================== -->
+  <!-- ==================== 1. EMAIL & PASSWORD LOGIN / REGISTER / RESET GATE ==================== -->
   <div id="auth-gate-overlay" class="fixed inset-0 z-[10050] flex items-center justify-center p-4 bg-white/50 dark:bg-slate-950/75 backdrop-blur-2xl">
     <div class="w-full max-w-md rounded-3xl glass-bar bg-white/94 dark:bg-slate-900/94 border border-white/85 dark:border-white/15 shadow-2xl p-6 sm:p-7 space-y-5 animate-win-pop">
 
@@ -244,13 +246,14 @@
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
           <button type="button" onclick="registerPinTriggerClick()" title="DRAKORIN" class="w-11 h-11 rounded-2xl accent-btn text-white flex items-center justify-center shadow-lg focus:outline-none">
-            <i class="fa-solid fa-heart text-lg"></i>
+            <i class="fa-solid fa-clapperboard text-lg"></i>
           </button>
           <div>
             <h1 class="font-display font-extrabold text-lg tracking-tight leading-none">DRAKORIN</h1>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Masuk atau Daftar dengan Email &amp; Password</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Seoul Desktop Watchlist &amp; Komunitas</p>
           </div>
         </div>
+        <span class="px-2.5 py-1 rounded-full text-[11px] font-bold border accent-chip">DRAKORIN OS</span>
       </div>
 
       <!-- Switch Tabs -->
@@ -270,14 +273,42 @@
           <input type="email" id="input-login-email" required autocomplete="email" placeholder="Ketik email kamu..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
         </div>
         <div>
-          <label for="input-login-password" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-200">Password</label>
+          <div class="flex items-center justify-between mb-1">
+            <label for="input-login-password" class="block text-xs font-semibold text-slate-700 dark:text-slate-200">Password</label>
+            <button type="button" onclick="openForgotPasswordPanel()" class="text-[11px] font-bold text-pink-600 dark:text-pink-400 hover:underline focus:outline-none">
+              Lupa Password?
+            </button>
+          </div>
           <input type="password" id="input-login-password" required autocomplete="current-password" placeholder="Ketik password kamu..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
         </div>
         <button type="submit" id="btn-submit-login" class="w-full py-2.5 px-4 rounded-xl accent-btn text-white text-xs font-bold shadow-md hover:opacity-95 transition flex items-center justify-center gap-2">
           <i class="fa-solid fa-right-to-bracket"></i>
-          <span>Masuk ke Desktop</span>
+          <span>Masuk ke DRAKORIN</span>
         </button>
       </form>
+
+      <!-- Form Lupa Password (Kirim Link ke Email via Firebase Auth) -->
+      <div id="auth-panel-forgot" class="hidden p-4 rounded-2xl bg-pink-50/80 dark:bg-slate-800/85 border border-pink-200/80 dark:border-slate-700 space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-extrabold text-pink-600 dark:text-pink-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-envelope-circle-check"></i> Reset Password via Email
+          </h2>
+          <button type="button" onclick="closeForgotPasswordPanel()" class="text-[11px] font-semibold text-slate-500 hover:underline">
+            Kembali Login
+          </button>
+        </div>
+        <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+          Masukkan email akunmu. Tautan reset password akan dikirimkan langsung ke email kamu melalui Firebase Authentication.
+        </p>
+        <form id="auth-form-forgot" onsubmit="processForgotPasswordReset(event)" class="space-y-2.5">
+          <input type="email" id="input-forgot-email" required autocomplete="email" placeholder="Alamat email akun kamu..." class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          <div id="forgot-password-feedback" class="hidden px-3 py-2 rounded-xl text-[11px] font-semibold"></div>
+          <button type="submit" id="btn-submit-forgot" class="w-full py-2 px-4 rounded-xl accent-btn text-white text-xs font-bold shadow hover:opacity-95 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>Kirim Link Reset ke Email</span>
+          </button>
+        </form>
+      </div>
 
       <!-- Form Register -->
       <form id="auth-form-register" onsubmit="processEmailPasswordRegister(event)" class="hidden space-y-3">
@@ -305,25 +336,25 @@
         </button>
       </form>
 
-      <!-- Manual PIN Access Trigger (Never auto-filled or exposed) -->
+      <!-- Manual PIN Access Trigger (Never auto-filled or pre-populated) -->
       <div class="pt-3 border-t border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
         <span class="flex items-center gap-1.5">
           <i class="fa-solid fa-shield-halved text-emerald-500"></i>
           <span>Firebase Auth &amp; App Check</span>
         </span>
         <button type="button" onclick="openManualPinModal()" class="font-semibold text-pink-600 dark:text-pink-400 hover:underline focus:outline-none">
-          Akses PIN
+          Super Admin
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MANUAL OWNER PIN MODAL (EMPTY ON OPEN) ==================== -->
+  <!-- ==================== MANUAL SUPER ADMIN PASSWORD MODAL (EMPTY ON OPEN) ==================== -->
   <div id="manual-pin-modal" class="hidden fixed inset-0 z-[10070] flex items-center justify-center p-4 bg-slate-950/65 backdrop-blur-xl">
     <div class="w-full max-w-xs rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/85 dark:border-white/15 shadow-2xl p-5 space-y-4 animate-win-pop">
       <div class="flex items-center justify-between">
         <span class="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-          <i class="fa-solid fa-key text-pink-500"></i> Verifikasi PIN Super Admin
+          <i class="fa-solid fa-key text-pink-500"></i> Password Super Admin DRAKORIN
         </span>
         <button type="button" onclick="closeManualPinModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs">
           <i class="fa-solid fa-xmark"></i>
@@ -334,10 +365,10 @@
           type="password"
           id="manual-pin-input"
           inputmode="numeric"
-          maxlength="8"
+          maxlength="12"
           autocomplete="off"
           required
-          placeholder="Ketik PIN secara manual..."
+          placeholder="Ketik password super admin..."
           class="w-full px-3.5 py-2.5 rounded-xl text-center tracking-widest text-sm font-bold bg-pink-50/70 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
         />
         <button type="submit" class="w-full py-2 rounded-xl accent-btn text-white text-xs font-bold shadow">
@@ -351,10 +382,10 @@
   <header class="glass-bar fixed top-0 left-0 right-0 h-8 px-3 sm:px-4 z-[9990] flex items-center justify-between text-xs font-medium bg-white/75 dark:bg-slate-900/80 border-b border-white/75 dark:border-white/10 text-slate-800 dark:text-slate-100">
     <!-- Left -->
     <div class="flex items-center gap-3 sm:gap-4 min-w-0">
-      <button type="button" onclick="registerPinTriggerClick()" title="K-Drama OS" class="flex items-center gap-1.5 font-bold hover:opacity-80 transition focus:outline-none">
+      <button type="button" onclick="registerPinTriggerClick()" title="DRAKORIN" class="flex items-center gap-1.5 font-bold hover:opacity-80 transition focus:outline-none">
         <i class="fa-brands fa-apple text-sm text-pink-500"></i>
       </button>
-      <span id="top-active-app-label" class="font-bold tracking-tight truncate">Desktop</span>
+      <span id="top-active-app-label" class="font-bold tracking-tight truncate">DRAKORIN</span>
       <nav class="hidden md:flex items-center gap-3 text-slate-600 dark:text-slate-300">
         <button type="button" onclick="openAppWindow('library')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Koleksi</button>
         <button type="button" onclick="openAppWindow('playlists')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Watching List</button>
@@ -375,7 +406,7 @@
       </span>
 
       <span id="cloud-sync-pill" class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border accent-chip">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Cloud Ready
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> DRAKORIN Cloud
       </span>
 
       <button type="button" onclick="openAppWindow('settings')" class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/85 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 border border-pink-200/70 dark:border-white/10 transition">
@@ -387,7 +418,7 @@
         <i id="top-dark-icon" class="fa-solid fa-moon text-xs"></i>
       </button>
 
-      <span id="top-live-clock" class="text-[11px] font-semibold tabular-nums">Sen 23 Nov 17:24</span>
+      <span id="top-live-clock" class="text-[11px] font-semibold tabular-nums">Sen 23 Nov 18:09</span>
     </div>
   </header>
 
@@ -454,7 +485,7 @@
         <div class="min-w-0 flex-1">
           <div class="flex items-center gap-1.5">
             <h2 id="widget-profile-name" class="font-bold text-sm truncate">Pengguna</h2>
-            <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold border accent-chip">Seoul</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold border accent-chip">DRAKORIN</span>
           </div>
           <p id="widget-profile-handle" class="text-xs font-semibold text-pink-600 dark:text-pink-400 truncate">@username</p>
           <p id="widget-profile-bio" class="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">Pecinta K-Drama &amp; Film</p>
@@ -464,7 +495,7 @@
       <div class="grid grid-cols-2 gap-2 mb-3 text-center">
         <button type="button" onclick="openAppWindow('library')" class="p-2 rounded-2xl bg-pink-50/90 dark:bg-slate-800/80 hover:bg-pink-100/80 dark:hover:bg-slate-700/80 border border-pink-200/60 dark:border-slate-700 transition">
           <span id="widget-count-posts" class="block font-extrabold text-sm text-pink-600 dark:text-pink-400">0</span>
-          <span class="text-[10px] font-medium text-slate-500 dark:text-slate-400">Drama Diulas</span>
+          <span class="text-[10px] font-medium text-slate-500 dark:text-slate-400">Drama Tersimpan</span>
         </button>
         <button type="button" onclick="openAppWindow('friends')" class="p-2 rounded-2xl bg-sky-50/90 dark:bg-slate-800/80 hover:bg-sky-100/80 dark:hover:bg-slate-700/80 border border-sky-200/60 dark:border-slate-700 transition">
           <span id="widget-count-friends" class="block font-extrabold text-sm text-sky-600 dark:text-sky-400">0</span>
@@ -495,7 +526,7 @@
         </div>
         <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
           <i class="fa-solid fa-clapperboard text-pink-500"></i>
-          <span>Koleksi K-Drama &amp; Film</span>
+          <span>Koleksi DRAKORIN — Drama &amp; Film</span>
         </div>
         <button type="button" onclick="openAppWindow('add')" class="px-3 py-1.5 rounded-xl accent-btn text-white text-xs font-bold shadow hover:opacity-95 transition flex items-center gap-1.5">
           <i class="fa-solid fa-plus"></i><span>Tambah</span>
@@ -750,7 +781,7 @@
         </div>
         <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
           <i class="fa-solid fa-comments text-pink-500"></i>
-          <span>Komunitas — Suka &amp; Komentar Terbuka</span>
+          <span>Komunitas DRAKORIN — Suka &amp; Komentar Terbuka</span>
         </div>
         <button type="button" onclick="openAppWindow('add')" class="px-3 py-1.5 rounded-xl accent-btn text-white text-xs font-bold shadow">+ Review</button>
       </div>
@@ -953,7 +984,7 @@
       </div>
     </section>
 
-    <!-- ==================== WINDOW 6: SUPER ADMIN PANEL (PRE-LAUNCH CLEANUP) ==================== -->
+    <!-- ==================== WINDOW 6: SUPER ADMIN PANEL (READ-ONLY USERS + PRE-LAUNCH CLEANUP) ==================== -->
     <section id="win-superadmin" class="hidden mac-workspace-win bg-white/95 dark:bg-slate-900/95 border border-rose-300/80 dark:border-rose-500/30 flex flex-col overflow-hidden z-20 animate-win-pop">
       <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-rose-50/90 dark:bg-slate-800/90 border-b border-rose-200/80 dark:border-slate-700 shrink-0">
         <div class="flex items-center gap-2">
@@ -965,7 +996,7 @@
         </div>
         <div class="flex items-center gap-2 text-xs sm:text-sm font-bold text-rose-700 dark:text-rose-300">
           <i class="fa-solid fa-shield-halved"></i>
-          <span>Super Admin — Pembersihan Data Sebelum Launching</span>
+          <span>Super Admin DRAKORIN — Pantau User &amp; Bersihkan Data</span>
         </div>
         <button type="button" onclick="lockSuperAdminMode()" class="px-3 py-1 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold hover:opacity-90 transition">
           Kunci Mode
@@ -976,9 +1007,9 @@
         <div id="superadmin-locked-notice" class="max-w-lg mx-auto my-10 p-6 rounded-2xl bg-rose-50/70 dark:bg-slate-800/80 border border-rose-200 dark:border-slate-700 text-center space-y-3">
           <i class="fa-solid fa-lock text-2xl text-rose-500"></i>
           <h3 class="text-sm font-bold">Mode Super Admin Terkunci</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-300">Masukkan PIN Super Admin secara manual untuk mengelola &amp; membersihkan data komunitas dan daftar teman.</p>
+          <p class="text-xs text-slate-600 dark:text-slate-300">Masukkan password Super Admin secara manual untuk memantau daftar user (mode baca saja) dan membersihkan data sebelum launching.</p>
           <button type="button" onclick="openManualPinModal()" class="px-4 py-2 rounded-xl accent-btn text-white text-xs font-bold shadow">
-            Buka Verifikasi PIN
+            Buka Verifikasi Password
           </button>
         </div>
 
@@ -986,8 +1017,8 @@
           <!-- Top Summary & Bulk Clear -->
           <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-rose-500/10 via-amber-500/10 to-pink-500/10 border border-rose-200/80 dark:border-rose-500/25 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h3 class="text-sm font-extrabold text-rose-700 dark:text-rose-300">Siapkan Aplikasi Sebelum Launching</h3>
-              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Hapus postingan uji coba, komentar tertentu, atau rapikan relasi teman (@username) tanpa perlu membuka popup bawaan browser.</p>
+              <h3 class="text-sm font-extrabold text-rose-700 dark:text-rose-300">Persiapan Launching DRAKORIN</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Super Admin dapat mengecek seluruh user (<b>Mode Pantau Saja — tanpa akses ubah/hapus akun user</b>) serta membersihkan postingan, komentar, atau relasi teman.</p>
             </div>
             <div class="flex items-center gap-2.5">
               <button type="button" id="btn-bulk-clear-posts" onclick="triggerBulkClearCommunityPosts()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow transition flex items-center gap-1.5">
@@ -1009,20 +1040,30 @@
               <div id="superadmin-posts-list" class="space-y-3"></div>
             </div>
 
-            <!-- Right: Friends & User Records Cleanup -->
-            <div class="lg:col-span-5 p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-4">
-              <h4 class="text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
-                Daftar Teman &amp; Akun Pengguna
-              </h4>
-
-              <div class="space-y-2">
-                <span class="block text-[11px] font-bold text-slate-600 dark:text-slate-300">Koneksi Teman Aktif</span>
-                <div id="superadmin-friend-links" class="space-y-2"></div>
+            <!-- Right: Read-Only Users Directory + Friend Connections Cleanup -->
+            <div class="lg:col-span-5 space-y-4">
+              <!-- Read-Only Users Inspection Card -->
+              <div class="p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-3">
+                <div class="flex items-center justify-between gap-2">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+                    Cek Semua User (Mode Pantau Saja)
+                  </h4>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/15 text-sky-700 dark:text-sky-300">
+                    <i class="fa-solid fa-eye mr-1"></i>Baca Saja
+                  </span>
+                </div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">
+                  Menampilkan daftar seluruh user terdaftar/dikenal. Super Admin tidak memiliki akses ubah, reset, atau hapus akun user.
+                </p>
+                <div id="superadmin-users-readonly-list" class="space-y-2.5 max-h-72 overflow-y-auto pr-1"></div>
               </div>
 
-              <div class="pt-3 border-t border-slate-200 dark:border-slate-700 space-y-2">
-                <span class="block text-[11px] font-bold text-slate-600 dark:text-slate-300">Direktori Profil (@username)</span>
-                <div id="superadmin-users-list" class="space-y-2"></div>
+              <!-- Friend Connections Cleanup Card -->
+              <div class="p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-2.5">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+                  Rapikan Koneksi Teman (@username)
+                </h4>
+                <div id="superadmin-friend-links" class="space-y-2"></div>
               </div>
             </div>
           </div>
@@ -1030,14 +1071,19 @@
       </div>
     </section>
 
-    <!-- ==================== DETAIL OVERLAY ==================== -->
+    <!-- ==================== DETAIL & FULL EDIT OVERLAY FOR SAVED DRAMAS/MOVIES ==================== -->
     <div id="drama-detail-overlay" class="hidden fixed inset-0 z-[10020] flex items-center justify-center p-4 bg-slate-950/55 backdrop-blur-md">
-      <div class="w-full max-w-2xl max-h-[86vh] rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/80 dark:border-white/15 shadow-2xl flex flex-col overflow-hidden animate-win-pop">
+      <div class="w-full max-w-2xl max-h-[88vh] rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/80 dark:border-white/15 shadow-2xl flex flex-col overflow-hidden animate-win-pop">
         <div class="h-11 px-4 flex items-center justify-between bg-pink-50/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 shrink-0">
           <span id="detail-overlay-title" class="text-xs font-bold truncate">Detail Drama / Film</span>
-          <button type="button" onclick="closeDramaDetailOverlay()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-sm">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" id="detail-toggle-edit-btn" onclick="toggleDramaEditMode()" class="px-2.5 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-700 dark:text-sky-300 text-[11px] font-bold transition">
+              <i class="fa-solid fa-pen mr-1"></i>Edit Drama
+            </button>
+            <button type="button" onclick="closeDramaDetailOverlay()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-sm">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
         </div>
         <div id="detail-overlay-body" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
       </div>
@@ -1113,13 +1159,14 @@
   <!-- Toast Area -->
   <div id="os-toast-container" class="fixed top-11 right-4 z-[10080] space-y-2 pointer-events-none"></div>
 
-  <!-- ==================== FIREBASE SDK v13.4.0 + APP CHECK + ENGINE ==================== -->
+  <!-- ==================== FIREBASE SDK v13.4.0 + APP CHECK + DRAKORIN ENGINE ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
     import {
       getAuth,
       createUserWithEmailAndPassword,
       signInWithEmailAndPassword,
+      sendPasswordResetEmail,
       signOut,
       onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
@@ -1147,7 +1194,7 @@
     };
 
     const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LcpDy4uAAAAALDh4aljxO7BrijRu_eXs22byJm7";
-    const SUPER_ADMIN_PIN = "1234";
+    const SUPER_ADMIN_PASSWORD = String(261213);
 
     // Initialize Firebase App
     const app = initializeApp(firebaseConfig);
@@ -1165,18 +1212,18 @@
     }
 
     const STORAGE_KEYS = Object.freeze({
-      PROFILES: "kdrama_os_seoul_profiles_v3",
-      SESSION_EMAIL: "kdrama_os_seoul_session_v3",
-      POSTS: "kdrama_os_seoul_posts_v3",
-      PLAYLISTS: "kdrama_os_seoul_playlists_v3",
-      THEME: "kdrama_os_seoul_theme_v3",
-      WALLPAPER: "kdrama_os_seoul_wp_v3",
-      CUSTOM_WP: "kdrama_os_seoul_custom_wp_v3",
-      DARK: "kdrama_os_seoul_dark_v3"
+      PROFILES: "drakorin_seoul_profiles_v4",
+      SESSION_EMAIL: "drakorin_seoul_session_v4",
+      POSTS: "drakorin_seoul_posts_v4",
+      PLAYLISTS: "drakorin_seoul_playlists_v4",
+      THEME: "drakorin_seoul_theme_v4",
+      WALLPAPER: "drakorin_seoul_wp_v4",
+      CUSTOM_WP: "drakorin_seoul_custom_wp_v4",
+      DARK: "drakorin_seoul_dark_v4"
     });
 
     function createPosterArtwork(title, subtitle) {
-      const safeTitle = String(title || "K-Drama").slice(0, 26).replace(/[<>&"]/g, "");
+      const safeTitle = String(title || "DRAKORIN").slice(0, 26).replace(/[<>&"]/g, "");
       const safeSub = String(subtitle || "Drama Korea").slice(0, 24).replace(/[<>&"]/g, "");
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="580" viewBox="0 0 400 580">
         <defs>
@@ -1192,18 +1239,18 @@
         <rect x="30" y="205" width="340" height="175" rx="26" fill="rgba(255,255,255,0.9)"/>
         <text x="200" y="270" text-anchor="middle" fill="#1e293b" font-family="Poppins, Arial, sans-serif" font-size="23" font-weight="700">${safeTitle}</text>
         <text x="200" y="310" text-anchor="middle" fill="#db2777" font-family="Poppins, Arial, sans-serif" font-size="14" font-weight="600">${safeSub}</text>
-        <text x="200" y="348" text-anchor="middle" fill="#0284c7" font-family="Poppins, Arial, sans-serif" font-size="12" font-weight="700">K-DRAMA OS SEOUL</text>
+        <text x="200" y="348" text-anchor="middle" fill="#0284c7" font-family="Poppins, Arial, sans-serif" font-size="12" font-weight="700">DRAKORIN SEOUL</text>
       </svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
     }
 
     function createAvatarArtwork(name) {
-      const initials = String(name || "KD")
+      const initials = String(name || "DK")
         .trim()
         .split(/\s+/)
         .slice(0, 2)
         .map((part) => (part[0] ? part[0].toUpperCase() : ""))
-        .join("") || "KD";
+        .join("") || "DK";
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
         <defs>
           <linearGradient id="av" x1="0" y1="0" x2="1" y2="1">
@@ -1279,7 +1326,7 @@
 
     const SEED_PROFILES = [
       {
-        email: "jiyeon@seoulmail.kr",
+        email: "jiyeon@drakorin.kr",
         name: "Ji-yeon Kim",
         handle: "@jiyeonseoul",
         bio: "Nonton rom-com ceria, kafe estetik, & OST manis",
@@ -1288,7 +1335,7 @@
         friends: ["@junhoscreen", "@minacherry"]
       },
       {
-        email: "junho@seoulmail.kr",
+        email: "junho@drakorin.kr",
         name: "Jun-ho Park",
         handle: "@junhoscreen",
         bio: "Suka drama remaja, musik band, & film Korea",
@@ -1297,7 +1344,7 @@
         friends: ["@jiyeonseoul"]
       },
       {
-        email: "mina@seoulmail.kr",
+        email: "mina@drakorin.kr",
         name: "Mina Choi",
         handle: "@minacherry",
         bio: "Koleksi review drama favorit & screenshot adegan",
@@ -1319,7 +1366,7 @@
         isFavorite: true,
         review: "Ceritanya manis, emosional, dan bikin susah berhenti nonton! Banyak adegan ikonik yang berkesan.",
         screenshot: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80",
-        authorEmail: "jiyeon@seoulmail.kr",
+        authorEmail: "jiyeon@drakorin.kr",
         authorName: "Ji-yeon Kim",
         authorHandle: "@jiyeonseoul",
         authorAvatar: createAvatarArtwork("Ji-yeon Kim"),
@@ -1347,7 +1394,7 @@
         isFavorite: true,
         review: "Energinya cerah banget! Cerita band anak muda dan persahabatannya hangat sekali.",
         screenshot: "",
-        authorEmail: "junho@seoulmail.kr",
+        authorEmail: "junho@drakorin.kr",
         authorName: "Jun-ho Park",
         authorHandle: "@junhoscreen",
         authorAvatar: createAvatarArtwork("Jun-ho Park"),
@@ -1366,7 +1413,7 @@
         isFavorite: true,
         review: "Ringan, lucu, dan penuh semangat anak kampus. Selalu cocok buat mood booster!",
         screenshot: "",
-        authorEmail: "mina@seoulmail.kr",
+        authorEmail: "mina@drakorin.kr",
         authorName: "Mina Choi",
         authorHandle: "@minacherry",
         authorAvatar: createAvatarArtwork("Mina Choi"),
@@ -1389,6 +1436,11 @@
       rating: 5,
       customPosterDataUrl: "",
       screenshotDataUrl: "",
+      detailPostId: "",
+      detailEditMode: false,
+      editDraftRating: 5,
+      editDraftPoster: "",
+      editDraftScreenshot: "",
       pinClickCount: 0,
       pinClickTimer: null,
       unsubPosts: null,
@@ -1399,12 +1451,12 @@
     function sanitizeHandle(rawHandle, fallbackEmail) {
       let clean = String(rawHandle || "").trim().toLowerCase();
       if (!clean) {
-        const prefix = String(fallbackEmail || "seoulfan").split("@")[0].replace(/[^a-z0-9_]/g, "");
-        clean = "@" + (prefix || "seoulfan");
+        const prefix = String(fallbackEmail || "drakorfan").split("@")[0].replace(/[^a-z0-9_]/g, "");
+        clean = "@" + (prefix || "drakorfan");
       }
       if (!clean.startsWith("@")) clean = "@" + clean;
       clean = "@" + clean.slice(1).replace(/[^a-z0-9_]/g, "");
-      return clean.length > 1 ? clean : "@seoulfan";
+      return clean.length > 1 ? clean : "@drakorfan";
     }
 
     function saveProfilesLocal() {
@@ -1482,9 +1534,9 @@
       const pill = document.getElementById("cloud-sync-pill");
       if (!pill) return;
       if (isOnline) {
-        pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Cloud Sync`;
+        pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> DRAKORIN Cloud`;
       } else {
-        pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Local + Cloud`;
+        pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> DRAKORIN Local`;
       }
     }
 
@@ -1634,7 +1686,7 @@
           {
             id: "pl-default-1",
             ownerEmail: "",
-            ownerHandle: "@seoul",
+            ownerHandle: "@drakorin",
             title: "Daftar Nonton Seru",
             description: "Kumpulan drama & film favorit untuk ditonton santai.",
             items: [
@@ -1690,7 +1742,7 @@
       }, 2800);
     };
 
-    // ==================== MANUAL OWNER PIN (1234 — NEVER AUTO-FILLED) ====================
+    // ==================== MANUAL SUPER ADMIN PASSWORD (261213 — NEVER AUTO-FILLED) ====================
     window.registerPinTriggerClick = function () {
       state.pinClickCount += 1;
       clearTimeout(state.pinClickTimer);
@@ -1724,8 +1776,8 @@
       const enteredPin = (input.value || "").trim();
       input.value = "";
 
-      if (enteredPin !== SUPER_ADMIN_PIN) {
-        showToast("PIN tidak sesuai.", "error");
+      if (enteredPin !== SUPER_ADMIN_PASSWORD) {
+        showToast("Password Super Admin tidak sesuai.", "error");
         return;
       }
 
@@ -1734,10 +1786,10 @@
 
       if (!state.currentUser) {
         const ownerProfile = {
-          email: "owner@kdrama-os.local",
-          name: "Super Admin Seoul",
+          email: "superadmin@drakorin.local",
+          name: "Super Admin DRAKORIN",
           handle: "@superadmin",
-          bio: "Kurator & Super Admin K-Drama OS",
+          bio: "Kurator & Super Admin DRAKORIN",
           avatar: createAvatarArtwork("Super Admin"),
           favorites: ["Queen of Tears", "Lovely Runner", "Moving"],
           friends: []
@@ -1752,7 +1804,7 @@
         refreshVisibleViews();
       }
 
-      showToast("Mode Super Admin aktif!", "success");
+      showToast("Mode Super Admin DRAKORIN aktif!", "success");
       openAppWindow("superadmin");
     };
 
@@ -1796,12 +1848,15 @@
       }
     }
 
-    // ==================== AUTHENTICATION (FIREBASE + LOCAL FALLBACK) ====================
+    // ==================== AUTHENTICATION + FORGOT PASSWORD EMAIL ====================
     window.switchAuthTab = function (tab) {
       const btnLogin = document.getElementById("auth-btn-login");
       const btnReg = document.getElementById("auth-btn-register");
       const formLogin = document.getElementById("auth-form-login");
       const formReg = document.getElementById("auth-form-register");
+      const forgotPanel = document.getElementById("auth-panel-forgot");
+
+      forgotPanel.classList.add("hidden");
 
       if (tab === "login") {
         btnLogin.className = "py-2 rounded-xl accent-btn text-white shadow transition";
@@ -1813,6 +1868,71 @@
         btnLogin.className = "py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition";
         formReg.classList.remove("hidden");
         formLogin.classList.add("hidden");
+      }
+    };
+
+    window.openForgotPasswordPanel = function () {
+      document.getElementById("auth-form-login").classList.add("hidden");
+      document.getElementById("auth-form-register").classList.add("hidden");
+      const forgotPanel = document.getElementById("auth-panel-forgot");
+      const forgotInput = document.getElementById("input-forgot-email");
+      const loginEmail = (document.getElementById("input-login-email")?.value || "").trim();
+      const fb = document.getElementById("forgot-password-feedback");
+
+      fb.classList.add("hidden");
+      fb.textContent = "";
+      if (loginEmail && !forgotInput.value) {
+        forgotInput.value = loginEmail;
+      }
+      forgotPanel.classList.remove("hidden");
+      setTimeout(() => forgotInput.focus(), 50);
+    };
+
+    window.closeForgotPasswordPanel = function () {
+      document.getElementById("auth-panel-forgot").classList.add("hidden");
+      document.getElementById("auth-form-login").classList.remove("hidden");
+    };
+
+    function setForgotFeedback(message, isSuccess) {
+      const fb = document.getElementById("forgot-password-feedback");
+      if (!fb) return;
+      fb.textContent = message;
+      fb.className = isSuccess
+        ? "px-3 py-2 rounded-xl text-[11px] font-semibold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-400/30"
+        : "px-3 py-2 rounded-xl text-[11px] font-semibold bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-400/30";
+      fb.classList.remove("hidden");
+    }
+
+    window.processForgotPasswordReset = async function (event) {
+      event.preventDefault();
+      const emailInput = document.getElementById("input-forgot-email");
+      const email = (emailInput.value || "").trim().toLowerCase();
+      const btn = document.getElementById("btn-submit-forgot");
+
+      if (!email) {
+        setForgotFeedback("Masukkan alamat email terlebih dahulu.", false);
+        return;
+      }
+
+      btn.disabled = true;
+      try {
+        await sendPasswordResetEmail(auth, email);
+        setForgotFeedback(`Link reset password telah dikirim ke ${email}. Silakan cek kotak masuk atau folder spam email kamu.`, true);
+        showToast(`Link reset password dikirim ke ${email}`, "success");
+      } catch (err) {
+        const code = err?.code || "";
+        if (code === "auth/user-not-found") {
+          setForgotFeedback("Email belum terdaftar di Firebase Authentication.", false);
+        } else if (code === "auth/invalid-email") {
+          setForgotFeedback("Format email tidak valid.", false);
+        } else if (code === "auth/too-many-requests") {
+          setForgotFeedback("Terlalu banyak permintaan. Coba beberapa saat lagi.", false);
+        } else {
+          setForgotFeedback("Tidak dapat mengirim email reset saat ini. Pastikan email terdaftar di Firebase Auth.", false);
+        }
+        showToast("Gagal mengirim link reset password.", "error");
+      } finally {
+        btn.disabled = false;
       }
     };
 
@@ -1868,7 +1988,7 @@
             email,
             name: email.split("@")[0],
             handle: sanitizeHandle("", email),
-            bio: "Anggota K-Drama OS",
+            bio: "Anggota DRAKORIN",
             avatar: createAvatarArtwork(email),
             favorites: [],
             friends: []
@@ -1881,11 +2001,10 @@
         saveProfilesLocal();
 
         await enterDesktopSession(userRecord, false);
-        showToast(`Selamat datang, ${userRecord.name}!`, "success");
+        showToast(`Selamat datang di DRAKORIN, ${userRecord.name}!`, "success");
       } catch (firebaseErr) {
         const code = firebaseErr?.code || "";
         if (code === "auth/network-request-failed" || code === "auth/internal-error") {
-          // Automatic offline/network fallback session using local profile
           document.getElementById("input-login-password").value = "";
           let fallbackUser = state.profiles.find((a) => a.email.toLowerCase() === email);
           if (!fallbackUser) {
@@ -1893,7 +2012,7 @@
               email,
               name: email.split("@")[0],
               handle: sanitizeHandle("", email),
-              bio: "Mode offline K-Drama OS",
+              bio: "Mode lokal DRAKORIN",
               avatar: createAvatarArtwork(email),
               favorites: [],
               friends: []
@@ -1943,7 +2062,7 @@
 
         document.getElementById("auth-form-register").reset();
         await enterDesktopSession(newProfile, false);
-        showToast(`Akun ${newProfile.name} (${newProfile.handle}) terdaftar!`, "success");
+        showToast(`Akun ${newProfile.name} (${newProfile.handle}) terdaftar di DRAKORIN!`, "success");
       } catch (firebaseErr) {
         const code = firebaseErr?.code || "";
         if (code === "auth/network-request-failed" || code === "auth/internal-error") {
@@ -1995,18 +2114,18 @@
       closeAllAppWindows();
       switchAuthTab("login");
       document.getElementById("auth-gate-overlay").classList.remove("hidden");
-      showToast("Kamu telah keluar dari akun.", "info");
+      showToast("Kamu telah keluar dari DRAKORIN.", "info");
     };
 
     // ==================== FULL WORKSPACE WINDOW CONTROLS ====================
     const WINDOW_NAMES = {
-      library: "Koleksi K-Drama & Film",
+      library: "Koleksi DRAKORIN",
       playlists: "Watching List / Playlist Kustom",
       add: "+ Tambah Drama",
-      community: "Komunitas Terbuka",
+      community: "Komunitas DRAKORIN",
       friends: "Teman (@username)",
       settings: "Profil, Tema & Wallpaper",
-      superadmin: "Super Admin — Pembersihan Data"
+      superadmin: "Super Admin DRAKORIN"
     };
 
     function closeAllAppWindows() {
@@ -2016,7 +2135,7 @@
         if (win) win.classList.add("hidden");
         if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-transparent mt-1";
       });
-      document.getElementById("top-active-app-label").textContent = "Desktop";
+      document.getElementById("top-active-app-label").textContent = "DRAKORIN";
     }
 
     window.openAppWindow = function (winId) {
@@ -2057,15 +2176,15 @@
       const dot = document.getElementById(`dock-indicator-${winId}`);
       if (win) win.classList.add("hidden");
       if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-transparent mt-1";
-      document.getElementById("top-active-app-label").textContent = "Desktop";
+      document.getElementById("top-active-app-label").textContent = "DRAKORIN";
     };
 
     // ==================== THEMES, WALLPAPERS & CLOCK ====================
     window.setCheerfulTheme = function (themeClass) {
-      const body = document.getElementById("kdrama-os-body");
+      const body = document.getElementById("drakorin-body");
       body.classList.remove("theme-seoul-pop", "theme-hongdae-mint", "theme-gangnam-peach");
       body.classList.add(themeClass);
-      localStorage.setItem(KEYS.THEME, themeClass);
+      localStorage.setItem(STORAGE_KEYS.THEME, themeClass);
 
       ["theme-seoul-pop", "theme-hongdae-mint", "theme-gangnam-peach"].forEach((t) => {
         const mark = document.getElementById(`theme-check-${t}`);
@@ -2074,14 +2193,14 @@
     };
 
     window.setDesktopWallpaper = function (wpClass) {
-      localStorage.removeItem(KEYS.CUSTOM_WP);
-      const body = document.getElementById("kdrama-os-body");
+      localStorage.removeItem(STORAGE_KEYS.CUSTOM_WP);
+      const body = document.getElementById("drakorin-body");
       body.style.backgroundImage = "";
       body.style.backgroundSize = "";
       body.style.backgroundPosition = "";
       body.classList.remove("wp-seoul-morning", "wp-han-daylight", "wp-cherry-daylight", "wp-namsan-sunny");
       body.classList.add(wpClass);
-      localStorage.setItem(KEYS.WALLPAPER, wpClass);
+      localStorage.setItem(STORAGE_KEYS.WALLPAPER, wpClass);
       toggleWallpaperDeleteBtn(false);
     };
 
@@ -2093,7 +2212,7 @@
         const dataUrl = e.target.result;
         applyCustomWallpaperBg(dataUrl);
         try {
-          localStorage.setItem(KEYS.CUSTOM_WP, dataUrl);
+          localStorage.setItem(STORAGE_KEYS.CUSTOM_WP, dataUrl);
         } catch (err) {
           showToast("Gambar wallpaper terlalu besar untuk disimpan permanen.", "error");
         }
@@ -2105,7 +2224,7 @@
     };
 
     function applyCustomWallpaperBg(dataUrl) {
-      const body = document.getElementById("kdrama-os-body");
+      const body = document.getElementById("drakorin-body");
       body.classList.remove("wp-seoul-morning", "wp-han-daylight", "wp-cherry-daylight", "wp-namsan-sunny");
       body.style.backgroundImage = `url("${dataUrl}")`;
       body.style.backgroundSize = "cover";
@@ -2113,8 +2232,8 @@
     }
 
     window.removeCustomWallpaper = function () {
-      localStorage.removeItem(KEYS.CUSTOM_WP);
-      const savedPreset = localStorage.getItem(KEYS.WALLPAPER) || "wp-seoul-morning";
+      localStorage.removeItem(STORAGE_KEYS.CUSTOM_WP);
+      const savedPreset = localStorage.getItem(STORAGE_KEYS.WALLPAPER) || "wp-seoul-morning";
       setDesktopWallpaper(savedPreset);
       showToast("Wallpaper kustom dihapus.", "info");
     };
@@ -2135,7 +2254,7 @@
       const darkNow = document.documentElement.classList.toggle("dark");
       const icon = document.getElementById("top-dark-icon");
       icon.className = darkNow ? "fa-solid fa-sun text-xs text-amber-300" : "fa-solid fa-moon text-xs";
-      localStorage.setItem(KEYS.DARK, darkNow ? "1" : "0");
+      localStorage.setItem(STORAGE_KEYS.DARK, darkNow ? "1" : "0");
     };
 
     function runLiveClock() {
@@ -2157,7 +2276,7 @@
     }
 
     function computeDefaultPoster() {
-      const title = document.getElementById("form-drama-title").value.trim() || document.getElementById("drama-auto-search").value.trim() || "K-Drama";
+      const title = document.getElementById("form-drama-title").value.trim() || document.getElementById("drama-auto-search").value.trim() || "DRAKORIN";
       const genre = document.getElementById("form-drama-genre").value.trim() || "Drama Korea";
       const matched = LOCAL_DRAMA_CATALOG.find((d) => d.title.toLowerCase() === title.toLowerCase());
       return matched ? matched.poster : createPosterArtwork(title, genre);
@@ -2206,7 +2325,6 @@
       }
     };
 
-    // Tier 1: Local catalog -> Tier 2: TVMaze & iTunes APIs -> Tier 3: Automatic fallback
     async function lookupThreeTierDrama(query) {
       const q = query.trim();
       const lower = q.toLowerCase();
@@ -2523,7 +2641,7 @@
       const friendSet = new Set((state.currentUser?.friends || []).map((h) => h.toLowerCase()));
 
       if (!state.posts.length) {
-        container.innerHTML = `<div class="p-10 rounded-2xl bg-white/85 dark:bg-slate-800/85 border border-pink-100 dark:border-slate-700 text-center text-xs text-slate-500">Belum ada postingan di komunitas. Tambahkan ulasan pertama kamu!</div>`;
+        container.innerHTML = `<div class="p-10 rounded-2xl bg-white/85 dark:bg-slate-800/85 border border-pink-100 dark:border-slate-700 text-center text-xs text-slate-500">Belum ada postingan di komunitas DRAKORIN. Tambahkan ulasan pertama kamu!</div>`;
         return;
       }
 
@@ -2565,14 +2683,19 @@
               </div>
             ` : ""}
 
-            <div class="flex items-center gap-4 pt-1 border-t border-slate-200/70 dark:border-slate-700/70 text-xs">
-              <button type="button" onclick="likeCommunityPost('${post.id}')" class="flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-200 hover:text-pink-500 transition">
-                <i class="fa-solid fa-heart text-pink-500"></i>
-                <span>${post.likes || 0} Suka</span>
+            <div class="flex items-center justify-between gap-4 pt-1 border-t border-slate-200/70 dark:border-slate-700/70 text-xs">
+              <div class="flex items-center gap-4">
+                <button type="button" onclick="likeCommunityPost('${post.id}')" class="flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-200 hover:text-pink-500 transition">
+                  <i class="fa-solid fa-heart text-pink-500"></i>
+                  <span>${post.likes || 0} Suka</span>
+                </button>
+                <span class="text-slate-500">
+                  <i class="fa-regular fa-comment mr-1"></i>${(post.comments || []).length} Komentar
+                </span>
+              </div>
+              <button type="button" onclick="openDramaDetailOverlay('${post.id}', true)" class="text-[11px] font-bold text-sky-600 dark:text-sky-400 hover:underline">
+                <i class="fa-solid fa-pen mr-1"></i>Edit Detail / Rate
               </button>
-              <span class="text-slate-500">
-                <i class="fa-regular fa-comment mr-1"></i>${(post.comments || []).length} Komentar
-              </span>
             </div>
 
             <div class="space-y-2 pl-2.5 border-l-2 border-pink-300 dark:border-pink-500/50">
@@ -2639,47 +2762,256 @@
       showToast("Komentar terkirim!", "success");
     };
 
-    // ==================== DETAIL OVERLAY ====================
-    window.openDramaDetailOverlay = function (postId) {
+    // ==================== DETAIL & FULL EDIT OVERLAY FOR SAVED DRAMAS/MOVIES ====================
+    window.openDramaDetailOverlay = function (postId, startInEdit) {
       const post = state.posts.find((p) => p.id === postId);
       if (!post) return;
-      const fallbackPoster = createPosterArtwork(post.title, post.genre);
-      const fallbackAvatar = createAvatarArtwork(post.authorName);
-
-      document.getElementById("detail-overlay-title").textContent = `${post.title} (${post.year})`;
-      document.getElementById("detail-overlay-body").innerHTML = `
-        <div class="flex flex-col sm:flex-row gap-4">
-          <img src="${post.poster || fallbackPoster}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" class="w-36 h-52 rounded-2xl object-cover shadow-lg mx-auto sm:mx-0 shrink-0" />
-          <div class="space-y-2 flex-1">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold border accent-chip">${post.genre}</span>
-              <span class="text-amber-400 text-xs font-bold">${"★".repeat(post.rating || 5)} (${post.rating || 5}/5)</span>
-            </div>
-            <h2 class="text-lg font-extrabold">${post.title}</h2>
-            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${post.synopsis}</p>
-            <div class="pt-2 flex items-center gap-2 text-xs">
-              <img src="${post.authorAvatar || fallbackAvatar}" alt="${post.authorName}" onerror="this.src='${fallbackAvatar}'" class="w-6 h-6 rounded-full object-cover bg-white" />
-              <span>Diulas oleh <b>${post.authorName}</b> <span class="text-pink-600 dark:text-pink-400 font-semibold">${post.authorHandle || ""}</span></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="p-3.5 rounded-2xl bg-pink-50/70 dark:bg-slate-800/80 border border-pink-200/60 dark:border-slate-700">
-          <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Review</p>
-          <p class="text-xs leading-relaxed">${post.review}</p>
-        </div>
-
-        ${post.screenshot ? `
-          <div>
-            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Screenshot Adegan</p>
-            <img src="${post.screenshot}" alt="Screenshot" class="w-full max-h-72 rounded-2xl object-cover border border-slate-200 dark:border-slate-700" />
-          </div>
-        ` : ""}
-      `;
+      state.detailPostId = postId;
+      state.detailEditMode = Boolean(startInEdit);
+      state.editDraftRating = Number(post.rating || 5);
+      state.editDraftPoster = post.poster || "";
+      state.editDraftScreenshot = post.screenshot || "";
+      renderDramaDetailOverlayContent();
       document.getElementById("drama-detail-overlay").classList.remove("hidden");
     };
 
+    window.toggleDramaEditMode = function () {
+      const post = state.posts.find((p) => p.id === state.detailPostId);
+      if (!post) return;
+      state.detailEditMode = !state.detailEditMode;
+      state.editDraftRating = Number(post.rating || 5);
+      state.editDraftPoster = post.poster || "";
+      state.editDraftScreenshot = post.screenshot || "";
+      renderDramaDetailOverlayContent();
+    };
+
+    window.setEditDraftRating = function (stars) {
+      state.editDraftRating = stars;
+      const label = document.getElementById("edit-draft-rating-label");
+      if (label) label.textContent = `${stars} / 5`;
+      document.querySelectorAll("#edit-star-group .edit-star").forEach((btn, i) => {
+        btn.className = i < stars
+          ? "edit-star text-amber-400 transition hover:scale-110"
+          : "edit-star text-slate-300 dark:text-slate-600 transition hover:scale-110";
+      });
+    };
+
+    window.onEditPosterFile = function (event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        state.editDraftPoster = e.target.result;
+        const img = document.getElementById("edit-draft-poster-preview");
+        if (img) img.src = e.target.result;
+        showToast("Poster baru dipilih.", "success");
+      };
+      reader.readAsDataURL(file);
+      event.target.value = "";
+    };
+
+    window.onEditScreenshotFile = function (event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        state.editDraftScreenshot = e.target.result;
+        const img = document.getElementById("edit-draft-screenshot-preview");
+        if (img) {
+          img.src = e.target.result;
+          img.classList.remove("hidden");
+        }
+        showToast("Screenshot baru dipilih.", "success");
+      };
+      reader.readAsDataURL(file);
+      event.target.value = "";
+    };
+
+    window.clearEditDraftScreenshot = function () {
+      state.editDraftScreenshot = "";
+      const img = document.getElementById("edit-draft-screenshot-preview");
+      if (img) {
+        img.src = "";
+        img.classList.add("hidden");
+      }
+    };
+
+    window.saveEditedDrama = async function () {
+      const post = state.posts.find((p) => p.id === state.detailPostId);
+      if (!post) return;
+
+      const newTitle = (document.getElementById("edit-drama-title")?.value || "").trim();
+      if (!newTitle) {
+        showToast("Judul drama tidak boleh kosong.", "error");
+        return;
+      }
+
+      const newYear = (document.getElementById("edit-drama-year")?.value || "").trim() || post.year || String(new Date().getFullYear());
+      const newGenre = (document.getElementById("edit-drama-genre")?.value || "").trim() || post.genre || "Drama Korea";
+      const newSynopsis = (document.getElementById("edit-drama-synopsis")?.value || "").trim() || post.synopsis || "";
+      const newReview = (document.getElementById("edit-drama-review")?.value || "").trim() || post.review || "";
+      const newFav = Boolean(document.getElementById("edit-drama-favorite")?.checked);
+      const newPoster = state.editDraftPoster || createPosterArtwork(newTitle, newGenre);
+
+      post.title = newTitle;
+      post.year = newYear;
+      post.genre = newGenre;
+      post.synopsis = newSynopsis;
+      post.rating = state.editDraftRating || 5;
+      post.isFavorite = newFav;
+      post.review = newReview;
+      post.poster = newPoster;
+      post.screenshot = state.editDraftScreenshot || "";
+
+      savePostsLocal();
+      state.detailEditMode = false;
+      renderDramaDetailOverlayContent();
+      refreshVisibleViews();
+      await syncPostToFirestore(post);
+      showToast(`Perubahan pada "${newTitle}" tersimpan!`, "success");
+    };
+
+    function renderDramaDetailOverlayContent() {
+      const post = state.posts.find((p) => p.id === state.detailPostId);
+      if (!post) return;
+
+      const toggleBtn = document.getElementById("detail-toggle-edit-btn");
+      if (toggleBtn) {
+        toggleBtn.innerHTML = state.detailEditMode
+          ? `<i class="fa-solid fa-eye mr-1"></i>Lihat Detail`
+          : `<i class="fa-solid fa-pen mr-1"></i>Edit Drama`;
+      }
+
+      const fallbackPoster = createPosterArtwork(post.title, post.genre);
+      const fallbackAvatar = createAvatarArtwork(post.authorName);
+      document.getElementById("detail-overlay-title").textContent = `${post.title} (${post.year})`;
+
+      if (!state.detailEditMode) {
+        document.getElementById("detail-overlay-body").innerHTML = `
+          <div class="flex flex-col sm:flex-row gap-4">
+            <img src="${post.poster || fallbackPoster}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" class="w-36 h-52 rounded-2xl object-cover shadow-lg mx-auto sm:mx-0 shrink-0" />
+            <div class="space-y-2 flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold border accent-chip">${post.genre}</span>
+                <span class="text-amber-400 text-xs font-bold">${"★".repeat(post.rating || 5)} (${post.rating || 5}/5)</span>
+                ${post.isFavorite ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-pink-500 text-white"><i class="fa-solid fa-heart mr-1"></i>Favorit</span>` : ""}
+              </div>
+              <h2 class="text-lg font-extrabold">${post.title}</h2>
+              <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${post.synopsis}</p>
+              <div class="pt-2 flex items-center gap-2 text-xs">
+                <img src="${post.authorAvatar || fallbackAvatar}" alt="${post.authorName}" onerror="this.src='${fallbackAvatar}'" class="w-6 h-6 rounded-full object-cover bg-white" />
+                <span>Diulas oleh <b>${post.authorName}</b> <span class="text-pink-600 dark:text-pink-400 font-semibold">${post.authorHandle || ""}</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-pink-50/70 dark:bg-slate-800/80 border border-pink-200/60 dark:border-slate-700">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Review</p>
+            <p class="text-xs leading-relaxed">${post.review}</p>
+          </div>
+
+          ${post.screenshot ? `
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Screenshot Adegan</p>
+              <img src="${post.screenshot}" alt="Screenshot" class="w-full max-h-72 rounded-2xl object-cover border border-slate-200 dark:border-slate-700" />
+            </div>
+          ` : ""}
+        `;
+        return;
+      }
+
+      const activeStars = state.editDraftRating || 5;
+      const starButtons = [1, 2, 3, 4, 5]
+        .map(
+          (n) => `<button type="button" onclick="setEditDraftRating(${n})" class="edit-star ${
+            n <= activeStars ? "text-amber-400" : "text-slate-300 dark:text-slate-600"
+          } transition hover:scale-110"><i class="fa-solid fa-star"></i></button>`
+        )
+        .join("");
+
+      document.getElementById("detail-overlay-body").innerHTML = `
+        <div class="space-y-4">
+          <div class="flex flex-col sm:flex-row gap-4 items-start">
+            <div class="space-y-2 shrink-0 mx-auto sm:mx-0">
+              <img id="edit-draft-poster-preview" src="${state.editDraftPoster || fallbackPoster}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" class="w-28 h-40 rounded-2xl object-cover shadow border border-white" />
+              <label class="w-full py-1.5 px-2.5 rounded-xl bg-pink-50 dark:bg-slate-800 border border-pink-200 dark:border-slate-700 text-[11px] font-bold cursor-pointer flex items-center justify-center gap-1">
+                <i class="fa-solid fa-image text-pink-500"></i> Ganti Poster
+                <input type="file" accept="image/*" onchange="onEditPosterFile(event)" class="hidden" />
+              </label>
+            </div>
+
+            <div class="flex-1 w-full space-y-2.5">
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                <div class="sm:col-span-2">
+                  <label class="block text-[11px] font-bold mb-1">Judul</label>
+                  <input type="text" id="edit-drama-title" value="${post.title.replace(/"/g, "&quot;")}" class="w-full px-3 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold mb-1">Tahun</label>
+                  <input type="text" id="edit-drama-year" value="${(post.year || "").replace(/"/g, "&quot;")}" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold mb-1">Genre</label>
+                  <input type="text" id="edit-drama-genre" value="${(post.genre || "").replace(/"/g, "&quot;")}" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold mb-1">Sinopsis</label>
+                <textarea id="edit-drama-synopsis" rows="2" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">${post.synopsis || ""}</textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+            <div>
+              <span class="block text-[11px] font-bold mb-1">Rating (1 - 5 Bintang)</span>
+              <div id="edit-star-group" class="flex items-center gap-1.5 text-lg">
+                ${starButtons}
+                <span id="edit-draft-rating-label" class="ml-2 text-xs font-bold text-amber-500">${activeStars} / 5</span>
+              </div>
+            </div>
+
+            <label class="inline-flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded-xl bg-pink-500/10 border border-pink-500/25">
+              <input type="checkbox" id="edit-drama-favorite" ${post.isFavorite ? "checked" : ""} class="rounded text-pink-500" />
+              <span class="text-xs font-bold text-pink-600 dark:text-pink-400"><i class="fa-solid fa-heart mr-1"></i>Favorit</span>
+            </label>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold mb-1">Review</label>
+            <textarea id="edit-drama-review" rows="3" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">${post.review || ""}</textarea>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <label class="px-3 py-1.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 text-sky-700 dark:text-sky-300 text-xs font-bold cursor-pointer">
+                <i class="fa-solid fa-camera mr-1"></i> Ganti / Tambah Screenshot
+                <input type="file" accept="image/*" onchange="onEditScreenshotFile(event)" class="hidden" />
+              </label>
+              ${state.editDraftScreenshot ? `
+                <button type="button" onclick="clearEditDraftScreenshot()" class="px-2.5 py-1.5 rounded-xl bg-rose-500/15 text-rose-600 dark:text-rose-400 text-xs font-bold">
+                  Hapus Screenshot
+                </button>
+              ` : ""}
+            </div>
+            <img id="edit-draft-screenshot-preview" src="${state.editDraftScreenshot || ""}" alt="Screenshot" class="${state.editDraftScreenshot ? "" : "hidden"} w-full max-h-48 rounded-xl object-cover border border-slate-200 dark:border-slate-700" />
+          </div>
+
+          <div class="flex justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-700">
+            <button type="button" onclick="toggleDramaEditMode()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-xs font-bold">
+              Batal
+            </button>
+            <button type="button" onclick="saveEditedDrama()" class="px-5 py-2 rounded-xl accent-btn text-white text-xs font-bold shadow">
+              Simpan Perubahan Drama
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
     window.closeDramaDetailOverlay = function () {
+      state.detailEditMode = false;
       document.getElementById("drama-detail-overlay").classList.add("hidden");
     };
 
@@ -3122,7 +3454,7 @@
       }
     }
 
-    // ==================== SUPER ADMIN CLEANUP TOOLS (NO ALERT/CONFIRM) ====================
+    // ==================== SUPER ADMIN (READ-ONLY USERS + PRE-LAUNCH CLEANUP) ====================
     window.renderSuperAdminDashboard = function () {
       if (!state.isSuperAdmin) return;
       const postsList = document.getElementById("superadmin-posts-list");
@@ -3177,6 +3509,34 @@
           .join("");
       }
 
+      // Read-only users list (Super Admin can only view, NO edit/delete/modify user accounts)
+      const readonlyUsersBox = document.getElementById("superadmin-users-readonly-list");
+      readonlyUsersBox.innerHTML = state.profiles
+        .map((prof) => {
+          const av = prof.avatar || createAvatarArtwork(prof.name);
+          const favList = (prof.favorites || []).slice(0, 3).join(", ") || "-";
+          const friendsCount = (prof.friends || []).length;
+          return `
+          <div class="p-3 rounded-xl bg-sky-50/50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 space-y-1.5 text-xs">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <img src="${av}" alt="${prof.name}" onerror="this.src='${av}'" class="w-8 h-8 rounded-full object-cover shrink-0 bg-white" />
+                <div class="min-w-0">
+                  <p class="font-bold truncate">${prof.name} <span class="text-pink-500 font-semibold">${prof.handle}</span></p>
+                  <p class="text-[10px] text-slate-500 truncate">${prof.email}</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">
+                ${friendsCount} Teman
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-600 dark:text-slate-300 truncate">${prof.bio || "Tidak ada bio"}</p>
+            <p class="text-[10px] text-slate-400 truncate">Favorit: ${favList}</p>
+          </div>
+        `;
+        })
+        .join("");
+
       // Friend connections cleanup
       const friendLinksBox = document.getElementById("superadmin-friend-links");
       const allFriendPairs = [];
@@ -3202,27 +3562,6 @@
           )
           .join("");
       }
-
-      // User profiles directory cleanup
-      const usersBox = document.getElementById("superadmin-users-list");
-      usersBox.innerHTML = state.profiles
-        .map((prof) => {
-          const isCurrent = state.currentUser && prof.email.toLowerCase() === state.currentUser.email.toLowerCase();
-          return `
-          <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
-            <div class="min-w-0">
-              <p class="font-bold truncate">${prof.name} <span class="text-pink-500 font-semibold">${prof.handle}</span></p>
-              <p class="text-[10px] text-slate-400 truncate">${prof.email}</p>
-            </div>
-            ${
-              isCurrent
-                ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full border accent-chip shrink-0">Aktif</span>`
-                : `<button type="button" onclick="adminRemoveProfileRecord('${prof.email}')" class="px-2.5 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 text-[10px] font-bold shrink-0">Hapus Profil</button>`
-            }
-          </div>
-        `;
-        })
-        .join("");
     };
 
     window.adminDeletePost = async function (postId) {
@@ -3284,16 +3623,6 @@
       renderSuperAdminDashboard();
       await syncUserToFirestore(prof);
       showToast(`Relasi ${prof.handle} → ${targetHandle} dihapus.`, "info");
-    };
-
-    window.adminRemoveProfileRecord = function (email) {
-      if (!state.isSuperAdmin) return;
-      if (state.currentUser && email.toLowerCase() === state.currentUser.email.toLowerCase()) return;
-      state.profiles = state.profiles.filter((p) => p.email.toLowerCase() !== email.toLowerCase());
-      saveProfilesLocal();
-      renderFriendsView();
-      renderSuperAdminDashboard();
-      showToast("Data profil pengguna dihapus dari direktori lokal.", "info");
     };
 
     // ==================== PROFILE & SETTINGS ====================
@@ -3395,19 +3724,19 @@
 
     // ==================== INITIALIZATION ====================
     window.addEventListener("DOMContentLoaded", function () {
-      const savedTheme = localStorage.getItem(KEYS.THEME) || "theme-seoul-pop";
+      const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || "theme-seoul-pop";
       setCheerfulTheme(savedTheme);
 
-      const customWp = localStorage.getItem(KEYS.CUSTOM_WP);
+      const customWp = localStorage.getItem(STORAGE_KEYS.CUSTOM_WP);
       if (customWp) {
         applyCustomWallpaperBg(customWp);
         toggleWallpaperDeleteBtn(true);
       } else {
-        const presetWp = localStorage.getItem(KEYS.WALLPAPER) || "wp-seoul-morning";
+        const presetWp = localStorage.getItem(STORAGE_KEYS.WALLPAPER) || "wp-seoul-morning";
         setDesktopWallpaper(presetWp);
       }
 
-      if (localStorage.getItem(KEYS.DARK) === "1") {
+      if (localStorage.getItem(STORAGE_KEYS.DARK) === "1") {
         document.documentElement.classList.add("dark");
         document.getElementById("top-dark-icon").className = "fa-solid fa-sun text-xs text-amber-300";
       }
@@ -3448,7 +3777,7 @@
               email: emailLower,
               name: emailLower.split("@")[0],
               handle: sanitizeHandle("", emailLower),
-              bio: "Anggota K-Drama OS",
+              bio: "Anggota DRAKORIN",
               avatar: createAvatarArtwork(emailLower),
               favorites: [],
               friends: []
