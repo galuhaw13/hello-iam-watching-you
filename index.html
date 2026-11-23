@@ -1,0 +1,2990 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drakorin — Kdrama Desktop Watchlist &amp; Community</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Poppins & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['Poppins', 'Inter', 'sans-serif'],
+          },
+          animation: {
+            'win-pop': 'winPop 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'float-card': 'floatCard 6.5s ease-in-out infinite',
+          },
+          keyframes: {
+            winPop: {
+              '0%': { opacity: '0', transform: 'scale(0.97) translateY(10px)' },
+              '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+            },
+            floatCard: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+    input, textarea, select, .selectable {
+      user-select: text;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Poppins', 'Inter', sans-serif;
+    }
+
+    /* ==================== BRIGHT SEOUL WALLPAPERS ==================== */
+    .wp-seoul-morning {
+      background:
+        radial-gradient(circle at 16% 18%, rgba(255, 182, 213, 0.88) 0%, transparent 48%),
+        radial-gradient(circle at 84% 20%, rgba(125, 211, 252, 0.86) 0%, transparent 50%),
+        radial-gradient(circle at 52% 86%, rgba(253, 224, 71, 0.68) 0%, transparent 58%),
+        linear-gradient(135deg, #fff1f7 0%, #e0f2fe 52%, #fef9c3 100%);
+    }
+    .dark .wp-seoul-morning {
+      background:
+        radial-gradient(circle at 18% 20%, rgba(244, 114, 182, 0.35) 0%, transparent 48%),
+        radial-gradient(circle at 84% 22%, rgba(56, 189, 248, 0.35) 0%, transparent 52%),
+        linear-gradient(135deg, #1b1130 0%, #172554 55%, #2e1065 100%);
+    }
+
+    .wp-han-daylight {
+      background:
+        radial-gradient(circle at 18% 20%, rgba(103, 232, 249, 0.82) 0%, transparent 46%),
+        radial-gradient(circle at 82% 76%, rgba(167, 243, 208, 0.84) 0%, transparent 54%),
+        radial-gradient(circle at 75% 18%, rgba(196, 181, 253, 0.68) 0%, transparent 48%),
+        linear-gradient(150deg, #ecfeff 0%, #eff6ff 52%, #f0fdf4 100%);
+    }
+    .dark .wp-han-daylight {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.28) 0%, transparent 48%),
+        radial-gradient(circle at 82% 78%, rgba(52, 211, 153, 0.26) 0%, transparent 55%),
+        linear-gradient(150deg, #061826 0%, #0d253f 55%, #112a38 100%);
+    }
+
+    .wp-cherry-daylight {
+      background:
+        radial-gradient(circle at 18% 20%, rgba(253, 164, 175, 0.88) 0%, transparent 48%),
+        radial-gradient(circle at 84% 28%, rgba(249, 168, 212, 0.85) 0%, transparent 52%),
+        radial-gradient(circle at 50% 88%, rgba(221, 214, 254, 0.84) 0%, transparent 60%),
+        linear-gradient(135deg, #fff1f2 0%, #fdf2f8 52%, #f5f3ff 100%);
+    }
+    .dark .wp-cherry-daylight {
+      background:
+        radial-gradient(circle at 18% 20%, rgba(251, 113, 133, 0.34) 0%, transparent 48%),
+        radial-gradient(circle at 84% 30%, rgba(244, 114, 182, 0.32) 0%, transparent 52%),
+        linear-gradient(135deg, #290d24 0%, #4a153c 55%, #2d144d 100%);
+    }
+
+    .wp-namsan-sunny {
+      background:
+        radial-gradient(circle at 15% 18%, rgba(253, 186, 116, 0.84) 0%, transparent 46%),
+        radial-gradient(circle at 85% 24%, rgba(254, 240, 138, 0.88) 0%, transparent 50%),
+        radial-gradient(circle at 55% 84%, rgba(147, 197, 253, 0.72) 0%, transparent 58%),
+        linear-gradient(145deg, #fff7ed 0%, #fefce8 52%, #eff6ff 100%);
+    }
+    .dark .wp-namsan-sunny {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(251, 146, 60, 0.3) 0%, transparent 48%),
+        radial-gradient(circle at 82% 80%, rgba(96, 165, 250, 0.28) 0%, transparent 55%),
+        linear-gradient(145deg, #1f130c 0%, #271b2e 55%, #111c36 100%);
+    }
+
+    /* ==================== CHEERFUL KOREAN VISUAL THEMES ==================== */
+    .theme-seoul-pop .accent-btn {
+      background-image: linear-gradient(135deg, #ec4899 0%, #8b5cf6 52%, #06b6d4 100%);
+    }
+    .theme-seoul-pop .accent-chip {
+      background-color: rgba(236, 72, 153, 0.14);
+      color: #db2777;
+      border-color: rgba(236, 72, 153, 0.28);
+    }
+    .dark.theme-seoul-pop .accent-chip {
+      background-color: rgba(244, 114, 182, 0.2);
+      color: #f9a8d4;
+      border-color: rgba(244, 114, 182, 0.32);
+    }
+
+    .theme-hongdae-mint .accent-btn {
+      background-image: linear-gradient(135deg, #10b981 0%, #0ea5e9 55%, #6366f1 100%);
+    }
+    .theme-hongdae-mint .accent-chip {
+      background-color: rgba(16, 185, 129, 0.14);
+      color: #059669;
+      border-color: rgba(16, 185, 129, 0.28);
+    }
+    .dark.theme-hongdae-mint .accent-chip {
+      background-color: rgba(52, 211, 153, 0.2);
+      color: #6ee7b7;
+      border-color: rgba(52, 211, 153, 0.32);
+    }
+
+    .theme-gangnam-peach .accent-btn {
+      background-image: linear-gradient(135deg, #f97316 0%, #fb7185 55%, #eab308 100%);
+    }
+    .theme-gangnam-peach .accent-chip {
+      background-color: rgba(249, 115, 22, 0.15);
+      color: #ea580c;
+      border-color: rgba(249, 115, 22, 0.28);
+    }
+    .dark.theme-gangnam-peach .accent-chip {
+      background-color: rgba(251, 146, 60, 0.22);
+      color: #fdba74;
+      border-color: rgba(251, 146, 60, 0.32);
+    }
+
+    /* ==================== GLASSMORPHISM & FULL WORKSPACE ==================== */
+    .glass-bar {
+      backdrop-filter: blur(24px) saturate(185%);
+      -webkit-backdrop-filter: blur(24px) saturate(185%);
+    }
+
+    .mac-workspace-win {
+      backdrop-filter: blur(30px) saturate(190%);
+      -webkit-backdrop-filter: blur(30px) saturate(190%);
+      box-shadow: 0 24px 65px -14px rgba(15, 23, 42, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.72);
+      position: fixed !important;
+      top: 38px !important;
+      left: 10px !important;
+      right: 10px !important;
+      width: calc(100vw - 20px) !important;
+      height: calc(100vh - 128px) !important;
+      max-width: none !important;
+      max-height: none !important;
+      border-radius: 22px !important;
+    }
+
+    @media (min-width: 640px) {
+      .mac-workspace-win {
+        top: 40px !important;
+        left: 14px !important;
+        right: 14px !important;
+        width: calc(100vw - 28px) !important;
+        height: calc(100vh - 136px) !important;
+        border-radius: 26px !important;
+      }
+    }
+
+    .dark .mac-workspace-win {
+      box-shadow: 0 30px 75px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.14);
+    }
+
+    /* Dock Magnification */
+    .dock-app-btn {
+      transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), margin 0.22s ease;
+      transform-origin: bottom center;
+    }
+    @media (hover: hover) {
+      .dock-app-btn:hover {
+        transform: scale(1.26) translateY(-7px);
+        margin-left: 6px;
+        margin-right: 6px;
+      }
+      .dock-app-btn:hover + .dock-app-btn,
+      .dock-app-btn:has(+ .dock-app-btn:hover) {
+        transform: scale(1.12) translateY(-3px);
+        margin-left: 3px;
+        margin-right: 3px;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.45);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.75);
+    }
+  </style>
+</head>
+
+<body id="kdrama-os-body" class="wp-seoul-morning theme-seoul-pop text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+  <!-- ==================== 1. EMAIL & PASSWORD LOGIN / REGISTER GATE ==================== -->
+  <div id="auth-gate-overlay" class="fixed inset-0 z-[10050] flex items-center justify-center p-4 bg-white/45 dark:bg-slate-950/70 backdrop-blur-2xl">
+    <div class="w-full max-w-md rounded-3xl glass-bar bg-white/92 dark:bg-slate-900/92 border border-white/80 dark:border-white/15 shadow-2xl p-6 sm:p-7 space-y-5 animate-win-pop">
+
+      <!-- Brand Header -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="handleSecretBrandClick()" title="Drakorin" class="w-11 h-11 rounded-2xl accent-btn text-white flex items-center justify-center shadow-lg focus:outline-none">
+            <i class="fa-solid fa-heart text-lg"></i>
+          </button>
+          <div>
+            <h1 class="font-display font-extrabold text-lg tracking-tight leading-none">DRAKORIN</h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Masuk atau Daftar dengan Email &amp; Password</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Switch Tabs -->
+      <div class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl bg-pink-50/90 dark:bg-slate-800 border border-pink-200/60 dark:border-slate-700 text-xs font-bold">
+        <button type="button" id="auth-btn-login" onclick="switchAuthTab('login')" class="py-2 rounded-xl accent-btn text-white shadow transition">
+          Masuk
+        </button>
+        <button type="button" id="auth-btn-register" onclick="switchAuthTab('register')" class="py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition">
+          Daftar Baru
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="auth-form-login" onsubmit="processEmailPasswordLogin(event)" class="space-y-3.5">
+        <div>
+          <label for="input-login-email" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-200">Email</label>
+          <input type="email" id="input-login-email" required placeholder="nama@email.com" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+        </div>
+        <div>
+          <label for="input-login-password" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-200">Password</label>
+          <input type="password" id="input-login-password" required placeholder="Masukkan password" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+        </div>
+        <button type="submit" class="w-full py-2.5 px-4 rounded-xl accent-btn text-white text-xs font-bold shadow-md hover:opacity-95 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Masuk ke DRAKORIN</span>
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="auth-form-register" onsubmit="processEmailPasswordRegister(event)" class="hidden space-y-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div>
+            <label for="input-reg-name" class="block text-xs font-semibold mb-1">Nama Tampilan</label>
+            <input type="text" id="input-reg-name" required placeholder="Nama kamu" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          </div>
+          <div>
+            <label for="input-reg-handle" class="block text-xs font-semibold mb-1">@username</label>
+            <input type="text" id="input-reg-handle" required placeholder="@usernamekamu" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          </div>
+        </div>
+        <div>
+          <label for="input-reg-email" class="block text-xs font-semibold mb-1">Email</label>
+          <input type="email" id="input-reg-email" required placeholder="kamu@email.com" class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+        </div>
+        <div>
+          <label for="input-reg-password" class="block text-xs font-semibold mb-1">Password</label>
+          <input type="password" id="input-reg-password" required minlength="6" placeholder="Minimal 6 karakter" class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+        </div>
+        <button type="submit" class="w-full py-2.5 px-4 rounded-xl accent-btn text-white text-xs font-bold shadow-md hover:opacity-95 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Daftar &amp; Masuk</span>
+        </button>
+      </form>
+
+      <div class="pt-3 border-t border-slate-200/80 dark:border-slate-700/80 space-y-2">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-crown text-amber-500"></i> Akses Super Admin
+          </span>
+          <button type="button" onclick="openOwnerPinAccess()" class="px-3 py-1 rounded-xl accent-btn text-white text-[11px] font-bold shadow hover:opacity-95 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-key"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div id="secret-owner-modal" class="hidden fixed inset-0 z-[10070] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xl">
+    <div class="w-full max-w-xs rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/80 dark:border-white/15 shadow-2xl p-5 space-y-4 animate-win-pop">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-2">
+          <i class="fa-solid fa-crown text-amber-500"></i> Verifikasi PIN
+        </span>
+        <button type="button" onclick="closeSecretOwnerModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <form onsubmit="submitSecretOwnerPin(event)" class="space-y-3">
+        <input type="password" id="secret-owner-pin-input" inputmode="numeric" maxlength="10" autocomplete="off" required placeholder="Ketik PIN!" class="w-full px-3.5 py-2.5 rounded-xl text-center tracking-widest text-sm font-bold bg-pink-50/70 dark:bg-slate-800 border border-pink-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+        <button type="submit" class="w-full py-2 rounded-xl accent-btn text-white text-xs font-bold shadow">
+          Masuk Sebagai Super Admin
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== 2. TOP MENU BAR (macOS) ==================== -->
+  <header class="glass-bar fixed top-0 left-0 right-0 h-8 px-3 sm:px-4 z-[9990] flex items-center justify-between text-xs font-medium bg-white/75 dark:bg-slate-900/80 border-b border-white/70 dark:border-white/10 text-slate-800 dark:text-slate-100">
+    <!-- Left -->
+    <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+      <button type="button" onclick="openOwnerPinAccess()" title="Akses Owner" class="flex items-center gap-1.5 font-bold hover:opacity-80 transition focus:outline-none">
+        <i class="fa-brands fa-apple text-sm text-pink-500"></i>
+      </button>
+      <span id="top-active-app-label" class="font-bold tracking-tight truncate">Desktop</span>
+      <nav class="hidden md:flex items-center gap-3 text-slate-600 dark:text-slate-300">
+        <button type="button" onclick="openAppWindow('library')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Koleksi</button>
+        <button type="button" onclick="openAppWindow('playlists')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Watching List</button>
+        <button type="button" onclick="openAppWindow('add')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">+ Tambah Drama</button>
+        <button type="button" onclick="openAppWindow('community')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Komunitas</button>
+        <button type="button" onclick="openAppWindow('friends')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Teman</button>
+        <button type="button" onclick="openAppWindow('settings')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Profil &amp; Tema</button>
+      </nav>
+    </div>
+
+    <!-- Right -->
+    <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+      <span id="cloud-sync-pill" class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border accent-chip">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Cloud Sync
+      </span>
+
+      <button type="button" onclick="openAppWindow('settings')" class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/80 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 border border-pink-200/60 dark:border-white/10 transition">
+        <img id="top-user-avatar" src="" alt="Avatar" class="w-4 h-4 rounded-full object-cover bg-white" />
+        <span id="top-user-handle" class="text-[11px] font-semibold max-w-[95px] truncate">@username</span>
+      </button>
+
+      <button type="button" onclick="toggleBrightnessMode()" title="Mode Terang / Gelap" class="p-1 rounded-md hover:bg-black/10 dark:hover:bg-white/15 transition">
+        <i id="top-dark-icon" class="fa-solid fa-moon text-xs"></i>
+      </button>
+
+      <span id="top-live-clock" class="text-[11px] font-semibold tabular-nums">Sen 23 Nov 15:30</span>
+    </div>
+  </header>
+
+  <!-- ==================== 3. BRIGHT SEOUL DESKTOP WORKSPACE ==================== -->
+  <main id="seoul-desktop-main" class="relative w-full h-full pt-10 pb-24 px-4 sm:px-6 overflow-hidden">
+
+    <!-- Desktop Shortcuts -->
+    <div class="flex flex-row sm:flex-col flex-wrap gap-3.5 sm:gap-5 items-start mt-1 sm:mt-2 sm:w-24">
+      <button type="button" onclick="openAppWindow('library')" class="group flex flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/35 dark:hover:bg-white/10 transition focus:outline-none">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
+          <i class="fa-solid fa-clapperboard"></i>
+        </div>
+        <span class="mt-1.5 text-[11px] font-bold text-slate-800 dark:text-white bg-white/75 dark:bg-slate-900/70 px-2 py-0.5 rounded-full shadow-sm leading-tight">Koleksi</span>
+      </button>
+
+      <button type="button" onclick="openAppWindow('playlists')" class="group flex flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/35 dark:hover:bg-white/10 transition focus:outline-none">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-fuchsia-400 to-pink-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
+          <i class="fa-solid fa-list-ul"></i>
+        </div>
+        <span class="mt-1.5 text-[11px] font-bold text-slate-800 dark:text-white bg-white/75 dark:bg-slate-900/70 px-2 py-0.5 rounded-full shadow-sm leading-tight">Playlist</span>
+      </button>
+
+      <button type="button" onclick="openAppWindow('add')" class="group flex flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/35 dark:hover:bg-white/10 transition focus:outline-none">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <span class="mt-1.5 text-[11px] font-bold text-slate-800 dark:text-white bg-white/75 dark:bg-slate-900/70 px-2 py-0.5 rounded-full shadow-sm leading-tight">+ Drama</span>
+      </button>
+
+      <button type="button" onclick="openAppWindow('community')" class="group flex flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/35 dark:hover:bg-white/10 transition focus:outline-none">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
+          <i class="fa-solid fa-comments"></i>
+        </div>
+        <span class="mt-1.5 text-[11px] font-bold text-slate-800 dark:text-white bg-white/75 dark:bg-slate-900/70 px-2 py-0.5 rounded-full shadow-sm leading-tight">Komunitas</span>
+      </button>
+
+      <button type="button" onclick="openAppWindow('friends')" class="group flex flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/35 dark:hover:bg-white/10 transition focus:outline-none">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
+          <i class="fa-solid fa-user-group"></i>
+        </div>
+        <span class="mt-1.5 text-[11px] font-bold text-slate-800 dark:text-white bg-white/75 dark:bg-slate-900/70 px-2 py-0.5 rounded-full shadow-sm leading-tight">Teman</span>
+      </button>
+
+      <button type="button" onclick="openAppWindow('settings')" class="group flex flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/35 dark:hover:bg-white/10 transition focus:outline-none">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-pink-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
+          <i class="fa-solid fa-palette"></i>
+        </div>
+        <span class="mt-1.5 text-[11px] font-bold text-slate-800 dark:text-white bg-white/75 dark:bg-slate-900/70 px-2 py-0.5 rounded-full shadow-sm leading-tight">Tema &amp; Profil</span>
+      </button>
+    </div>
+
+    <!-- Desktop Profile & Top 3 Favorites Widget -->
+    <aside class="hidden lg:block animate-float-card fixed top-12 right-5 w-80 p-4 rounded-3xl glass-bar bg-white/88 dark:bg-slate-900/88 border border-white/85 dark:border-white/15 shadow-2xl z-10">
+      <div class="flex items-center gap-3 mb-3">
+        <img id="widget-profile-avatar" src="" alt="Foto Profil" class="w-12 h-12 rounded-2xl object-cover border-2 border-pink-300 dark:border-slate-700 shadow bg-white shrink-0" />
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-1.5">
+            <h2 id="widget-profile-name" class="font-bold text-sm truncate">Pengguna</h2>
+            <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold border accent-chip">K-Fan</span>
+          </div>
+          <p id="widget-profile-handle" class="text-xs font-semibold text-pink-600 dark:text-pink-400 truncate">@username</p>
+          <p id="widget-profile-bio" class="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">Pecinta K-Drama &amp; Film</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mb-3 text-center">
+        <button type="button" onclick="openAppWindow('library')" class="p-2 rounded-2xl bg-pink-50/90 dark:bg-slate-800/80 hover:bg-pink-100/80 dark:hover:bg-slate-700/80 border border-pink-200/60 dark:border-slate-700 transition">
+          <span id="widget-count-posts" class="block font-extrabold text-sm text-pink-600 dark:text-pink-400">0</span>
+          <span class="text-[10px] font-medium text-slate-500 dark:text-slate-400">Drama Diulas</span>
+        </button>
+        <button type="button" onclick="openAppWindow('friends')" class="p-2 rounded-2xl bg-sky-50/90 dark:bg-slate-800/80 hover:bg-sky-100/80 dark:hover:bg-slate-700/80 border border-sky-200/60 dark:border-slate-700 transition">
+          <span id="widget-count-friends" class="block font-extrabold text-sm text-sky-600 dark:text-sky-400">0</span>
+          <span class="text-[10px] font-medium text-slate-500 dark:text-slate-400">Teman</span>
+        </button>
+      </div>
+
+      <div class="pt-2.5 border-t border-slate-200/80 dark:border-slate-700/80">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400">
+            <i class="fa-solid fa-heart mr-1"></i>Top 3 Drama Favorit
+          </span>
+          <button type="button" onclick="openAppWindow('settings')" class="text-[10px] font-semibold text-slate-500 hover:underline">Edit</button>
+        </div>
+        <div id="widget-top3-favorites" class="space-y-1.5 text-xs"></div>
+      </div>
+    </aside>
+
+    <!-- ==================== WINDOW 1: KOLEKSI DRAMA & FILM ==================== -->
+    <section id="win-library" class="hidden mac-workspace-win bg-white/92 dark:bg-slate-900/92 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
+      <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeAppWindow('library')" title="Tutup" class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:brightness-90 flex items-center justify-center text-[9px] text-black/75 transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e]/90"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></span>
+        </div>
+        <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
+          <i class="fa-solid fa-clapperboard text-pink-500"></i>
+          <span>Koleksi K-Drama &amp; Film</span>
+        </div>
+        <button type="button" onclick="openAppWindow('add')" class="px-3 py-1.5 rounded-xl accent-btn text-white text-xs font-bold shadow hover:opacity-95 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-plus"></i><span>Tambah</span>
+        </button>
+      </div>
+
+      <!-- Filter & Search -->
+      <div class="p-3.5 border-b border-slate-200/75 dark:border-slate-800/75 flex flex-wrap items-center justify-between gap-2.5 bg-pink-50/45 dark:bg-slate-900/45 shrink-0">
+        <div class="flex flex-wrap items-center gap-1.5">
+          <button type="button" id="filter-chip-all" onclick="setLibraryFilterMode('all')" class="px-3 py-1.5 rounded-xl text-xs font-bold accent-btn text-white shadow">Semua</button>
+          <button type="button" id="filter-chip-mine" onclick="setLibraryFilterMode('mine')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/85 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">Punyamu</button>
+          <button type="button" id="filter-chip-friends" onclick="setLibraryFilterMode('friends')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/85 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">Teman</button>
+          <button type="button" id="filter-chip-fav" onclick="setLibraryFilterMode('fav')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/85 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">Favorit</button>
+        </div>
+
+        <div class="flex items-center gap-2 flex-1 sm:flex-initial min-w-[210px]">
+          <div class="relative flex-1">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+            <input type="text" id="library-search-query" oninput="renderLibraryCollection()" placeholder="Cari judul, genre, @username..." class="w-full pl-8 pr-3 py-1.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          </div>
+          <select id="library-sort-mode" onchange="renderLibraryCollection()" class="px-2.5 py-1.5 rounded-xl text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none">
+            <option value="newest">Terbaru</option>
+            <option value="rating">Rating Tertinggi</option>
+            <option value="title">Judul (A-Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div id="library-collection-grid" class="flex-1 overflow-y-auto p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 content-start"></div>
+    </section>
+
+    <!-- ==================== WINDOW 1B: CUSTOM WATCHING LISTS / PLAYLISTS ==================== -->
+    <section id="win-playlists" class="hidden mac-workspace-win bg-white/94 dark:bg-slate-900/94 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
+      <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeAppWindow('playlists')" title="Tutup" class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:brightness-90 flex items-center justify-center text-[9px] text-black/75 transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e]/90"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></span>
+        </div>
+        <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
+          <i class="fa-solid fa-list-ul text-pink-500"></i>
+          <span>Watching List / Playlist Kustom</span>
+        </div>
+        <div class="w-10"></div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Left: Create / Edit Custom Playlist -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="p-4 sm:p-5 rounded-2xl bg-pink-50/75 dark:bg-slate-800/85 border border-pink-200/75 dark:border-slate-700 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 id="playlist-form-heading" class="text-xs font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400">
+                  Buat Watching List Baru
+                </h3>
+                <button type="button" id="playlist-cancel-edit-btn" onclick="cancelEditPlaylist()" class="hidden text-[11px] font-semibold text-slate-500 hover:underline">
+                  Batal Edit
+                </button>
+              </div>
+
+              <input type="hidden" id="playlist-edit-id" value="" />
+
+              <div>
+                <label for="playlist-title-input" class="block text-xs font-bold mb-1">Judul Playlist</label>
+                <input type="text" id="playlist-title-input" placeholder="Contoh: Marathon Akhir Pekan, Rom-Com Bikin Senyum" class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+              </div>
+
+              <div>
+                <label for="playlist-desc-input" class="block text-xs font-bold mb-1">Deskripsi Playlist</label>
+                <textarea id="playlist-desc-input" rows="2" placeholder="Tulis tema, mood, atau catatan playlist kamu..." class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
+              </div>
+
+              <button type="button" onclick="saveCustomPlaylist()" class="w-full py-2.5 px-4 rounded-xl accent-btn text-white text-xs font-bold shadow hover:opacity-95 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-folder-plus"></i>
+                <span id="playlist-submit-label">Simpan Watching List</span>
+              </button>
+            </div>
+
+            <!-- Playlists List -->
+            <div class="p-4 rounded-2xl bg-sky-50/70 dark:bg-slate-800/85 border border-sky-200/70 dark:border-slate-700 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Daftar Playlist Kamu</h3>
+                <span id="playlists-count-badge" class="text-[11px] font-bold text-pink-600 dark:text-pink-400">0 Playlist</span>
+              </div>
+              <div id="custom-playlists-list" class="space-y-2.5"></div>
+            </div>
+          </div>
+
+          <!-- Right: Active Playlist Items & Quick Add Drama -->
+          <div class="lg:col-span-7 space-y-4">
+            <div id="active-playlist-detail-card" class="p-5 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-pink-200/80 dark:border-slate-700 shadow-sm space-y-4">
+              <p class="text-xs text-slate-500">Memuat watching list...</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WINDOW 2: TAMBAH DRAMA & AUTO-LOOKUP ==================== -->
+    <section id="win-add" class="hidden mac-workspace-win bg-white/94 dark:bg-slate-900/94 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
+      <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeAppWindow('add')" title="Tutup" class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:brightness-90 flex items-center justify-center text-[9px] text-black/75 transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e]/90"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></span>
+        </div>
+        <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
+          <i class="fa-solid fa-wand-magic-sparkles text-pink-500"></i>
+          <span>Tambah Drama / Film — Auto-Poster &amp; Sinopsis</span>
+        </div>
+        <div class="w-10"></div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Left: Title Lookup & Poster Cover -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="relative">
+              <label for="drama-auto-search" class="block text-xs font-bold mb-1.5">1. Ketik atau Pilih Judul Drama / Film</label>
+              <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="drama-auto-search" oninput="onDramaSearchInput(this.value)" placeholder="Contoh: Queen of Tears, Lovely Runner, Moving, Crash Landing..." class="w-full pl-9 pr-9 py-2.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+                <span id="drama-lookup-spinner" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-pink-500 text-xs">
+                  <i class="fa-solid fa-spinner fa-spin"></i>
+                </span>
+              </div>
+              <div id="drama-search-suggestions" class="hidden absolute left-0 right-0 mt-1.5 max-h-64 overflow-y-auto rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-2xl z-40 divide-y divide-slate-100 dark:divide-slate-700/70"></div>
+            </div>
+
+            <!-- Poster Box -->
+            <div class="p-4 rounded-2xl bg-pink-50/70 dark:bg-slate-800/80 border border-pink-200/70 dark:border-slate-700 space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold">Poster Sampul</span>
+                <button type="button" onclick="syncPosterAutomatically()" class="px-2.5 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-700 dark:text-sky-300 text-[11px] font-bold transition flex items-center gap-1">
+                  <i class="fa-solid fa-rotate"></i> Sinkron Poster Otomatis
+                </button>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <img id="form-drama-poster-img" src="" alt="Poster Drama" class="w-28 h-40 rounded-2xl object-cover shadow-lg bg-slate-200 dark:bg-slate-700 shrink-0 border border-white" />
+                <div class="flex-1 space-y-2">
+                  <label class="w-full py-2 px-3 rounded-xl bg-white dark:bg-slate-900 hover:bg-pink-50 dark:hover:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold cursor-pointer transition flex items-center justify-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-upload text-pink-500"></i>
+                    <span>Upload Poster Sendiri</span>
+                    <input type="file" id="form-poster-upload" accept="image/*" onchange="onCustomPosterUpload(event)" class="hidden" />
+                  </label>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
+                    Poster &amp; sinopsis otomatis terisi saat mengetik judul. Kamu juga bebas upload poster sendiri atau klik <b>Sinkron Poster Otomatis</b>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Metadata, Rating, Review & Screenshot -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="p-4 rounded-2xl bg-sky-50/60 dark:bg-slate-800/80 border border-sky-200/70 dark:border-slate-700 space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
+                <div class="sm:col-span-2">
+                  <label for="form-drama-title" class="block text-[11px] font-bold mb-1">Judul</label>
+                  <input type="text" id="form-drama-title" oninput="onManualTitleChange(this.value)" placeholder="Judul drama atau film" class="w-full px-3 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                </div>
+                <div>
+                  <label for="form-drama-year" class="block text-[11px] font-bold mb-1">Tahun</label>
+                  <input type="text" id="form-drama-year" placeholder="2024" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                </div>
+                <div>
+                  <label for="form-drama-genre" class="block text-[11px] font-bold mb-1">Genre</label>
+                  <input type="text" id="form-drama-genre" placeholder="Romansa, Drama" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                </div>
+              </div>
+
+              <div>
+                <label for="form-drama-synopsis" class="block text-[11px] font-bold mb-1">Sinopsis Otomatis</label>
+                <textarea id="form-drama-synopsis" rows="3" placeholder="Sinopsis otomatis muncul saat judul dipilih atau diketik..." class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 leading-relaxed"></textarea>
+              </div>
+            </div>
+
+            <!-- Rating & Favorite -->
+            <div class="flex flex-wrap items-center justify-between gap-3 px-1">
+              <div>
+                <span class="block text-xs font-bold mb-1">2. Rating (1 - 5 Bintang)</span>
+                <div id="form-star-group" class="flex items-center gap-1.5 text-xl">
+                  <button type="button" onclick="setReviewRating(1)" class="form-star text-amber-400 transition hover:scale-110"><i class="fa-solid fa-star"></i></button>
+                  <button type="button" onclick="setReviewRating(2)" class="form-star text-amber-400 transition hover:scale-110"><i class="fa-solid fa-star"></i></button>
+                  <button type="button" onclick="setReviewRating(3)" class="form-star text-amber-400 transition hover:scale-110"><i class="fa-solid fa-star"></i></button>
+                  <button type="button" onclick="setReviewRating(4)" class="form-star text-amber-400 transition hover:scale-110"><i class="fa-solid fa-star"></i></button>
+                  <button type="button" onclick="setReviewRating(5)" class="form-star text-amber-400 transition hover:scale-110"><i class="fa-solid fa-star"></i></button>
+                  <span id="form-rating-label" class="ml-2 text-xs font-bold text-amber-500">5 / 5</span>
+                </div>
+              </div>
+
+              <label class="inline-flex items-center gap-2 cursor-pointer px-3.5 py-2 rounded-xl bg-pink-500/10 border border-pink-500/25">
+                <input type="checkbox" id="form-drama-favorite" class="rounded text-pink-500" />
+                <span class="text-xs font-bold text-pink-600 dark:text-pink-400"><i class="fa-solid fa-heart mr-1"></i>Tandai Favorit</span>
+              </label>
+            </div>
+
+            <!-- Review -->
+            <div>
+              <label for="form-drama-review" class="block text-xs font-bold mb-1">3. Review Kamu</label>
+              <textarea id="form-drama-review" rows="3" placeholder="Ceritakan kesan nonton, adegan seru, atau rekomendasi untuk komunitas..." class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
+            </div>
+
+            <!-- Screenshot Attachment -->
+            <div>
+              <span class="block text-xs font-bold mb-1">4. Foto / Screenshot Adegan (Opsional)</span>
+              <div class="flex items-center gap-3">
+                <label class="px-3.5 py-2 rounded-xl bg-pink-100/80 dark:bg-slate-800 hover:bg-pink-200/70 dark:hover:bg-slate-700 text-xs font-semibold cursor-pointer transition flex items-center gap-2 border border-pink-200/70 dark:border-slate-700">
+                  <i class="fa-solid fa-camera text-pink-500"></i>
+                  <span>Tambah Screenshot</span>
+                  <input type="file" id="form-screenshot-upload" accept="image/*" onchange="onScreenshotUpload(event)" class="hidden" />
+                </label>
+                <div id="form-screenshot-preview-box" class="hidden relative">
+                  <img id="form-screenshot-preview-img" src="" alt="Screenshot" class="h-16 rounded-xl object-cover border border-slate-300 dark:border-slate-700" />
+                  <button type="button" onclick="removeScreenshotAttachment()" class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-rose-500 text-white text-[10px] flex items-center justify-center shadow">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-1 flex justify-end">
+              <button type="button" onclick="publishDramaReview()" class="px-6 py-2.5 rounded-xl accent-btn text-white text-xs font-bold shadow-lg hover:opacity-95 transition flex items-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Simpan &amp; Bagikan</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WINDOW 3: KOMUNITAS TERBUKA ==================== -->
+    <section id="win-community" class="hidden mac-workspace-win bg-white/92 dark:bg-slate-900/92 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
+      <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeAppWindow('community')" title="Tutup" class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:brightness-90 flex items-center justify-center text-[9px] text-black/75 transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e]/90"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></span>
+        </div>
+        <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
+          <i class="fa-solid fa-comments text-pink-500"></i>
+          <span>Komunitas — Suka &amp; Komentar Terbuka</span>
+        </div>
+        <button type="button" onclick="openAppWindow('add')" class="px-3 py-1.5 rounded-xl accent-btn text-white text-xs font-bold shadow">+ Review</button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+        <div id="community-feed-list" class="max-w-4xl mx-auto space-y-5"></div>
+      </div>
+    </section>
+
+    <!-- ==================== WINDOW 4: TEMAN (@USERNAME) ==================== -->
+    <section id="win-friends" class="hidden mac-workspace-win bg-white/92 dark:bg-slate-900/92 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
+      <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeAppWindow('friends')" title="Tutup" class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:brightness-90 flex items-center justify-center text-[9px] text-black/75 transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e]/90"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></span>
+        </div>
+        <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
+          <i class="fa-solid fa-user-group text-violet-500"></i>
+          <span>Teman (@username)</span>
+        </div>
+        <div class="w-10"></div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Search / Add Friend + Friends List -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="p-4 rounded-2xl bg-pink-50/70 dark:bg-slate-800/80 border border-pink-200/70 dark:border-slate-700 space-y-3">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400">Cari &amp; Tambah Teman (@username)</h3>
+              <div class="flex gap-2">
+                <input type="text" id="friend-handle-search" oninput="renderFriendsDirectoryList()" onkeydown="if(event.key==='Enter') addFriendByHandle()" placeholder="Ketik @username..." class="flex-1 px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+                <button type="button" onclick="addFriendByHandle()" class="px-4 py-2 rounded-xl accent-btn text-white text-xs font-bold shadow">
+                  Tambah
+                </button>
+              </div>
+              <div id="friends-directory-list" class="space-y-2 pt-1"></div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-sky-50/60 dark:bg-slate-800/80 border border-sky-200/70 dark:border-slate-700 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Daftar Teman Kamu</h3>
+                <span id="friends-total-badge" class="text-xs font-bold text-pink-600 dark:text-pink-400">0</span>
+              </div>
+              <div id="friends-added-list" class="space-y-2"></div>
+            </div>
+          </div>
+
+          <!-- Highlighted Friends Posts -->
+          <div class="lg:col-span-7 space-y-3.5">
+            <div class="p-3.5 rounded-2xl bg-gradient-to-r from-pink-500/15 via-violet-500/15 to-sky-500/15 border border-pink-300/40 dark:border-white/10 flex items-center justify-between">
+              <div>
+                <h3 class="text-xs font-bold">Postingan Pilihan dari Teman</h3>
+                <p class="text-[11px] text-slate-600 dark:text-slate-300">Drama &amp; review terbaru dari teman yang kamu tambahkan lewat @username.</p>
+              </div>
+              <i class="fa-solid fa-sparkles text-pink-500 text-lg"></i>
+            </div>
+            <div id="friends-highlighted-feed" class="space-y-4"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WINDOW 5: PROFIL, TEMA & WALLPAPER ==================== -->
+    <section id="win-settings" class="hidden mac-workspace-win bg-white/94 dark:bg-slate-900/94 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
+      <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeAppWindow('settings')" title="Tutup" class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:brightness-90 flex items-center justify-center text-[9px] text-black/75 transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e]/90"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></span>
+        </div>
+        <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
+          <i class="fa-solid fa-palette text-pink-500"></i>
+          <span>Profil, Tema &amp; Wallpaper</span>
+        </div>
+        <button type="button" onclick="signOutAccount()" class="px-3 py-1 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 text-xs font-bold transition">
+          Keluar
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Profile & Favorites Editor -->
+          <div class="lg:col-span-7 p-5 rounded-2xl bg-pink-50/65 dark:bg-slate-800/80 border border-pink-200/70 dark:border-slate-700 space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Profil &amp; Top 3 Drama Favorit</h3>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+              <div class="relative group shrink-0">
+                <img id="settings-avatar-preview" src="" alt="Foto Profil" class="w-24 h-24 rounded-2xl object-cover border-2 border-white dark:border-slate-700 shadow bg-white" />
+                <label class="absolute inset-0 rounded-2xl bg-black/55 text-white text-[11px] font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition">
+                  Ganti Foto
+                  <input type="file" accept="image/*" onchange="onProfileAvatarChange(event)" class="hidden" />
+                </label>
+              </div>
+
+              <div class="flex-1 w-full space-y-2.5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label for="settings-display-name" class="block text-[11px] font-bold mb-1">Nama Tampilan</label>
+                    <input type="text" id="settings-display-name" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                  </div>
+                  <div>
+                    <label for="settings-user-handle" class="block text-[11px] font-bold mb-1">@username</label>
+                    <input type="text" id="settings-user-handle" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                  </div>
+                </div>
+                <div>
+                  <label for="settings-user-bio" class="block text-[11px] font-bold mb-1">Bio</label>
+                  <input type="text" id="settings-user-bio" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span class="block text-xs font-bold mb-1.5 text-pink-600 dark:text-pink-400">Top 3 Drama Favorit (Tampil di Widget Desktop)</span>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <input type="text" id="settings-fav-1" placeholder="Favorit #1" class="px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                <input type="text" id="settings-fav-2" placeholder="Favorit #2" class="px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+                <input type="text" id="settings-fav-3" placeholder="Favorit #3" class="px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+            </div>
+
+            <div class="flex justify-end pt-1">
+              <button type="button" onclick="saveProfileSettings()" class="px-5 py-2.5 rounded-xl accent-btn text-white text-xs font-bold shadow-lg hover:opacity-95 transition">
+                Simpan Profil
+              </button>
+            </div>
+          </div>
+
+          <!-- Theme & Wallpaper Customizer -->
+          <div class="lg:col-span-5 p-5 rounded-2xl bg-sky-50/60 dark:bg-slate-800/80 border border-sky-200/70 dark:border-slate-700 space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Tema &amp; Wallpaper</h3>
+
+            <!-- Visual Themes -->
+            <div class="space-y-2">
+              <span class="block text-xs font-bold">Tema Warna</span>
+              <div class="grid grid-cols-1 gap-2 text-xs font-semibold">
+                <button type="button" onclick="setCheerfulTheme('theme-seoul-pop')" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/85 dark:bg-slate-900/85 hover:border-pink-400 flex items-center justify-between">
+                  <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-gradient-to-r from-pink-500 to-cyan-400"></span> Seoul Pop</span>
+                  <span id="theme-check-theme-seoul-pop" class="text-pink-500 text-xs"></span>
+                </button>
+                <button type="button" onclick="setCheerfulTheme('theme-hongdae-mint')" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/85 dark:bg-slate-900/85 hover:border-emerald-400 flex items-center justify-between">
+                  <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-gradient-to-r from-emerald-400 to-indigo-500"></span> Hongdae Mint</span>
+                  <span id="theme-check-theme-hongdae-mint" class="text-emerald-500 text-xs"></span>
+                </button>
+                <button type="button" onclick="setCheerfulTheme('theme-gangnam-peach')" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/85 dark:bg-slate-900/85 hover:border-orange-400 flex items-center justify-between">
+                  <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-gradient-to-r from-orange-400 to-yellow-400"></span> Gangnam Peach</span>
+                  <span id="theme-check-theme-gangnam-peach" class="text-orange-500 text-xs"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Preset Wallpapers -->
+            <div class="space-y-2">
+              <span class="block text-xs font-bold">Wallpaper Ceria</span>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="setDesktopWallpaper('wp-seoul-morning')" class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-left">
+                  <div class="w-full h-10 rounded-lg wp-seoul-morning mb-1 border border-white/70"></div>
+                  <span class="text-[11px] font-semibold">Seoul Morning</span>
+                </button>
+                <button type="button" onclick="setDesktopWallpaper('wp-han-daylight')" class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-left">
+                  <div class="w-full h-10 rounded-lg wp-han-daylight mb-1 border border-white/70"></div>
+                  <span class="text-[11px] font-semibold">Han Daylight</span>
+                </button>
+                <button type="button" onclick="setDesktopWallpaper('wp-cherry-daylight')" class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-left">
+                  <div class="w-full h-10 rounded-lg wp-cherry-daylight mb-1 border border-white/70"></div>
+                  <span class="text-[11px] font-semibold">Cherry Blossom</span>
+                </button>
+                <button type="button" onclick="setDesktopWallpaper('wp-namsan-sunny')" class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-left">
+                  <div class="w-full h-10 rounded-lg wp-namsan-sunny mb-1 border border-white/70"></div>
+                  <span class="text-[11px] font-semibold">Namsan Sunny</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Upload & Delete Custom Wallpaper -->
+            <div class="pt-2 border-t border-slate-200 dark:border-slate-700 space-y-2">
+              <span class="block text-xs font-bold">Wallpaper Upload Sendiri</span>
+              <p id="wallpaper-upload-status" class="text-[11px] text-slate-500 dark:text-slate-400">Belum ada gambar wallpaper kustom.</p>
+              <div class="flex items-center gap-2">
+                <label class="flex-1 py-2 px-3 rounded-xl accent-btn text-white text-xs font-bold text-center cursor-pointer shadow hover:opacity-95 transition">
+                  <i class="fa-solid fa-image mr-1.5"></i>Upload Wallpaper
+                  <input type="file" accept="image/*" onchange="onCustomWallpaperUpload(event)" class="hidden" />
+                </label>
+                <button type="button" id="btn-delete-wallpaper" onclick="removeCustomWallpaper()" class="hidden py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 text-xs font-bold transition">
+                  <i class="fa-solid fa-trash mr-1"></i>Hapus
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== DETAIL MODAL ==================== -->
+    <div id="drama-detail-overlay" class="hidden fixed inset-0 z-[10020] flex items-center justify-center p-4 bg-slate-950/55 backdrop-blur-md">
+      <div class="w-full max-w-2xl max-h-[86vh] rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/80 dark:border-white/15 shadow-2xl flex flex-col overflow-hidden animate-win-pop">
+        <div class="h-11 px-4 flex items-center justify-between bg-pink-50/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 shrink-0">
+          <span id="detail-overlay-title" class="text-xs font-bold truncate">Detail Drama / Film</span>
+          <button type="button" onclick="closeDramaDetailOverlay()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-sm">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div id="detail-overlay-body" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== 4. FLOATING macOS DOCK ==================== -->
+  <div class="fixed bottom-3 left-1/2 -translate-x-1/2 z-[9990] max-w-[96vw]">
+    <div class="glass-bar px-3.5 py-2 rounded-3xl bg-white/75 dark:bg-slate-900/75 border border-white/85 dark:border-white/15 shadow-2xl flex items-end gap-2.5 sm:gap-3.5">
+
+      <button type="button" onclick="openAppWindow('library')" class="dock-app-btn group relative flex flex-col items-center focus:outline-none">
+        <span class="hidden sm:block absolute -top-8 px-2.5 py-0.5 rounded-lg bg-slate-900/90 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Koleksi</span>
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 text-white flex items-center justify-center text-lg shadow-lg border border-white/50">
+          <i class="fa-solid fa-clapperboard"></i>
+        </div>
+        <span id="dock-indicator-library" class="w-1.5 h-1.5 rounded-full bg-transparent mt-1"></span>
+      </button>
+
+      <button type="button" onclick="openAppWindow('playlists')" class="dock-app-btn group relative flex flex-col items-center focus:outline-none">
+        <span class="hidden sm:block absolute -top-8 px-2.5 py-0.5 rounded-lg bg-slate-900/90 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Watching List</span>
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-fuchsia-400 to-pink-500 text-white flex items-center justify-center text-lg shadow-lg border border-white/50">
+          <i class="fa-solid fa-list-ul"></i>
+        </div>
+        <span id="dock-indicator-playlists" class="w-1.5 h-1.5 rounded-full bg-transparent mt-1"></span>
+      </button>
+
+      <button type="button" onclick="openAppWindow('add')" class="dock-app-btn group relative flex flex-col items-center focus:outline-none">
+        <span class="hidden sm:block absolute -top-8 px-2.5 py-0.5 rounded-lg bg-slate-900/90 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">+ Tambah Drama</span>
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center text-lg shadow-lg border border-white/50">
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <span id="dock-indicator-add" class="w-1.5 h-1.5 rounded-full bg-transparent mt-1"></span>
+      </button>
+
+      <button type="button" onclick="openAppWindow('community')" class="dock-app-btn group relative flex flex-col items-center focus:outline-none">
+        <span class="hidden sm:block absolute -top-8 px-2.5 py-0.5 rounded-lg bg-slate-900/90 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Komunitas</span>
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 text-white flex items-center justify-center text-lg shadow-lg border border-white/50">
+          <i class="fa-solid fa-comments"></i>
+        </div>
+        <span id="dock-indicator-community" class="w-1.5 h-1.5 rounded-full bg-transparent mt-1"></span>
+      </button>
+
+      <button type="button" onclick="openAppWindow('friends')" class="dock-app-btn group relative flex flex-col items-center focus:outline-none">
+        <span class="hidden sm:block absolute -top-8 px-2.5 py-0.5 rounded-lg bg-slate-900/90 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Teman (@username)</span>
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-500 text-white flex items-center justify-center text-lg shadow-lg border border-white/50">
+          <i class="fa-solid fa-user-group"></i>
+        </div>
+        <span id="dock-indicator-friends" class="w-1.5 h-1.5 rounded-full bg-transparent mt-1"></span>
+      </button>
+
+      <div class="w-[1px] h-9 bg-slate-400/40 dark:bg-white/20 self-center mx-0.5"></div>
+
+      <button type="button" onclick="openAppWindow('settings')" class="dock-app-btn group relative flex flex-col items-center focus:outline-none">
+        <span class="hidden sm:block absolute -top-8 px-2.5 py-0.5 rounded-lg bg-slate-900/90 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Profil &amp; Tema</span>
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-pink-500 text-white flex items-center justify-center text-lg shadow-lg border border-white/50">
+          <i class="fa-solid fa-palette"></i>
+        </div>
+        <span id="dock-indicator-settings" class="w-1.5 h-1.5 rounded-full bg-transparent mt-1"></span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Toast Area -->
+  <div id="os-toast-container" class="fixed top-11 right-4 z-[10080] space-y-2 pointer-events-none"></div>
+
+  <!-- ==================== FIREBASE v13.4.0 & APP ENGINE ==================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      setDoc,
+      getDoc,
+      getDocs,
+      addDoc,
+      updateDoc,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCsVXdXmMBNCQuIrfXMJeHN66OAIsThSOg",
+      authDomain: "kdrama-os.firebaseapp.com",
+      projectId: "kdrama-os",
+      storageBucket: "kdrama-os.firebasestorage.app",
+      messagingSenderId: "155346177779",
+      appId: "1:155346177779:web:19b2c8437fe1857fc4f186"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const OWNER_PIN = "261213";
+    const KEYS = {
+      ACCOUNTS: "kdrama_os_seoul_accounts_v1",
+      POSTS: "kdrama_os_seoul_posts_v1",
+      PLAYLISTS: "kdrama_os_seoul_playlists_v1",
+      SESSION_EMAIL: "kdrama_os_seoul_session_email_v1",
+      THEME: "kdrama_os_seoul_theme_v1",
+      WALLPAPER: "kdrama_os_seoul_wp_v1",
+      CUSTOM_WP: "kdrama_os_seoul_custom_wp_v1",
+      DARK: "kdrama_os_seoul_dark_v1"
+    };
+
+    function createPosterArtwork(title, genre) {
+      const safeTitle = String(title || "K-Drama").slice(0, 26).replace(/[<>&"]/g, "");
+      const safeGenre = String(genre || "Seoul Series").slice(0, 24).replace(/[<>&"]/g, "");
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="580" viewBox="0 0 400 580">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f472b6"/>
+            <stop offset="52%" stop-color="#a855f7"/>
+            <stop offset="100%" stop-color="#38bdf8"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="580" fill="url(#bg)"/>
+        <circle cx="330" cy="105" r="95" fill="rgba(255,255,255,0.2)"/>
+        <circle cx="75" cy="495" r="110" fill="rgba(255,255,255,0.16)"/>
+        <rect x="28" y="205" width="344" height="182" rx="24" fill="rgba(255,255,255,0.88)"/>
+        <text x="200" y="272" text-anchor="middle" fill="#1e1b4b" font-family="Poppins, Arial, sans-serif" font-size="22" font-weight="700">${safeTitle}</text>
+        <text x="200" y="314" text-anchor="middle" fill="#6d28d9" font-family="Poppins, Arial, sans-serif" font-size="13" font-weight="600">${safeGenre}</text>
+        <text x="200" y="356" text-anchor="middle" fill="#db2777" font-family="Poppins, Arial, sans-serif" font-size="12" font-weight="700">K-DRAMA OS • SEOUL</text>
+      </svg>`;
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    function createAvatarArtwork(name) {
+      const initials = String(name || "KD")
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map((part) => (part[0] ? part[0].toUpperCase() : ""))
+        .join("") || "KD";
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+        <defs>
+          <linearGradient id="av" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ec4899"/>
+            <stop offset="100%" stop-color="#38bdf8"/>
+          </linearGradient>
+        </defs>
+        <rect width="160" height="160" rx="38" fill="url(#av)"/>
+        <text x="80" y="96" text-anchor="middle" fill="#ffffff" font-family="Poppins, Arial, sans-serif" font-size="52" font-weight="700">${initials}</text>
+      </svg>`;
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    const BUILTIN_DRAMAS = [
+      {
+        title: "Queen of Tears",
+        year: "2024",
+        genre: "Romansa, Drama, Komedi",
+        poster: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=500&q=80",
+        synopsis: "Hong Hae-in, ratu department store yang tegas, dan Baek Hyun-woo, pengacara penuh perhatian, menghadapi badai pernikahan hingga cinta mereka tumbuh kembali."
+      },
+      {
+        title: "Lovely Runner",
+        year: "2024",
+        genre: "Romansa, Fantasi, Perjalanan Waktu",
+        poster: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80",
+        synopsis: "Im Sol kembali ke masa SMA yang penuh warna demi menyelamatkan Ryu Sun-jae, idola yang selalu menjadi penyemangat hidupnya."
+      },
+      {
+        title: "Moving",
+        year: "2023",
+        genre: "Aksi, Fiksi Ilmiah, Remaja",
+        poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=500&q=80",
+        synopsis: "Para remaja berbakat istimewa dan orang tua mereka saling menjaga rahasia dan keluarga saat menghadapi ancaman tak terduga."
+      },
+      {
+        title: "Twinkling Watermelon",
+        year: "2023",
+        genre: "Remaja, Musik, Fantasi",
+        poster: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=500&q=80",
+        synopsis: "Eun-gyeol yang mencintai musik terlempar ke tahun 1995 dan membentuk band penuh semangat bersama versi muda ayahnya."
+      },
+      {
+        title: "Crash Landing on You",
+        year: "2019",
+        genre: "Romansa, Komedi, Melodrama",
+        poster: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80",
+        synopsis: "Yoon Se-ri mengalami pendaratan darurat akibat angin kencang dan bertemu Ri Jeong-hyeok yang melindunginya di tengah situasi tak biasa."
+      },
+      {
+        title: "Reply 1988",
+        year: "2015",
+        genre: "Slice of Life, Keluarga, Komedi",
+        poster: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=500&q=80",
+        synopsis: "Kisah persahabatan ceria dan hangat lima sahabat serta keluarga mereka di gang Ssangmun-dong pada tahun 1988."
+      },
+      {
+        title: "Weightlifting Fairy Kim Bok-joo",
+        year: "2016",
+        genre: "Romansa, Olahraga, Komedi Kampus",
+        poster: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=500&q=80",
+        synopsis: "Atlet angkat besi ceria Kim Bok-joo mengejar mimpi, persahabatan, dan kisah cinta manis di lingkungan kampus olahraga."
+      },
+      {
+        title: "Train to Busan",
+        year: "2016",
+        genre: "Film, Thriller, Aksi",
+        poster: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=500&q=80",
+        synopsis: "Penumpang kereta ekspres menuju Busan berjuang saling membantu saat wabah mendadak menyebar di sepanjang perjalanan."
+      }
+    ];
+
+    const DEFAULT_USERS = [
+      {
+        email: "jiyeon@seoulmail.kr",
+        password: "user123",
+        name: "Ji-yeon Kim",
+        handle: "@jiyeonseoul",
+        bio: "Nonton rom-com ceria, kafe estetik, & OST manis",
+        avatar: createAvatarArtwork("Ji-yeon Kim"),
+        favorites: ["Queen of Tears", "Lovely Runner", "Reply 1988"],
+        friends: ["@junhoscreen", "@minacherry"]
+      },
+      {
+        email: "junho@seoulmail.kr",
+        password: "user123",
+        name: "Jun-ho Park",
+        handle: "@junhoscreen",
+        bio: "Suka drama remaja, musik band, & film Korea",
+        avatar: createAvatarArtwork("Jun-ho Park"),
+        favorites: ["Twinkling Watermelon", "Moving", "Train to Busan"],
+        friends: ["@jiyeonseoul"]
+      },
+      {
+        email: "mina@seoulmail.kr",
+        password: "user123",
+        name: "Mina Choi",
+        handle: "@minacherry",
+        bio: "Koleksi review drama favorit & screenshot adegan",
+        avatar: createAvatarArtwork("Mina Choi"),
+        favorites: ["Weightlifting Fairy Kim Bok-joo", "Crash Landing on You"],
+        friends: ["@jiyeonseoul"]
+      }
+    ];
+
+    const DEFAULT_POSTS = [
+      {
+        id: "seed-post-1",
+        title: "Queen of Tears",
+        year: "2024",
+        genre: "Romansa, Drama, Komedi",
+        poster: BUILTIN_DRAMAS[0].poster,
+        synopsis: BUILTIN_DRAMAS[0].synopsis,
+        rating: 5,
+        isFavorite: true,
+        review: "Ceritanya manis, emosional, dan bikin susah berhenti nonton! Banyak adegan ikonik yang berkesan.",
+        screenshot: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80",
+        authorName: "Ji-yeon Kim",
+        authorHandle: "@jiyeonseoul",
+        authorAvatar: createAvatarArtwork("Ji-yeon Kim"),
+        likes: 24,
+        createdAt: Date.now() - 1000 * 60 * 75,
+        comments: [
+          {
+            id: "seed-c-1",
+            name: "Jun-ho Park",
+            handle: "@junhoscreen",
+            avatar: createAvatarArtwork("Jun-ho Park"),
+            text: "Setuju banget, chemistry-nya bikin senyum terus!",
+            time: "30 menit lalu"
+          }
+        ]
+      },
+      {
+        id: "seed-post-2",
+        title: "Twinkling Watermelon",
+        year: "2023",
+        genre: "Remaja, Musik, Fantasi",
+        poster: BUILTIN_DRAMAS[3].poster,
+        synopsis: BUILTIN_DRAMAS[3].synopsis,
+        rating: 5,
+        isFavorite: true,
+        review: "Energinya cerah banget! Cerita band anak muda dan persahabatannya hangat sekali.",
+        screenshot: "",
+        authorName: "Jun-ho Park",
+        authorHandle: "@junhoscreen",
+        authorAvatar: createAvatarArtwork("Jun-ho Park"),
+        likes: 18,
+        createdAt: Date.now() - 1000 * 60 * 210,
+        comments: []
+      },
+      {
+        id: "seed-post-3",
+        title: "Weightlifting Fairy Kim Bok-joo",
+        year: "2016",
+        genre: "Romansa, Olahraga, Komedi Kampus",
+        poster: BUILTIN_DRAMAS[6].poster,
+        synopsis: BUILTIN_DRAMAS[6].synopsis,
+        rating: 5,
+        isFavorite: true,
+        review: "Ringan, lucu, dan penuh semangat anak kampus. Selalu cocok buat mood booster!",
+        screenshot: "",
+        authorName: "Mina Choi",
+        authorHandle: "@minacherry",
+        authorAvatar: createAvatarArtwork("Mina Choi"),
+        likes: 15,
+        createdAt: Date.now() - 1000 * 60 * 420,
+        comments: []
+      }
+    ];
+
+    const state = {
+      accounts: [],
+      currentUser: null,
+      posts: [],
+      playlists: [],
+      activePlaylistId: "",
+      libraryFilter: "all",
+      rating: 5,
+      customPosterDataUrl: "",
+      screenshotDataUrl: "",
+      firestoreActive: false
+    };
+
+    function sanitizeHandle(rawHandle, fallbackEmail) {
+      let clean = String(rawHandle || "").trim().toLowerCase();
+      if (!clean) {
+        const prefix = String(fallbackEmail || "seoulfan").split("@")[0].replace(/[^a-z0-9_]/g, "");
+        clean = "@" + (prefix || "seoulfan");
+      }
+      if (!clean.startsWith("@")) clean = "@" + clean;
+      clean = "@" + clean.slice(1).replace(/[^a-z0-9_]/g, "");
+      return clean.length > 1 ? clean : "@seoulfan";
+    }
+
+    function saveAccountsLocal() {
+      try {
+        localStorage.setItem(KEYS.ACCOUNTS, JSON.stringify(state.accounts));
+      } catch (e) {
+        showToast("Penyimpanan lokal penuh untuk gambar besar.", "error");
+      }
+    }
+
+    function savePostsLocal() {
+      try {
+        localStorage.setItem(KEYS.POSTS, JSON.stringify(state.posts));
+      } catch (e) {
+        showToast("Gagal menyimpan data ulasan secara lokal.", "error");
+      }
+    }
+
+    function savePlaylistsLocal() {
+      try {
+        localStorage.setItem(KEYS.PLAYLISTS, JSON.stringify(state.playlists));
+      } catch (e) {
+        showToast("Gagal menyimpan watching list secara lokal.", "error");
+      }
+    }
+
+    async function syncPlaylistToFirestore(plObj) {
+      if (!plObj || !plObj.id) return;
+      try {
+        await setDoc(doc(db, "kdrama_playlists", plObj.id), plObj, { merge: true });
+        state.firestoreActive = true;
+        updateCloudPill(true);
+      } catch (err) {
+        updateCloudPill(false);
+      }
+    }
+
+    async function syncPostToFirestore(postObj) {
+      if (!postObj || !postObj.id) return;
+      try {
+        await setDoc(doc(db, "kdrama_posts", postObj.id), postObj, { merge: true });
+        state.firestoreActive = true;
+        updateCloudPill(true);
+      } catch (err) {
+        updateCloudPill(false);
+      }
+    }
+
+    async function syncUserToFirestore(userObj) {
+      if (!userObj || !userObj.email) return;
+      const emailKey = userObj.email.toLowerCase();
+      try {
+        await setDoc(doc(db, "kdrama_users", emailKey), {
+          email: emailKey,
+          name: userObj.name,
+          handle: userObj.handle,
+          bio: userObj.bio || "",
+          avatar: userObj.avatar || "",
+          favorites: userObj.favorites || [],
+          friends: userObj.friends || []
+        }, { merge: true });
+        state.firestoreActive = true;
+        updateCloudPill(true);
+      } catch (err) {
+        updateCloudPill(false);
+      }
+    }
+
+    function updateCloudPill(isOnline) {
+      const pill = document.getElementById("cloud-sync-pill");
+      if (!pill) return;
+      if (isOnline) {
+        pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Cloud Sync`;
+      } else {
+        pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Local + Cloud`;
+      }
+    }
+
+    function startFirestoreListeners() {
+      try {
+        onSnapshot(collection(db, "kdrama_posts"), (snap) => {
+          const remotePosts = [];
+          snap.forEach((d) => {
+            const val = d.data();
+            if (val && val.title) {
+              remotePosts.push({ id: d.id, ...val });
+            }
+          });
+          if (remotePosts.length > 0) {
+            const merged = new Map();
+            [...remotePosts, ...state.posts].forEach((item) => {
+              if (item && item.id) merged.set(item.id, item);
+            });
+            state.posts = Array.from(merged.values()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+            savePostsLocal();
+            state.firestoreActive = true;
+            updateCloudPill(true);
+            refreshVisibleViews();
+          }
+        }, () => {
+          updateCloudPill(false);
+        });
+
+        onSnapshot(collection(db, "kdrama_users"), (snap) => {
+          const remoteUsers = [];
+          snap.forEach((d) => {
+            const val = d.data();
+            if (val && val.email) remoteUsers.push(val);
+          });
+          if (remoteUsers.length > 0) {
+            remoteUsers.forEach((ru) => {
+              const idx = state.accounts.findIndex((a) => a.email.toLowerCase() === ru.email.toLowerCase());
+              if (idx >= 0) {
+                state.accounts[idx] = {
+                  ...state.accounts[idx],
+                  name: ru.name || state.accounts[idx].name,
+                  handle: ru.handle || state.accounts[idx].handle,
+                  bio: ru.bio !== undefined ? ru.bio : state.accounts[idx].bio,
+                  avatar: ru.avatar || state.accounts[idx].avatar,
+                  favorites: Array.isArray(ru.favorites) ? ru.favorites : state.accounts[idx].favorites,
+                  friends: Array.isArray(ru.friends) ? ru.friends : state.accounts[idx].friends
+                };
+              } else {
+                state.accounts.push({
+                  email: ru.email.toLowerCase(),
+                  password: "user123",
+                  name: ru.name || ru.email.split("@")[0],
+                  handle: ru.handle || sanitizeHandle("", ru.email),
+                  bio: ru.bio || "",
+                  avatar: ru.avatar || createAvatarArtwork(ru.name || ru.email),
+                  favorites: ru.favorites || [],
+                  friends: ru.friends || []
+                });
+              }
+            });
+            if (state.currentUser) {
+              const updatedCurrent = state.accounts.find((a) => a.email.toLowerCase() === state.currentUser.email.toLowerCase());
+              if (updatedCurrent) state.currentUser = updatedCurrent;
+            }
+            saveAccountsLocal();
+            renderQuickAccountChips();
+            refreshVisibleViews();
+          }
+        }, () => {
+          updateCloudPill(false);
+        });
+      } catch (err) {
+        updateCloudPill(false);
+      }
+    }
+
+    function loadStoredState() {
+      try {
+        const rawAcc = localStorage.getItem(KEYS.ACCOUNTS);
+        if (rawAcc) {
+          const parsedAcc = JSON.parse(rawAcc);
+          if (Array.isArray(parsedAcc) && parsedAcc.length > 0) {
+            state.accounts = parsedAcc;
+          }
+        }
+      } catch (e) {}
+
+      if (!state.accounts.length) {
+        state.accounts = DEFAULT_USERS.map((u) => ({ ...u, favorites: [...u.favorites], friends: [...u.friends] }));
+        saveAccountsLocal();
+      }
+
+      try {
+        const rawPosts = localStorage.getItem(KEYS.POSTS);
+        if (rawPosts) {
+          const parsedPosts = JSON.parse(rawPosts);
+          if (Array.isArray(parsedPosts) && parsedPosts.length > 0) {
+            state.posts = parsedPosts;
+          }
+        }
+      } catch (e) {}
+
+      if (!state.posts.length) {
+        state.posts = DEFAULT_POSTS.map((p) => ({ ...p, comments: [...(p.comments || [])] }));
+        savePostsLocal();
+      }
+
+      try {
+        const rawPl = localStorage.getItem(KEYS.PLAYLISTS);
+        if (rawPl) {
+          const parsedPl = JSON.parse(rawPl);
+          if (Array.isArray(parsedPl)) {
+            state.playlists = parsedPl;
+          }
+        }
+      } catch (e) {}
+
+      if (!state.playlists.length) {
+        state.playlists = [
+          {
+            id: "pl-default-1",
+            ownerEmail: "",
+            ownerHandle: "@seoul",
+            title: "Daftar Nonton Seru",
+            description: "Kumpulan drama & film favorit untuk ditonton santai.",
+            items: [
+              {
+                id: "pli-1",
+                title: BUILTIN_DRAMAS[0].title,
+                year: BUILTIN_DRAMAS[0].year,
+                genre: BUILTIN_DRAMAS[0].genre,
+                poster: BUILTIN_DRAMAS[0].poster,
+                rating: 5,
+                note: "Wajib ditonton!"
+              }
+            ],
+            createdAt: Date.now()
+          }
+        ];
+        savePlaylistsLocal();
+      }
+      if (!state.activePlaylistId && state.playlists.length > 0) {
+        state.activePlaylistId = state.playlists[0].id;
+      }
+
+      const savedSessionEmail = (localStorage.getItem(KEYS.SESSION_EMAIL) || "").trim().toLowerCase();
+      if (savedSessionEmail) {
+        const foundUser = state.accounts.find((a) => a.email.toLowerCase() === savedSessionEmail);
+        if (foundUser) {
+          state.currentUser = foundUser;
+        }
+      }
+    }
+
+    // ==================== TOAST NOTIFICATIONS ====================
+    window.showToast = function (msg, type) {
+      const box = document.getElementById("os-toast-container");
+      if (!box) return;
+      const toast = document.createElement("div");
+      const themeMap = {
+        success: "border-emerald-400/50 bg-white/95 dark:bg-slate-900/95 text-emerald-700 dark:text-emerald-300",
+        error: "border-rose-400/50 bg-white/95 dark:bg-slate-900/95 text-rose-700 dark:text-rose-300",
+        info: "border-pink-400/50 bg-white/95 dark:bg-slate-900/95 text-slate-800 dark:text-slate-100"
+      };
+      const iconMap = {
+        success: "fa-circle-check text-emerald-500",
+        error: "fa-circle-exclamation text-rose-500",
+        info: "fa-sparkles text-pink-500"
+      };
+      toast.className = `glass-bar px-4 py-2.5 rounded-2xl border shadow-xl text-xs font-semibold flex items-center gap-2.5 animate-win-pop ${themeMap[type] || themeMap.info}`;
+      toast.innerHTML = `<i class="fa-solid ${iconMap[type] || iconMap.info}"></i><span>${msg}</span>`;
+      box.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transition = "opacity 0.2s ease";
+        setTimeout(() => toast.remove(), 220);
+      }, 2800);
+    };
+
+    window.openOwnerPinAccess = function () {
+      const modal = document.getElementById("secret-owner-modal");
+      const input = document.getElementById("secret-owner-pin-input");
+      if (!modal || !input) return;
+      input.value = "";
+      modal.classList.remove("hidden");
+      setTimeout(() => input.focus(), 50);
+    };
+
+    window.handleSecretBrandClick = function () {
+      window.openOwnerPinAccess();
+    };
+
+    window.closeSecretOwnerModal = function () {
+      const modal = document.getElementById("secret-owner-modal");
+      const input = document.getElementById("secret-owner-pin-input");
+      if (input) input.value = "";
+      if (modal) modal.classList.add("hidden");
+    };
+
+    window.submitSecretOwnerPin = async function (event) {
+      event.preventDefault();
+      const entered = document.getElementById("secret-owner-pin-input").value.trim();
+      if (entered !== OWNER_PIN) {
+        showToast("PIN tidak cocok.", "error");
+        return;
+      }
+
+      let ownerAcc = state.accounts.find((a) => a.email === "owner@kdrama.os" || a.handle === "@owner");
+      if (!ownerAcc) {
+        ownerAcc = {
+          email: "owner@kdrama.os",
+          password: OWNER_PIN,
+          name: "Owner K-Drama OS",
+          handle: "@owner",
+          bio: "Pemilik & kurator drama Korea favorit",
+          avatar: createAvatarArtwork("Owner"),
+          favorites: ["Queen of Tears", "Lovely Runner", "Moving"],
+          friends: ["@jiyeonseoul", "@junhoscreen", "@minacherry"]
+        };
+        state.accounts.unshift(ownerAcc);
+        saveAccountsLocal();
+      }
+
+      closeSecretOwnerModal();
+      await enterDesktopSession(ownerAcc);
+      showToast("Akses khusus dibuka.", "success");
+    };
+
+    // ==================== EMAIL & PASSWORD AUTH ====================
+    window.switchAuthTab = function (tab) {
+      const btnLogin = document.getElementById("auth-btn-login");
+      const btnReg = document.getElementById("auth-btn-register");
+      const formLogin = document.getElementById("auth-form-login");
+      const formReg = document.getElementById("auth-form-register");
+
+      if (tab === "login") {
+        btnLogin.className = "py-2 rounded-xl accent-btn text-white shadow transition";
+        btnReg.className = "py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition";
+        formLogin.classList.remove("hidden");
+        formReg.classList.add("hidden");
+      } else {
+        btnReg.className = "py-2 rounded-xl accent-btn text-white shadow transition";
+        btnLogin.className = "py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition";
+        formReg.classList.remove("hidden");
+        formLogin.classList.add("hidden");
+      }
+    };
+
+    function renderQuickAccountChips() {
+      const container = document.getElementById("quick-accounts-grid");
+      if (!container) return;
+      const items = state.accounts.filter((a) => a.email !== "owner@kdrama.os").slice(0, 2);
+      container.innerHTML = items
+        .map(
+          (acc) => `
+        <button type="button" onclick="fillQuickAccount('${acc.email}', '${acc.password}')" class="p-2 rounded-xl bg-pink-50/80 dark:bg-slate-800 hover:bg-pink-100/80 dark:hover:bg-slate-700 border border-pink-200/60 dark:border-slate-700 text-left transition">
+          <p class="text-[11px] font-bold truncate">${acc.name}</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">${acc.email}</p>
+        </button>
+      `
+        )
+        .join("");
+    }
+
+    window.fillQuickAccount = function (email, password) {
+      switchAuthTab("login");
+      document.getElementById("input-login-email").value = email;
+      document.getElementById("input-login-password").value = password;
+    };
+
+    window.processEmailPasswordLogin = async function (event) {
+      event.preventDefault();
+      const email = document.getElementById("input-login-email").value.trim().toLowerCase();
+      const password = document.getElementById("input-login-password").value;
+
+      // Attempt Firebase Auth sign-in first when available
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        const snap = await getDoc(doc(db, "kdrama_users", email));
+        let userRecord = state.accounts.find((a) => a.email.toLowerCase() === email);
+        if (snap.exists()) {
+          const remote = snap.data();
+          userRecord = {
+            email,
+            password,
+            name: remote.name || userRecord?.name || email.split("@")[0],
+            handle: remote.handle || userRecord?.handle || sanitizeHandle("", email),
+            bio: remote.bio !== undefined ? remote.bio : (userRecord?.bio || ""),
+            avatar: remote.avatar || userRecord?.avatar || createAvatarArtwork(remote.name || email),
+            favorites: Array.isArray(remote.favorites) ? remote.favorites : (userRecord?.favorites || []),
+            friends: Array.isArray(remote.friends) ? remote.friends : (userRecord?.friends || [])
+          };
+          const idx = state.accounts.findIndex((a) => a.email.toLowerCase() === email);
+          if (idx >= 0) state.accounts[idx] = userRecord;
+          else state.accounts.unshift(userRecord);
+          saveAccountsLocal();
+        }
+        if (!userRecord) {
+          userRecord = {
+            email,
+            password,
+            name: email.split("@")[0],
+            handle: sanitizeHandle("", email),
+            bio: "Anggota K-Drama OS",
+            avatar: createAvatarArtwork(email),
+            favorites: [],
+            friends: []
+          };
+          state.accounts.unshift(userRecord);
+          saveAccountsLocal();
+        }
+        document.getElementById("input-login-password").value = "";
+        await enterDesktopSession(userRecord);
+        showToast(`Selamat datang kembali, ${userRecord.name}!`, "success");
+        return;
+      } catch (firebaseErr) {
+        // Fallback to local stored account record
+      }
+
+      const localUser = state.accounts.find((a) => a.email.toLowerCase() === email);
+      if (!localUser) {
+        showToast("Email belum terdaftar. Silakan tab Daftar Baru.", "error");
+        return;
+      }
+      if (localUser.password !== password) {
+        showToast("Password salah. Periksa kembali password kamu.", "error");
+        return;
+      }
+
+      document.getElementById("input-login-password").value = "";
+      await enterDesktopSession(localUser);
+      showToast(`Halo, ${localUser.name}!`, "success");
+    };
+
+    window.processEmailPasswordRegister = async function (event) {
+      event.preventDefault();
+      const name = document.getElementById("input-reg-name").value.trim();
+      const handle = sanitizeHandle(
+        document.getElementById("input-reg-handle").value,
+        document.getElementById("input-reg-email").value
+      );
+      const email = document.getElementById("input-reg-email").value.trim().toLowerCase();
+      const password = document.getElementById("input-reg-password").value;
+
+      if (state.accounts.some((a) => a.email.toLowerCase() === email)) {
+        showToast("Email sudah terdaftar. Silakan masuk.", "error");
+        return;
+      }
+
+      const newAccount = {
+        email,
+        password,
+        name: name || email.split("@")[0],
+        handle,
+        bio: "Penggemar drama Korea & film seru",
+        avatar: createAvatarArtwork(name || email),
+        favorites: [],
+        friends: []
+      };
+
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } catch (firebaseErr) {
+        // Continue smoothly with local persistence if Auth provider or network is offline
+      }
+
+      state.accounts.unshift(newAccount);
+      saveAccountsLocal();
+      document.getElementById("auth-form-register").reset();
+      await enterDesktopSession(newAccount);
+      showToast(`Akun ${newAccount.name} (${newAccount.handle}) siap dipakai!`, "success");
+    };
+
+    async function enterDesktopSession(userRecord) {
+      state.currentUser = userRecord;
+      localStorage.setItem(KEYS.SESSION_EMAIL, userRecord.email.toLowerCase());
+      document.getElementById("auth-gate-overlay").classList.add("hidden");
+      refreshVisibleViews();
+      await syncUserToFirestore(userRecord);
+    }
+
+    window.signOutAccount = async function () {
+      state.currentUser = null;
+      localStorage.removeItem(KEYS.SESSION_EMAIL);
+      try {
+        await signOut(auth);
+      } catch (e) {}
+      closeAllAppWindows();
+      switchAuthTab("login");
+      document.getElementById("auth-gate-overlay").classList.remove("hidden");
+      showToast("Kamu telah keluar dari akun.", "info");
+    };
+
+    // ==================== FULL WORKSPACE WINDOW CONTROLS ====================
+    const WINDOW_NAMES = {
+      library: "Koleksi K-Drama & Film",
+      playlists: "Watching List / Playlist Kustom",
+      add: "+ Tambah Drama",
+      community: "Komunitas Terbuka",
+      friends: "Teman (@username)",
+      settings: "Profil, Tema & Wallpaper"
+    };
+
+    function closeAllAppWindows() {
+      Object.keys(WINDOW_NAMES).forEach((id) => {
+        const win = document.getElementById(`win-${id}`);
+        const dot = document.getElementById(`dock-indicator-${id}`);
+        if (win) win.classList.add("hidden");
+        if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-transparent mt-1";
+      });
+      document.getElementById("top-active-app-label").textContent = "Desktop";
+    }
+
+    window.openAppWindow = function (winId) {
+      if (!state.currentUser) {
+        document.getElementById("auth-gate-overlay").classList.remove("hidden");
+        return;
+      }
+      if (!WINDOW_NAMES[winId]) return;
+
+      Object.keys(WINDOW_NAMES).forEach((id) => {
+        const win = document.getElementById(`win-${id}`);
+        const dot = document.getElementById(`dock-indicator-${id}`);
+        if (!win) return;
+        if (id === winId) {
+          win.classList.remove("hidden");
+          if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-pink-500 mt-1";
+        } else {
+          win.classList.add("hidden");
+          if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-transparent mt-1";
+        }
+      });
+
+      document.getElementById("top-active-app-label").textContent = WINDOW_NAMES[winId];
+
+      if (winId === "library") renderLibraryCollection();
+      if (winId === "playlists") renderPlaylistsWorkspace();
+      if (winId === "community") renderCommunityPosts();
+      if (winId === "friends") renderFriendsView();
+      if (winId === "settings") fillSettingsInputs();
+    };
+
+    window.closeAppWindow = function (winId) {
+      const win = document.getElementById(`win-${winId}`);
+      const dot = document.getElementById(`dock-indicator-${winId}`);
+      if (win) win.classList.add("hidden");
+      if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-transparent mt-1";
+      document.getElementById("top-active-app-label").textContent = "Desktop";
+    };
+
+    // ==================== THEMES, WALLPAPERS & CLOCK ====================
+    window.setCheerfulTheme = function (themeClass) {
+      const body = document.getElementById("kdrama-os-body");
+      body.classList.remove("theme-seoul-pop", "theme-hongdae-mint", "theme-gangnam-peach");
+      body.classList.add(themeClass);
+      localStorage.setItem(KEYS.THEME, themeClass);
+
+      ["theme-seoul-pop", "theme-hongdae-mint", "theme-gangnam-peach"].forEach((t) => {
+        const mark = document.getElementById(`theme-check-${t}`);
+        if (mark) mark.innerHTML = t === themeClass ? '<i class="fa-solid fa-check"></i>' : "";
+      });
+    };
+
+    window.setDesktopWallpaper = function (wpClass) {
+      localStorage.removeItem(KEYS.CUSTOM_WP);
+      const body = document.getElementById("kdrama-os-body");
+      body.style.backgroundImage = "";
+      body.style.backgroundSize = "";
+      body.style.backgroundPosition = "";
+      body.classList.remove("wp-seoul-morning", "wp-han-daylight", "wp-cherry-daylight", "wp-namsan-sunny");
+      body.classList.add(wpClass);
+      localStorage.setItem(KEYS.WALLPAPER, wpClass);
+      toggleWallpaperDeleteBtn(false);
+    };
+
+    window.onCustomWallpaperUpload = function (event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const dataUrl = e.target.result;
+        applyCustomWallpaperBg(dataUrl);
+        try {
+          localStorage.setItem(KEYS.CUSTOM_WP, dataUrl);
+        } catch (err) {
+          showToast("Gambar wallpaper terlalu besar untuk disimpan permanen.", "error");
+        }
+        toggleWallpaperDeleteBtn(true);
+        showToast("Wallpaper kustom terpasang!", "success");
+      };
+      reader.readAsDataURL(file);
+      event.target.value = "";
+    };
+
+    function applyCustomWallpaperBg(dataUrl) {
+      const body = document.getElementById("kdrama-os-body");
+      body.classList.remove("wp-seoul-morning", "wp-han-daylight", "wp-cherry-daylight", "wp-namsan-sunny");
+      body.style.backgroundImage = `url("${dataUrl}")`;
+      body.style.backgroundSize = "cover";
+      body.style.backgroundPosition = "center";
+    }
+
+    window.removeCustomWallpaper = function () {
+      localStorage.removeItem(KEYS.CUSTOM_WP);
+      const savedPreset = localStorage.getItem(KEYS.WALLPAPER) || "wp-seoul-morning";
+      setDesktopWallpaper(savedPreset);
+      showToast("Wallpaper kustom dihapus.", "info");
+    };
+
+    function toggleWallpaperDeleteBtn(hasCustom) {
+      const btn = document.getElementById("btn-delete-wallpaper");
+      const status = document.getElementById("wallpaper-upload-status");
+      if (hasCustom) {
+        btn.classList.remove("hidden");
+        status.textContent = "Wallpaper gambar kustom sedang aktif.";
+      } else {
+        btn.classList.add("hidden");
+        status.textContent = "Belum ada gambar wallpaper kustom.";
+      }
+    }
+
+    window.toggleBrightnessMode = function () {
+      const darkNow = document.documentElement.classList.toggle("dark");
+      const icon = document.getElementById("top-dark-icon");
+      icon.className = darkNow ? "fa-solid fa-sun text-xs text-amber-300" : "fa-solid fa-moon text-xs";
+      localStorage.setItem(KEYS.DARK, darkNow ? "1" : "0");
+    };
+
+    function runLiveClock() {
+      const days = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+      const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+      const update = () => {
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, "0");
+        const mm = String(now.getMinutes()).padStart(2, "0");
+        document.getElementById("top-live-clock").textContent = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]} ${hh}:${mm}`;
+      };
+      update();
+      setInterval(update, 15000);
+    }
+
+    // ==================== AUTO-LOOKUP DRAMA/MOVIE (CATALOG + FREE PUBLIC API) ====================
+    function stripHtmlTags(rawHtml) {
+      return String(rawHtml || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    }
+
+    function computeDefaultPoster() {
+      const title = document.getElementById("form-drama-title").value.trim() || document.getElementById("drama-auto-search").value.trim() || "K-Drama";
+      const genre = document.getElementById("form-drama-genre").value.trim() || "Drama Korea";
+      const matched = BUILTIN_DRAMAS.find((d) => d.title.toLowerCase() === title.toLowerCase());
+      return matched ? matched.poster : createPosterArtwork(title, genre);
+    }
+
+    function resetAddFormState() {
+      state.rating = 5;
+      state.customPosterDataUrl = "";
+      state.screenshotDataUrl = "";
+      setReviewRating(5);
+      document.getElementById("form-drama-poster-img").src = createPosterArtwork("Ketik Judul Drama", "Auto Poster");
+      document.getElementById("form-screenshot-preview-box").classList.add("hidden");
+      document.getElementById("form-screenshot-preview-img").src = "";
+    }
+
+    window.setReviewRating = function (stars) {
+      state.rating = stars;
+      document.getElementById("form-rating-label").textContent = `${stars} / 5`;
+      document.querySelectorAll("#form-star-group .form-star").forEach((btn, i) => {
+        btn.className = i < stars
+          ? "form-star text-amber-400 transition hover:scale-110"
+          : "form-star text-slate-300 dark:text-slate-600 transition hover:scale-110";
+      });
+    };
+
+    function populateFormWithMetadata(meta, closeMenu) {
+      state.customPosterDataUrl = "";
+      document.getElementById("form-drama-title").value = meta.title;
+      document.getElementById("form-drama-year").value = meta.year || "2024";
+      document.getElementById("form-drama-genre").value = meta.genre || "Drama Korea";
+      document.getElementById("form-drama-synopsis").value = meta.synopsis || "";
+      document.getElementById("form-drama-poster-img").src = meta.poster || createPosterArtwork(meta.title, meta.genre);
+      if (closeMenu) {
+        document.getElementById("drama-search-suggestions").classList.add("hidden");
+      }
+    }
+
+    window.onManualTitleChange = function (val) {
+      const trimmed = val.trim();
+      if (!trimmed) return;
+      const hit = BUILTIN_DRAMAS.find((d) => d.title.toLowerCase() === trimmed.toLowerCase());
+      if (hit) {
+        populateFormWithMetadata(hit, false);
+      } else if (!state.customPosterDataUrl) {
+        document.getElementById("form-drama-poster-img").src = createPosterArtwork(trimmed, document.getElementById("form-drama-genre").value || "Drama");
+      }
+    };
+
+    let lookupTimer = null;
+    window.onDramaSearchInput = function (query) {
+      clearTimeout(lookupTimer);
+      const menu = document.getElementById("drama-search-suggestions");
+      const spinner = document.getElementById("drama-lookup-spinner");
+      const q = String(query || "").trim();
+
+      if (!q) {
+        menu.classList.add("hidden");
+        spinner.classList.add("hidden");
+        return;
+      }
+
+      document.getElementById("form-drama-title").value = q;
+      if (!state.customPosterDataUrl) {
+        document.getElementById("form-drama-poster-img").src = createPosterArtwork(q, document.getElementById("form-drama-genre").value || "Drama Korea");
+        if (!document.getElementById("form-drama-synopsis").value.trim()) {
+          document.getElementById("form-drama-synopsis").value = `Kisah drama/film "${q}" dengan alur cerita menarik dan karakter berkesan.`;
+        }
+        if (!document.getElementById("form-drama-year").value.trim()) {
+          document.getElementById("form-drama-year").value = "2024";
+        }
+        if (!document.getElementById("form-drama-genre").value.trim()) {
+          document.getElementById("form-drama-genre").value = "Drama Korea";
+        }
+      }
+
+      const lower = q.toLowerCase();
+      let items = BUILTIN_DRAMAS.filter(
+        (d) => d.title.toLowerCase().includes(lower) || d.genre.toLowerCase().includes(lower)
+      );
+
+      const exactMatch = BUILTIN_DRAMAS.find((d) => d.title.toLowerCase() === lower);
+      if (exactMatch) {
+        populateFormWithMetadata(exactMatch, false);
+      }
+
+      spinner.classList.remove("hidden");
+      lookupTimer = setTimeout(async () => {
+        try {
+          const resp = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(q)}`);
+          if (resp.ok) {
+            const arr = await resp.json();
+            if (Array.isArray(arr) && arr.length > 0) {
+              const apiItems = arr.slice(0, 4).map((entry) => {
+                const show = entry.show || {};
+                const showTitle = show.name || q;
+                const showYear = (show.premiered || "").slice(0, 4) || "2024";
+                const showGenre = (Array.isArray(show.genres) && show.genres.length > 0) ? show.genres.join(", ") : "Drama";
+                const showPoster = (show.image && (show.image.medium || show.image.original)) || createPosterArtwork(showTitle, showGenre);
+                const showSyn = stripHtmlTags(show.summary) || `Kisah drama "${showTitle}" dengan cerita seru.`;
+                return {
+                  title: showTitle,
+                  year: showYear,
+                  genre: showGenre,
+                  poster: showPoster,
+                  synopsis: showSyn
+                };
+              });
+              items = [...items, ...apiItems];
+            }
+          }
+        } catch (err) {
+          // Keep built-in & generated items seamlessly
+        }
+
+        spinner.classList.add("hidden");
+        if (!items.length) {
+          items = [{
+            title: q,
+            year: "2024",
+            genre: "Drama Korea",
+            poster: createPosterArtwork(q, "Drama Korea"),
+            synopsis: `Kisah drama/film "${q}" dengan jalan cerita menarik dan penuh kejutan.`
+          }];
+        }
+
+        menu.innerHTML = items
+          .map(
+            (it, idx) => `
+          <button type="button" onclick="pickLookupResult(${idx})" class="w-full p-2.5 text-left hover:bg-pink-50 dark:hover:bg-slate-700/60 flex items-center gap-3 transition">
+            <img src="${it.poster}" alt="${it.title}" onerror="this.src='${createPosterArtwork(it.title, it.genre)}'" class="w-10 h-14 rounded-lg object-cover bg-slate-200 shrink-0" />
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-bold truncate">${it.title} <span class="text-slate-400 font-normal">(${it.year})</span></p>
+              <p class="text-[10px] font-semibold text-pink-600 dark:text-pink-400">${it.genre}</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">${it.synopsis}</p>
+            </div>
+          </button>
+        `
+          )
+          .join("");
+
+        window.__latestLookupList = items;
+        menu.classList.remove("hidden");
+      }, 240);
+    };
+
+    window.pickLookupResult = function (index) {
+      const list = window.__latestLookupList || [];
+      const chosen = list[index];
+      if (!chosen) return;
+      document.getElementById("drama-auto-search").value = chosen.title;
+      populateFormWithMetadata(chosen, true);
+      showToast(`Data "${chosen.title}" otomatis dimuat!`, "success");
+    };
+
+    window.syncPosterAutomatically = function () {
+      state.customPosterDataUrl = "";
+      const title = document.getElementById("form-drama-title").value.trim() || document.getElementById("drama-auto-search").value.trim();
+      if (title) {
+        const hit = BUILTIN_DRAMAS.find((d) => d.title.toLowerCase() === title.toLowerCase());
+        if (hit) {
+          populateFormWithMetadata(hit, true);
+          showToast("Poster & sinopsis disinkronkan otomatis!", "success");
+          return;
+        }
+      }
+      document.getElementById("form-drama-poster-img").src = computeDefaultPoster();
+      showToast("Poster otomatis disinkronkan!", "success");
+    };
+
+    window.onCustomPosterUpload = function (event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        state.customPosterDataUrl = e.target.result;
+        document.getElementById("form-drama-poster-img").src = e.target.result;
+        showToast("Poster sendiri berhasil dipasang!", "success");
+      };
+      reader.readAsDataURL(file);
+      event.target.value = "";
+    };
+
+    window.onScreenshotUpload = function (event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        state.screenshotDataUrl = e.target.result;
+        document.getElementById("form-screenshot-preview-img").src = e.target.result;
+        document.getElementById("form-screenshot-preview-box").classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
+      event.target.value = "";
+    };
+
+    window.removeScreenshotAttachment = function () {
+      state.screenshotDataUrl = "";
+      document.getElementById("form-screenshot-preview-img").src = "";
+      document.getElementById("form-screenshot-preview-box").classList.add("hidden");
+    };
+
+    window.publishDramaReview = async function () {
+      if (!state.currentUser) return;
+      const title = (document.getElementById("form-drama-title").value || document.getElementById("drama-auto-search").value || "").trim();
+      if (!title) {
+        showToast("Silakan isi judul drama atau film terlebih dahulu.", "error");
+        return;
+      }
+
+      const year = document.getElementById("form-drama-year").value.trim() || "2024";
+      const genre = document.getElementById("form-drama-genre").value.trim() || "Drama Korea";
+      const synopsis = document.getElementById("form-drama-synopsis").value.trim() || `Kisah drama/film "${title}" yang seru dan berkesan.`;
+      const review = document.getElementById("form-drama-review").value.trim() || "Wajib banget masuk daftar tontonan!";
+      const isFavorite = document.getElementById("form-drama-favorite").checked;
+      const poster = state.customPosterDataUrl || computeDefaultPoster();
+
+      const newPost = {
+        id: "post-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
+        title,
+        year,
+        genre,
+        poster,
+        synopsis,
+        rating: state.rating,
+        isFavorite,
+        review,
+        screenshot: state.screenshotDataUrl || "",
+        authorName: state.currentUser.name,
+        authorHandle: state.currentUser.handle,
+        authorAvatar: state.currentUser.avatar,
+        likes: 1,
+        createdAt: Date.now(),
+        comments: []
+      };
+
+      state.posts.unshift(newPost);
+      savePostsLocal();
+
+      document.getElementById("drama-auto-search").value = "";
+      document.getElementById("form-drama-title").value = "";
+      document.getElementById("form-drama-year").value = "";
+      document.getElementById("form-drama-genre").value = "";
+      document.getElementById("form-drama-synopsis").value = "";
+      document.getElementById("form-drama-review").value = "";
+      document.getElementById("form-drama-favorite").checked = false;
+      resetAddFormState();
+
+      refreshVisibleViews();
+      await syncPostToFirestore(newPost);
+      showToast(`"${title}" berhasil disimpan & dibagikan!`, "success");
+      openAppWindow("library");
+    };
+
+    // ==================== LIBRARY RENDER & FILTER ====================
+    window.setLibraryFilterMode = function (mode) {
+      state.libraryFilter = mode;
+      ["all", "mine", "friends", "fav"].forEach((k) => {
+        const chip = document.getElementById(`filter-chip-${k}`);
+        if (!chip) return;
+        chip.className = k === mode
+          ? "px-3 py-1.5 rounded-xl text-xs font-bold accent-btn text-white shadow"
+          : "px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/85 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700";
+      });
+      renderLibraryCollection();
+    };
+
+    window.renderLibraryCollection = function () {
+      const grid = document.getElementById("library-collection-grid");
+      if (!grid) return;
+
+      const search = (document.getElementById("library-search-query")?.value || "").trim().toLowerCase();
+      const sort = document.getElementById("library-sort-mode")?.value || "newest";
+      const myHandle = (state.currentUser?.handle || "").toLowerCase();
+      const friendSet = new Set((state.currentUser?.friends || []).map((h) => h.toLowerCase()));
+
+      let filtered = state.posts.filter((p) => {
+        const authorH = (p.authorHandle || "").toLowerCase();
+        if (state.libraryFilter === "mine" && authorH !== myHandle) return false;
+        if (state.libraryFilter === "friends" && !friendSet.has(authorH)) return false;
+        if (state.libraryFilter === "fav" && !p.isFavorite) return false;
+
+        if (search) {
+          return (
+            p.title.toLowerCase().includes(search) ||
+            (p.genre || "").toLowerCase().includes(search) ||
+            (p.authorName || "").toLowerCase().includes(search) ||
+            authorH.includes(search)
+          );
+        }
+        return true;
+      });
+
+      if (sort === "rating") filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      if (sort === "title") filtered.sort((a, b) => a.title.localeCompare(b.title));
+      if (sort === "newest") filtered.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="col-span-full py-14 text-center text-xs text-slate-500 dark:text-slate-400">Belum ada drama/film pada filter ini.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered
+        .map((post) => {
+          const fallbackPoster = createPosterArtwork(post.title, post.genre);
+          const isFriend = friendSet.has((post.authorHandle || "").toLowerCase());
+          return `
+          <article onclick="openDramaDetailOverlay('${post.id}')" class="group cursor-pointer rounded-2xl bg-white/90 dark:bg-slate-800/90 border border-pink-100 dark:border-slate-700 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition flex flex-col">
+            <div class="relative aspect-[3/4] overflow-hidden bg-slate-200 dark:bg-slate-700">
+              <img src="${post.poster || fallbackPoster}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+              <div class="absolute top-2 left-2 flex gap-1">
+                ${isFriend ? `<span class="px-1.5 py-0.5 rounded-md bg-violet-500 text-white text-[9px] font-bold shadow">TEMAN</span>` : ""}
+                ${post.isFavorite ? `<span class="w-5 h-5 rounded-full bg-pink-500 text-white text-[10px] flex items-center justify-center shadow"><i class="fa-solid fa-heart"></i></span>` : ""}
+              </div>
+              <div class="absolute bottom-2.5 left-2.5 right-2.5 text-white">
+                <div class="text-amber-400 text-[11px]">${"★".repeat(post.rating || 5)}${"☆".repeat(5 - (post.rating || 5))}</div>
+                <h3 class="font-bold text-xs leading-snug line-clamp-1">${post.title}</h3>
+                <p class="text-[10px] text-slate-200 truncate">${post.year} • ${post.genre}</p>
+              </div>
+            </div>
+            <div class="p-2.5 flex-1 flex flex-col justify-between gap-2">
+              <p class="text-[11px] text-slate-600 dark:text-slate-300 line-clamp-2">"${post.review}"</p>
+              <div class="flex items-center justify-between pt-1.5 border-t border-slate-200/70 dark:border-slate-700/70 text-[10px] text-slate-500 dark:text-slate-400">
+                <span class="font-semibold truncate">${post.authorHandle || post.authorName}</span>
+                <span><i class="fa-regular fa-comment mr-0.5"></i>${(post.comments || []).length}</span>
+              </div>
+            </div>
+          </article>
+        `;
+        })
+        .join("");
+    };
+
+    // ==================== COMMUNITY FEED & OPEN COMMENTS ====================
+    window.renderCommunityPosts = function () {
+      const container = document.getElementById("community-feed-list");
+      if (!container) return;
+      const friendSet = new Set((state.currentUser?.friends || []).map((h) => h.toLowerCase()));
+
+      container.innerHTML = state.posts
+        .map((post) => {
+          const fallbackPoster = createPosterArtwork(post.title, post.genre);
+          const fallbackAvatar = createAvatarArtwork(post.authorName);
+          const isFriend = friendSet.has((post.authorHandle || "").toLowerCase());
+
+          return `
+          <article class="p-4 sm:p-5 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-pink-100 dark:border-slate-700 shadow-sm space-y-3.5">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <img src="${post.authorAvatar || fallbackAvatar}" alt="${post.authorName}" onerror="this.src='${fallbackAvatar}'" class="w-9 h-9 rounded-full object-cover bg-white shrink-0" />
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-xs font-bold truncate">${post.authorName}</span>
+                    <span class="text-[11px] font-semibold text-pink-600 dark:text-pink-400">${post.authorHandle || ""}</span>
+                    ${isFriend ? `<span class="text-[9px] px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-700 dark:text-violet-300 font-bold">Teman</span>` : ""}
+                  </div>
+                  <p class="text-[10px] text-slate-400 truncate">Ulasan <b>${post.title}</b> (${post.year})</p>
+                </div>
+              </div>
+              <span class="text-amber-400 text-xs font-bold bg-amber-500/10 px-2.5 py-1 rounded-full shrink-0">${"★".repeat(post.rating || 5)}</span>
+            </div>
+
+            <div class="flex gap-3.5 p-3 rounded-xl bg-pink-50/60 dark:bg-slate-900/65 border border-pink-100/80 dark:border-slate-700/70">
+              <img src="${post.poster || fallbackPoster}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" onclick="openDramaDetailOverlay('${post.id}')" class="w-16 h-24 rounded-xl object-cover cursor-pointer shrink-0 shadow" />
+              <div class="min-w-0 flex-1 space-y-1">
+                <h4 onclick="openDramaDetailOverlay('${post.id}')" class="text-sm font-bold hover:text-pink-500 cursor-pointer truncate">${post.title}</h4>
+                <p class="text-[10px] text-slate-500">${post.genre}</p>
+                <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed">${post.review}</p>
+              </div>
+            </div>
+
+            ${post.screenshot ? `
+              <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+                <img src="${post.screenshot}" alt="Screenshot Adegan" class="w-full max-h-72 object-cover" />
+              </div>
+            ` : ""}
+
+            <div class="flex items-center gap-4 pt-1 border-t border-slate-200/70 dark:border-slate-700/70 text-xs">
+              <button type="button" onclick="likeCommunityPost('${post.id}')" class="flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-200 hover:text-pink-500 transition">
+                <i class="fa-solid fa-heart text-pink-500"></i>
+                <span>${post.likes || 0} Suka</span>
+              </button>
+              <span class="text-slate-500">
+                <i class="fa-regular fa-comment mr-1"></i>${(post.comments || []).length} Komentar
+              </span>
+            </div>
+
+            <!-- Open Comments -->
+            <div class="space-y-2 pl-2.5 border-l-2 border-pink-300 dark:border-pink-500/50">
+              ${(post.comments || [])
+                .map(
+                  (c) => `
+                <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 text-xs">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-[11px]">${c.name} <span class="text-pink-500 font-semibold">${c.handle || ""}</span></span>
+                    <span class="text-[10px] text-slate-400">${c.time || "Baru saja"}</span>
+                  </div>
+                  <p class="text-xs text-slate-700 dark:text-slate-300 mt-0.5">${c.text}</p>
+                </div>
+              `
+                )
+                .join("")}
+
+              <div class="flex items-center gap-2 pt-1">
+                <input type="text" id="comment-input-${post.id}" onkeydown="if(event.key==='Enter') postComment('${post.id}')" placeholder="Tulis komentar terbuka..." class="flex-1 px-3 py-1.5 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+                <button type="button" onclick="postComment('${post.id}')" class="px-3.5 py-1.5 rounded-xl accent-btn text-white text-xs font-bold shadow">
+                  Kirim
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+        })
+        .join("");
+    };
+
+    window.likeCommunityPost = async function (postId) {
+      const post = state.posts.find((p) => p.id === postId);
+      if (!post) return;
+      post.likes = (post.likes || 0) + 1;
+      savePostsLocal();
+      renderCommunityPosts();
+      await syncPostToFirestore(post);
+    };
+
+    window.postComment = async function (postId) {
+      if (!state.currentUser) return;
+      const input = document.getElementById(`comment-input-${postId}`);
+      const text = (input?.value || "").trim();
+      if (!text) return;
+
+      const post = state.posts.find((p) => p.id === postId);
+      if (!post) return;
+
+      post.comments = post.comments || [];
+      post.comments.push({
+        id: "c-" + Date.now(),
+        name: state.currentUser.name,
+        handle: state.currentUser.handle,
+        avatar: state.currentUser.avatar,
+        text,
+        time: "Baru saja"
+      });
+
+      input.value = "";
+      savePostsLocal();
+      renderCommunityPosts();
+      renderLibraryCollection();
+      await syncPostToFirestore(post);
+      showToast("Komentar terkirim!", "success");
+    };
+
+    // ==================== DETAIL OVERLAY ====================
+    window.openDramaDetailOverlay = function (postId) {
+      const post = state.posts.find((p) => p.id === postId);
+      if (!post) return;
+      const fallbackPoster = createPosterArtwork(post.title, post.genre);
+      const fallbackAvatar = createAvatarArtwork(post.authorName);
+
+      document.getElementById("detail-overlay-title").textContent = `${post.title} (${post.year})`;
+      document.getElementById("detail-overlay-body").innerHTML = `
+        <div class="flex flex-col sm:flex-row gap-4">
+          <img src="${post.poster || fallbackPoster}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" class="w-36 h-52 rounded-2xl object-cover shadow-lg mx-auto sm:mx-0 shrink-0" />
+          <div class="space-y-2 flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold border accent-chip">${post.genre}</span>
+              <span class="text-amber-400 text-xs font-bold">${"★".repeat(post.rating || 5)} (${post.rating || 5}/5)</span>
+            </div>
+            <h2 class="text-lg font-extrabold">${post.title}</h2>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${post.synopsis}</p>
+            <div class="pt-2 flex items-center gap-2 text-xs">
+              <img src="${post.authorAvatar || fallbackAvatar}" alt="${post.authorName}" onerror="this.src='${fallbackAvatar}'" class="w-6 h-6 rounded-full object-cover bg-white" />
+              <span>Diulas oleh <b>${post.authorName}</b> <span class="text-pink-600 dark:text-pink-400 font-semibold">${post.authorHandle || ""}</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-pink-50/70 dark:bg-slate-800/80 border border-pink-200/60 dark:border-slate-700">
+          <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Review</p>
+          <p class="text-xs leading-relaxed">${post.review}</p>
+        </div>
+
+        ${post.screenshot ? `
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Screenshot Adegan</p>
+            <img src="${post.screenshot}" alt="Screenshot" class="w-full max-h-72 rounded-2xl object-cover border border-slate-200 dark:border-slate-700" />
+          </div>
+        ` : ""}
+      `;
+      document.getElementById("drama-detail-overlay").classList.remove("hidden");
+    };
+
+    window.closeDramaDetailOverlay = function () {
+      document.getElementById("drama-detail-overlay").classList.add("hidden");
+    };
+
+    // ==================== CUSTOM WATCHING LISTS / PLAYLISTS ====================
+    function ensureActivePlaylistId() {
+      if (!state.playlists.length) {
+        state.activePlaylistId = "";
+        return;
+      }
+      const exists = state.playlists.some((p) => p.id === state.activePlaylistId);
+      if (!exists) {
+        state.activePlaylistId = state.playlists[0].id;
+      }
+    }
+
+    window.saveCustomPlaylist = async function () {
+      if (!state.currentUser) return;
+      const editId = (document.getElementById("playlist-edit-id").value || "").trim();
+      const title = (document.getElementById("playlist-title-input").value || "").trim();
+      const description = (document.getElementById("playlist-desc-input").value || "").trim();
+
+      if (!title) {
+        showToast("Silakan isi judul watching list terlebih dahulu.", "error");
+        return;
+      }
+
+      if (editId) {
+        const target = state.playlists.find((p) => p.id === editId);
+        if (target) {
+          target.title = title;
+          target.description = description || "Playlist drama/film kustom.";
+          state.activePlaylistId = target.id;
+          savePlaylistsLocal();
+          cancelEditPlaylist();
+          renderPlaylistsWorkspace();
+          await syncPlaylistToFirestore(target);
+          showToast(`Playlist "${title}" diperbarui!`, "success");
+          return;
+        }
+      }
+
+      const newPl = {
+        id: "pl-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
+        ownerEmail: state.currentUser.email,
+        ownerHandle: state.currentUser.handle,
+        title,
+        description: description || "Playlist drama/film kustom.",
+        items: [],
+        createdAt: Date.now()
+      };
+
+      state.playlists.unshift(newPl);
+      state.activePlaylistId = newPl.id;
+      savePlaylistsLocal();
+
+      document.getElementById("playlist-title-input").value = "";
+      document.getElementById("playlist-desc-input").value = "";
+      renderPlaylistsWorkspace();
+      await syncPlaylistToFirestore(newPl);
+      showToast(`Watching list "${title}" dibuat!`, "success");
+    };
+
+    window.startEditPlaylist = function (playlistId) {
+      const pl = state.playlists.find((p) => p.id === playlistId);
+      if (!pl) return;
+      document.getElementById("playlist-edit-id").value = pl.id;
+      document.getElementById("playlist-title-input").value = pl.title;
+      document.getElementById("playlist-desc-input").value = pl.description || "";
+      document.getElementById("playlist-form-heading").textContent = "Edit Watching List";
+      document.getElementById("playlist-submit-label").textContent = "Simpan Perubahan";
+      document.getElementById("playlist-cancel-edit-btn").classList.remove("hidden");
+    };
+
+    window.cancelEditPlaylist = function () {
+      document.getElementById("playlist-edit-id").value = "";
+      document.getElementById("playlist-title-input").value = "";
+      document.getElementById("playlist-desc-input").value = "";
+      document.getElementById("playlist-form-heading").textContent = "Buat Watching List Baru";
+      document.getElementById("playlist-submit-label").textContent = "Simpan Watching List";
+      document.getElementById("playlist-cancel-edit-btn").classList.add("hidden");
+    };
+
+    window.deleteCustomPlaylist = function (playlistId) {
+      if (!state.playlists.length) return;
+      state.playlists = state.playlists.filter((p) => p.id !== playlistId);
+      savePlaylistsLocal();
+      if (state.activePlaylistId === playlistId) {
+        state.activePlaylistId = state.playlists[0]?.id || "";
+      }
+      renderPlaylistsWorkspace();
+      showToast("Watching list dihapus.", "info");
+    };
+
+    window.selectActivePlaylist = function (playlistId) {
+      state.activePlaylistId = playlistId;
+      renderPlaylistsWorkspace();
+    };
+
+    window.addDramaToActivePlaylist = async function () {
+      ensureActivePlaylistId();
+      const pl = state.playlists.find((p) => p.id === state.activePlaylistId);
+      if (!pl) {
+        showToast("Buat watching list terlebih dahulu di panel kiri.", "error");
+        return;
+      }
+
+      const selectEl = document.getElementById("playlist-source-select");
+      const customTitle = (document.getElementById("playlist-custom-drama-title")?.value || "").trim();
+      const note = (document.getElementById("playlist-item-note")?.value || "").trim();
+
+      let itemData = null;
+      if (customTitle) {
+        const hit = BUILTIN_DRAMAS.find((d) => d.title.toLowerCase() === customTitle.toLowerCase());
+        itemData = {
+          id: "pli-" + Date.now(),
+          title: hit ? hit.title : customTitle,
+          year: hit ? hit.year : "2024",
+          genre: hit ? hit.genre : "Drama Korea",
+          poster: hit ? hit.poster : createPosterArtwork(customTitle, "Drama Korea"),
+          rating: 5,
+          note: note || "Siap ditonton"
+        };
+      } else if (selectEl && selectEl.value) {
+        const val = selectEl.value;
+        if (val.startsWith("post:")) {
+          const postId = val.slice(5);
+          const post = state.posts.find((p) => p.id === postId);
+          if (post) {
+            itemData = {
+              id: "pli-" + Date.now(),
+              title: post.title,
+              year: post.year || "2024",
+              genre: post.genre || "Drama Korea",
+              poster: post.poster || createPosterArtwork(post.title, post.genre),
+              rating: post.rating || 5,
+              note: note || post.review || "Dari koleksi"
+            };
+          }
+        } else if (val.startsWith("builtin:")) {
+          const idx = Number(val.slice(8));
+          const b = BUILTIN_DRAMAS[idx];
+          if (b) {
+            itemData = {
+              id: "pli-" + Date.now(),
+              title: b.title,
+              year: b.year,
+              genre: b.genre,
+              poster: b.poster,
+              rating: 5,
+              note: note || "Rekomendasi drama"
+            };
+          }
+        }
+      }
+
+      if (!itemData) {
+        showToast("Pilih drama dari daftar atau ketik judul drama.", "error");
+        return;
+      }
+
+      pl.items = pl.items || [];
+      pl.items.unshift(itemData);
+      savePlaylistsLocal();
+      if (document.getElementById("playlist-custom-drama-title")) {
+        document.getElementById("playlist-custom-drama-title").value = "";
+      }
+      if (document.getElementById("playlist-item-note")) {
+        document.getElementById("playlist-item-note").value = "";
+      }
+      renderPlaylistsWorkspace();
+      await syncPlaylistToFirestore(pl);
+      showToast(`"${itemData.title}" masuk ke "${pl.title}"!`, "success");
+    };
+
+    window.removeDramaFromPlaylist = async function (playlistId, itemId) {
+      const pl = state.playlists.find((p) => p.id === playlistId);
+      if (!pl) return;
+      pl.items = (pl.items || []).filter((it) => it.id !== itemId);
+      savePlaylistsLocal();
+      renderPlaylistsWorkspace();
+      await syncPlaylistToFirestore(pl);
+      showToast("Drama dihapus dari playlist.", "info");
+    };
+
+    window.renderPlaylistsWorkspace = function () {
+      ensureActivePlaylistId();
+      const listEl = document.getElementById("custom-playlists-list");
+      const detailEl = document.getElementById("active-playlist-detail-card");
+      const badgeEl = document.getElementById("playlists-count-badge");
+      if (!listEl || !detailEl) return;
+
+      if (badgeEl) badgeEl.textContent = `${state.playlists.length} Playlist`;
+
+      if (!state.playlists.length) {
+        listEl.innerHTML = `<p class="text-xs text-slate-500 italic">Belum ada watching list. Buat playlist baru di atas.</p>`;
+        detailEl.innerHTML = `<p class="text-xs text-slate-500 text-center py-10">Buat watching list baru untuk mulai menyusun daftar tontonan kamu.</p>`;
+        return;
+      }
+
+      listEl.innerHTML = state.playlists
+        .map((pl) => {
+          const isSelected = pl.id === state.activePlaylistId;
+          const count = (pl.items || []).length;
+          return `
+          <div onclick="selectActivePlaylist('${pl.id}')" class="p-3 rounded-xl cursor-pointer border transition ${
+            isSelected
+              ? "bg-white dark:bg-slate-900 border-pink-400 shadow-sm"
+              : "bg-white/70 dark:bg-slate-900/60 border-slate-200/80 dark:border-slate-700 hover:border-pink-300"
+          }">
+            <div class="flex items-start justify-between gap-2">
+              <div class="min-w-0">
+                <h4 class="text-xs font-bold truncate">${pl.title}</h4>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">${pl.description || "Tanpa deskripsi"}</p>
+                <span class="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full border accent-chip">${count} Judul</span>
+              </div>
+              <div class="flex items-center gap-1 shrink-0" onclick="event.stopPropagation()">
+                <button type="button" onclick="startEditPlaylist('${pl.id}')" title="Edit Playlist" class="p-1.5 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-700 dark:text-sky-300 text-[10px]">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button type="button" onclick="deleteCustomPlaylist('${pl.id}')" title="Hapus Playlist" class="p-1.5 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 text-[10px]">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        })
+        .join("");
+
+      const activePl = state.playlists.find((p) => p.id === state.activePlaylistId) || state.playlists[0];
+      const postOptions = state.posts
+        .map((p) => `<option value="post:${p.id}">${p.title} (${p.year}) — ${p.authorHandle || p.authorName}</option>`)
+        .join("");
+      const builtinOptions = BUILTIN_DRAMAS
+        .map((b, i) => `<option value="builtin:${i}">${b.title} (${b.year}) — ${b.genre}</option>`)
+        .join("");
+
+      const itemsHtml = (activePl.items || []).length
+        ? (activePl.items || [])
+            .map((it) => {
+              const fbPoster = createPosterArtwork(it.title, it.genre);
+              return `
+              <div class="p-3 rounded-2xl bg-pink-50/60 dark:bg-slate-900/70 border border-pink-100 dark:border-slate-700 flex items-center gap-3">
+                <img src="${it.poster || fbPoster}" alt="${it.title}" onerror="this.src='${fbPoster}'" class="w-12 h-16 rounded-xl object-cover shrink-0 shadow" />
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center justify-between gap-2">
+                    <h5 class="text-xs font-bold truncate">${it.title} <span class="text-slate-400 font-normal">(${it.year || "2024"})</span></h5>
+                    <span class="text-amber-400 text-[11px] shrink-0">${"★".repeat(it.rating || 5)}</span>
+                  </div>
+                  <p class="text-[10px] text-pink-600 dark:text-pink-400 font-semibold">${it.genre || "Drama Korea"}</p>
+                  <p class="text-[11px] text-slate-600 dark:text-slate-300 truncate mt-0.5">${it.note || ""}</p>
+                </div>
+                <button type="button" onclick="removeDramaFromPlaylist('${activePl.id}', '${it.id}')" title="Hapus dari Playlist" class="px-2.5 py-1.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 text-[10px] font-bold shrink-0">
+                  Hapus
+                </button>
+              </div>
+            `;
+            })
+            .join("")
+        : `<div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-dashed border-slate-300 dark:border-slate-700 text-center text-xs text-slate-500">Playlist ini masih kosong. Tambahkan drama di atas!</div>`;
+
+      detailEl.innerHTML = `
+        <div class="pb-3 border-b border-slate-200/80 dark:border-slate-700/80">
+          <h3 class="text-base font-extrabold">${activePl.title}</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">${activePl.description || "Tanpa deskripsi"}</p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-sky-50/60 dark:bg-slate-900/60 border border-sky-200/70 dark:border-slate-700 space-y-2.5">
+          <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200">Tambah Drama / Film ke Watching List Ini</span>
+          <select id="playlist-source-select" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <option value="">-- Pilih dari Koleksi &amp; Katalog Drama --</option>
+            ${postOptions}
+            ${builtinOptions}
+          </select>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <input type="text" id="playlist-custom-drama-title" placeholder="Atau ketik judul drama bebas..." class="px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+            <input type="text" id="playlist-item-note" placeholder="Catatan nonton (opsional)..." class="px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+          </div>
+          <div class="flex justify-end">
+            <button type="button" onclick="addDramaToActivePlaylist()" class="px-4 py-2 rounded-xl accent-btn text-white text-xs font-bold shadow hover:opacity-95 transition">
+              <i class="fa-solid fa-plus mr-1"></i> Masukkan ke Playlist
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            Isi Watching List (${(activePl.items || []).length} Drama)
+          </span>
+          <div class="space-y-2">${itemsHtml}</div>
+        </div>
+      `;
+    };
+
+    // ==================== FRIENDS BY @USERNAME ====================
+    window.addFriendByHandle = async function (specificHandle) {
+      if (!state.currentUser) return;
+      const input = document.getElementById("friend-handle-search");
+      const raw = specificHandle || (input ? input.value : "");
+      const handle = sanitizeHandle(raw, "");
+      if (!handle || handle === "@") {
+        showToast("Masukkan @username teman terlebih dahulu.", "error");
+        return;
+      }
+      if (handle === state.currentUser.handle.toLowerCase()) {
+        showToast("Itu @username kamu sendiri!", "info");
+        return;
+      }
+
+      state.currentUser.friends = state.currentUser.friends || [];
+      if (state.currentUser.friends.includes(handle)) {
+        showToast(`${handle} sudah ada di daftar temanmu.`, "info");
+        return;
+      }
+
+      state.currentUser.friends.push(handle);
+      saveAccountsLocal();
+      if (input && !specificHandle) input.value = "";
+      refreshVisibleViews();
+      renderFriendsView();
+      await syncUserToFirestore(state.currentUser);
+      showToast(`Berteman dengan ${handle}!`, "success");
+    };
+
+    window.removeFriendByHandle = async function (handle) {
+      if (!state.currentUser) return;
+      state.currentUser.friends = (state.currentUser.friends || []).filter((h) => h !== handle);
+      saveAccountsLocal();
+      refreshVisibleViews();
+      renderFriendsView();
+      await syncUserToFirestore(state.currentUser);
+      showToast(`${handle} dihapus dari daftar teman.`, "info");
+    };
+
+    window.renderFriendsDirectoryList = function () {
+      const box = document.getElementById("friends-directory-list");
+      if (!box || !state.currentUser) return;
+      const q = (document.getElementById("friend-handle-search")?.value || "").trim().toLowerCase().replace(/^@/, "");
+
+      const others = state.accounts.filter((a) => a.handle.toLowerCase() !== state.currentUser.handle.toLowerCase());
+      const matches = q
+        ? others.filter((a) => a.handle.toLowerCase().includes(q) || a.name.toLowerCase().includes(q))
+        : others;
+
+      if (!matches.length) {
+        box.innerHTML = `<p class="text-[11px] text-slate-500">Belum ada hasil cocok. Klik Tambah untuk menambahkan @username langsung.</p>`;
+        return;
+      }
+
+      const myFriends = state.currentUser.friends || [];
+      box.innerHTML = matches
+        .map((acc) => {
+          const already = myFriends.includes(acc.handle);
+          const av = acc.avatar || createAvatarArtwork(acc.name);
+          return `
+          <div class="p-2 rounded-xl bg-white/90 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-700 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <img src="${av}" alt="${acc.name}" onerror="this.src='${av}'" class="w-8 h-8 rounded-full object-cover shrink-0" />
+              <div class="min-w-0">
+                <p class="text-xs font-bold truncate">${acc.name}</p>
+                <p class="text-[10px] font-semibold text-pink-600 dark:text-pink-400 truncate">${acc.handle}</p>
+              </div>
+            </div>
+            ${
+              already
+                ? `<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 shrink-0">Teman</span>`
+                : `<button type="button" onclick="addFriendByHandle('${acc.handle}')" class="text-[10px] font-bold px-2.5 py-1 rounded-lg accent-btn text-white shrink-0">Add</button>`
+            }
+          </div>
+        `;
+        })
+        .join("");
+    };
+
+    function renderFriendsView() {
+      if (!state.currentUser) return;
+      renderFriendsDirectoryList();
+
+      const friends = state.currentUser.friends || [];
+      document.getElementById("friends-total-badge").textContent = `${friends.length} Teman`;
+
+      const addedEl = document.getElementById("friends-added-list");
+      if (!friends.length) {
+        addedEl.innerHTML = `<p class="text-xs text-slate-500 italic">Belum ada teman ditambahkan.</p>`;
+      } else {
+        addedEl.innerHTML = friends
+          .map((handle) => {
+            const match = state.accounts.find((a) => a.handle.toLowerCase() === handle.toLowerCase());
+            const displayName = match ? match.name : handle.slice(1);
+            const av = match?.avatar || createAvatarArtwork(displayName);
+            return `
+            <div class="p-2.5 rounded-xl bg-white/90 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-700 flex items-center justify-between">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <img src="${av}" alt="${displayName}" onerror="this.src='${av}'" class="w-8 h-8 rounded-full object-cover shrink-0" />
+                <div class="min-w-0">
+                  <p class="text-xs font-bold truncate">${displayName}</p>
+                  <p class="text-[10px] font-semibold text-violet-600 dark:text-violet-400 truncate">${handle}</p>
+                </div>
+              </div>
+              <button type="button" onclick="removeFriendByHandle('${handle}')" class="text-[10px] px-2 py-1 rounded-lg bg-rose-500/15 text-rose-600 dark:text-rose-400 font-semibold">
+                Hapus
+              </button>
+            </div>
+          `;
+          })
+          .join("");
+      }
+
+      const friendSet = new Set(friends.map((h) => h.toLowerCase()));
+      const friendPosts = state.posts.filter((p) => friendSet.has((p.authorHandle || "").toLowerCase()));
+      const feedEl = document.getElementById("friends-highlighted-feed");
+
+      if (!friendPosts.length) {
+        feedEl.innerHTML = `<div class="p-6 rounded-2xl bg-white/85 dark:bg-slate-800/85 border border-slate-200 dark:border-slate-700 text-center text-xs text-slate-500">Belum ada ulasan dari teman yang kamu tambahkan.</div>`;
+      } else {
+        feedEl.innerHTML = friendPosts
+          .map((post) => {
+            const fallbackPoster = createPosterArtwork(post.title, post.genre);
+            return `
+            <div class="p-4 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-pink-200/70 dark:border-slate-700 shadow-sm space-y-2.5">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-xs font-bold">${post.authorName}</span>
+                  <span class="text-[11px] font-semibold text-pink-600 dark:text-pink-400 ml-1">${post.authorHandle}</span>
+                </div>
+                <span class="text-amber-400 text-xs font-bold">${"★".repeat(post.rating || 5)}</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <img src="${post.poster || fallbackPoster}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" onclick="openDramaDetailOverlay('${post.id}')" class="w-12 h-16 rounded-xl object-cover cursor-pointer shrink-0" />
+                <div class="min-w-0">
+                  <h4 onclick="openDramaDetailOverlay('${post.id}')" class="text-xs font-bold hover:text-pink-500 cursor-pointer truncate">${post.title} (${post.year})</h4>
+                  <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5 line-clamp-2">"${post.review}"</p>
+                </div>
+              </div>
+            </div>
+          `;
+          })
+          .join("");
+      }
+    }
+
+    // ==================== PROFILE & SETTINGS ====================
+    function fillSettingsInputs() {
+      if (!state.currentUser) return;
+      const u = state.currentUser;
+      document.getElementById("settings-avatar-preview").src = u.avatar || createAvatarArtwork(u.name);
+      document.getElementById("settings-display-name").value = u.name || "";
+      document.getElementById("settings-user-handle").value = u.handle || "";
+      document.getElementById("settings-user-bio").value = u.bio || "";
+      document.getElementById("settings-fav-1").value = (u.favorites && u.favorites[0]) || "";
+      document.getElementById("settings-fav-2").value = (u.favorites && u.favorites[1]) || "";
+      document.getElementById("settings-fav-3").value = (u.favorites && u.favorites[2]) || "";
+    }
+
+    window.onProfileAvatarChange = async function (event) {
+      if (!state.currentUser) return;
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async function (e) {
+        state.currentUser.avatar = e.target.result;
+        document.getElementById("settings-avatar-preview").src = e.target.result;
+        saveAccountsLocal();
+        refreshVisibleViews();
+        await syncUserToFirestore(state.currentUser);
+        showToast("Foto profil diperbarui!", "success");
+      };
+      reader.readAsDataURL(file);
+      event.target.value = "";
+    };
+
+    window.saveProfileSettings = async function () {
+      if (!state.currentUser) return;
+      const name = document.getElementById("settings-display-name").value.trim();
+      const handle = sanitizeHandle(
+        document.getElementById("settings-user-handle").value,
+        state.currentUser.email
+      );
+      const bio = document.getElementById("settings-user-bio").value.trim();
+      const favs = [
+        document.getElementById("settings-fav-1").value.trim(),
+        document.getElementById("settings-fav-2").value.trim(),
+        document.getElementById("settings-fav-3").value.trim()
+      ].filter(Boolean);
+
+      if (name) state.currentUser.name = name;
+      state.currentUser.handle = handle;
+      state.currentUser.bio = bio || "Pecinta K-Drama & Film";
+      state.currentUser.favorites = favs;
+      if (!state.currentUser.avatar) {
+        state.currentUser.avatar = createAvatarArtwork(state.currentUser.name);
+      }
+
+      saveAccountsLocal();
+      refreshVisibleViews();
+      await syncUserToFirestore(state.currentUser);
+      showToast("Profil & Top 3 Favorit tersimpan!", "success");
+    };
+
+    function refreshVisibleViews() {
+      const u = state.currentUser;
+      if (!u) return;
+
+      const av = u.avatar || createAvatarArtwork(u.name);
+      document.getElementById("top-user-avatar").src = av;
+      document.getElementById("top-user-handle").textContent = u.handle;
+
+      document.getElementById("widget-profile-avatar").src = av;
+      document.getElementById("widget-profile-name").textContent = u.name;
+      document.getElementById("widget-profile-handle").textContent = u.handle;
+      document.getElementById("widget-profile-bio").textContent = u.bio || "";
+      document.getElementById("widget-count-posts").textContent = String(state.posts.length);
+      document.getElementById("widget-count-friends").textContent = String((u.friends || []).length);
+
+      const top3Box = document.getElementById("widget-top3-favorites");
+      const favs = u.favorites || [];
+      if (!favs.length) {
+        top3Box.innerHTML = `<p class="text-[11px] text-slate-400 italic">Belum ada drama favorit.</p>`;
+      } else {
+        top3Box.innerHTML = favs
+          .slice(0, 3)
+          .map(
+            (title, idx) => `
+          <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-pink-50/80 dark:bg-slate-800/80 border border-pink-200/50 dark:border-slate-700/60">
+            <span class="w-4 h-4 rounded-full accent-btn text-white text-[10px] font-bold flex items-center justify-center shrink-0">${idx + 1}</span>
+            <span class="text-[11px] font-semibold truncate">${title}</span>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      renderLibraryCollection();
+      renderCommunityPosts();
+      renderPlaylistsWorkspace();
+    }
+
+    // ==================== INITIALIZATION ====================
+    window.addEventListener("DOMContentLoaded", function () {
+      const savedTheme = localStorage.getItem(KEYS.THEME) || "theme-seoul-pop";
+      setCheerfulTheme(savedTheme);
+
+      const customWp = localStorage.getItem(KEYS.CUSTOM_WP);
+      if (customWp) {
+        applyCustomWallpaperBg(customWp);
+        toggleWallpaperDeleteBtn(true);
+      } else {
+        const presetWp = localStorage.getItem(KEYS.WALLPAPER) || "wp-seoul-morning";
+        setDesktopWallpaper(presetWp);
+      }
+
+      if (localStorage.getItem(KEYS.DARK) === "1") {
+        document.documentElement.classList.add("dark");
+        document.getElementById("top-dark-icon").className = "fa-solid fa-sun text-xs text-amber-300";
+      }
+
+      runLiveClock();
+      loadStoredState();
+      resetAddFormState();
+      renderQuickAccountChips();
+      updateCloudPill(false);
+      startFirestoreListeners();
+
+      onAuthStateChanged(auth, (fbUser) => {
+        if (fbUser && fbUser.email) {
+          const emailLower = fbUser.email.toLowerCase();
+          let matched = state.accounts.find((a) => a.email.toLowerCase() === emailLower);
+          if (!matched) {
+            matched = {
+              email: emailLower,
+              password: "",
+              name: emailLower.split("@")[0],
+              handle: sanitizeHandle("", emailLower),
+              bio: "Anggota K-Drama OS",
+              avatar: createAvatarArtwork(emailLower),
+              favorites: [],
+              friends: []
+            };
+            state.accounts.unshift(matched);
+            saveAccountsLocal();
+          }
+          state.currentUser = matched;
+          localStorage.setItem(KEYS.SESSION_EMAIL, emailLower);
+          document.getElementById("auth-gate-overlay").classList.add("hidden");
+          refreshVisibleViews();
+        }
+      });
+
+      if (state.currentUser) {
+        document.getElementById("auth-gate-overlay").classList.add("hidden");
+        refreshVisibleViews();
+      } else {
+        document.getElementById("auth-gate-overlay").classList.remove("hidden");
+      }
+    });
+  </script>
+</body>
+</html>
