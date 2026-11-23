@@ -3094,7 +3094,7 @@ function getLiveAuthorHandle(post) {
                 <div class="min-w-0">
                   <div class="flex items-center gap-1.5 flex-wrap">
                     <span class="text-xs font-semibold truncate group-hover:text-pink-500 transition">${post.authorName}</span>
-                    <span class="text-[11px] font-medium text-pink-600 dark:text-pink-400">${liveHandle}</span>
+                    <span class="text-[11px] font-medium text-pink-600 dark:text-pink-400">${getLiveAuthorHandle(post)}</span>
                     ${isFriend
                       ? `<span class="text-[9px] px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-700 dark:text-violet-300 font-medium">Teman</span>`
                       : `<span class="text-[9px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-700 dark:text-sky-300 font-medium">Publik</span>`
@@ -3105,7 +3105,6 @@ function getLiveAuthorHandle(post) {
               </div>
               ${!isWallUpdate ? `<span class="text-amber-400 text-xs font-medium bg-amber-500/10 px-2.5 py-1 rounded-full shrink-0">${"★".repeat(post.rating || 5)}</span>` : ""}
             </div>
-
             ${
               isWallUpdate
                 ? `<div class="p-3.5 rounded-xl bg-sky-50/65 dark:bg-slate-900/65 border border-sky-200/70 dark:border-slate-700/70 space-y-2">
@@ -3141,7 +3140,7 @@ function getLiveAuthorHandle(post) {
                   <i class="fa-regular fa-comment mr-1"></i>${(post.comments || []).length} Komentar
                 </span>
               </div>
-${
+			  ${
                 canManagePost
                   ? `<div class="flex items-center gap-3">
                        ${!isWallUpdate ? `<button type="button" onclick="openDramaDetailOverlay('${post.id}', true)" class="text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i>Edit Detail / Rate</button>` : ""}
@@ -4704,13 +4703,7 @@ ${
           .join("");
       }
 
-      renderLibraryCollection();
-      <img src="${post.authorAvatar || fallbackAvatar}" alt="${post.authorName}" onerror="this.src='${fallbackAvatar}'" class="w-9 h-9 rounded-full object-cover bg-white shrink-0" />
-                <div class="min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <span class="text-xs font-semibold truncate group-hover:text-pink-500 transition">${post.authorName}</span>
-                    <span class="text-[11px] font-medium text-pink-600 dark:text-pink-400">${getLiveAuthorHandle(post)}</span>
-                    ${isFriend();
+	  renderLibraryCollection();
       renderPlaylistsWorkspace();
       renderMessagesWorkspace();
       if (state.isSuperAdmin) renderSuperAdminDashboard();
