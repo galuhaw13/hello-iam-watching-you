@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drakorin — Kdrama Desktop Watchlist &amp; Community</title>
+  <title>DRAKORIN — K-Drama Desktop Watchlist &amp; Community</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -16,6 +16,16 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
+  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcpDy4uAAAAALDh4aljxO7BrijRu_eXs22byJm7"></script>
+  <!-- Your code -->
+ <script>
+  function onClick(e) {
+    e.preventDefault();
+    grecaptcha.enterprise.ready(async () => {
+      const token = await grecaptcha.enterprise.execute('6LcpDy4uAAAAALDh4aljxO7BrijRu_eXs22byJm7', {action: 'LOGIN'});
+    });
+  }
+</script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -243,14 +253,17 @@
       <!-- Brand Header -->
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <button type="button" onclick="handleSecretBrandClick()" title="Drakorin" class="w-11 h-11 rounded-2xl accent-btn text-white flex items-center justify-center shadow-lg focus:outline-none">
+          <div class="w-11 h-11 rounded-2xl accent-btn text-white flex items-center justify-center shadow-lg">
             <i class="fa-solid fa-heart text-lg"></i>
-          </button>
+          </div>
           <div>
             <h1 class="font-display font-extrabold text-lg tracking-tight leading-none">DRAKORIN</h1>
             <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Masuk atau Daftar dengan Email &amp; Password</p>
           </div>
         </div>
+        <span class="px-2.5 py-1 rounded-full text-[11px] font-bold border accent-chip">
+          Seoul Cloud
+        </span>
       </div>
 
       <!-- Switch Tabs -->
@@ -267,13 +280,13 @@
       <form id="auth-form-login" onsubmit="processEmailPasswordLogin(event)" class="space-y-3.5">
         <div>
           <label for="input-login-email" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-200">Email</label>
-          <input type="email" id="input-login-email" required placeholder="nama@email.com" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          <input type="email" id="input-login-email" required autocomplete="email" placeholder="nama@email.com" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
         </div>
         <div>
           <label for="input-login-password" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-200">Password</label>
-          <input type="password" id="input-login-password" required placeholder="Masukkan password" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          <input type="password" id="input-login-password" required autocomplete="current-password" placeholder="Masukkan password" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
         </div>
-        <button type="submit" class="w-full py-2.5 px-4 rounded-xl accent-btn text-white text-xs font-bold shadow-md hover:opacity-95 transition flex items-center justify-center gap-2">
+        <button type="submit" id="btn-submit-login" class="w-full py-2.5 px-4 rounded-xl accent-btn text-white text-xs font-bold shadow-md hover:opacity-95 transition flex items-center justify-center gap-2">
           <i class="fa-solid fa-right-to-bracket"></i>
           <span>Masuk ke DRAKORIN</span>
         </button>
@@ -293,48 +306,25 @@
         </div>
         <div>
           <label for="input-reg-email" class="block text-xs font-semibold mb-1">Email</label>
-          <input type="email" id="input-reg-email" required placeholder="kamu@email.com" class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          <input type="email" id="input-reg-email" required autocomplete="email" placeholder="kamu@email.com" class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
         </div>
         <div>
           <label for="input-reg-password" class="block text-xs font-semibold mb-1">Password</label>
-          <input type="password" id="input-reg-password" required minlength="6" placeholder="Minimal 6 karakter" class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+          <input type="password" id="input-reg-password" required minlength="6" autocomplete="new-password" placeholder="Minimal 6 karakter" class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
         </div>
-        <button type="submit" class="w-full py-2.5 px-4 rounded-xl accent-btn text-white text-xs font-bold shadow-md hover:opacity-95 transition flex items-center justify-center gap-2">
+        <button type="submit" id="btn-submit-register" class="w-full py-2.5 px-4 rounded-xl accent-btn text-white text-xs font-bold shadow-md hover:opacity-95 transition flex items-center justify-center gap-2">
           <i class="fa-solid fa-user-plus"></i>
           <span>Daftar &amp; Masuk</span>
         </button>
       </form>
 
-      <div class="pt-3 border-t border-slate-200/80 dark:border-slate-700/80 space-y-2">
-        <div class="flex items-center justify-between gap-2">
-          <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
-            <i class="fa-solid fa-crown text-amber-500"></i> Akses Super Admin
-          </span>
-          <button type="button" onclick="openOwnerPinAccess()" class="px-3 py-1 rounded-xl accent-btn text-white text-[11px] font-bold shadow hover:opacity-95 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-key"></i>
-          </button>
-        </div>
+      <!-- Info Keamanan Akun -->
+      <div class="pt-3 border-t border-slate-200/80 dark:border-slate-700/80">
+        <p class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-shield-halved text-emerald-500"></i>
+          <span>Dilindungi Firebase Authentication &amp; Firestore Security Rules.</span>
+        </p>
       </div>
-    </div>
-  </div>
-
-  
-  <div id="secret-owner-modal" class="hidden fixed inset-0 z-[10070] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xl">
-    <div class="w-full max-w-xs rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/80 dark:border-white/15 shadow-2xl p-5 space-y-4 animate-win-pop">
-      <div class="flex items-center justify-between">
-        <span class="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-2">
-          <i class="fa-solid fa-crown text-amber-500"></i> Verifikasi PIN
-        </span>
-        <button type="button" onclick="closeSecretOwnerModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <form onsubmit="submitSecretOwnerPin(event)" class="space-y-3">
-        <input type="password" id="secret-owner-pin-input" inputmode="numeric" maxlength="10" autocomplete="off" required placeholder="Ketik PIN!" class="w-full px-3.5 py-2.5 rounded-xl text-center tracking-widest text-sm font-bold bg-pink-50/70 dark:bg-slate-800 border border-pink-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
-        <button type="submit" class="w-full py-2 rounded-xl accent-btn text-white text-xs font-bold shadow">
-          Masuk Sebagai Super Admin
-        </button>
-      </form>
     </div>
   </div>
 
@@ -342,9 +332,9 @@
   <header class="glass-bar fixed top-0 left-0 right-0 h-8 px-3 sm:px-4 z-[9990] flex items-center justify-between text-xs font-medium bg-white/75 dark:bg-slate-900/80 border-b border-white/70 dark:border-white/10 text-slate-800 dark:text-slate-100">
     <!-- Left -->
     <div class="flex items-center gap-3 sm:gap-4 min-w-0">
-      <button type="button" onclick="openOwnerPinAccess()" title="Akses Owner" class="flex items-center gap-1.5 font-bold hover:opacity-80 transition focus:outline-none">
+      <span class="flex items-center gap-1.5 font-bold">
         <i class="fa-brands fa-apple text-sm text-pink-500"></i>
-      </button>
+      </span>
       <span id="top-active-app-label" class="font-bold tracking-tight truncate">Desktop</span>
       <nav class="hidden md:flex items-center gap-3 text-slate-600 dark:text-slate-300">
         <button type="button" onclick="openAppWindow('library')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Koleksi</button>
@@ -1004,7 +994,7 @@
   <!-- Toast Area -->
   <div id="os-toast-container" class="fixed top-11 right-4 z-[10080] space-y-2 pointer-events-none"></div>
 
-  <!-- ==================== FIREBASE v13.4.0 & APP ENGINE ==================== -->
+  <!-- ==================== FIREBASE v13.4.0 & SECURED APP ENGINE ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
     import {
@@ -1020,55 +1010,71 @@
       doc,
       setDoc,
       getDoc,
-      getDocs,
-      addDoc,
-      updateDoc,
       onSnapshot
     } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
 
-    const firebaseConfig = {
+    const firebaseConfig = Object.freeze({
       apiKey: "AIzaSyCsVXdXmMBNCQuIrfXMJeHN66OAIsThSOg",
       authDomain: "kdrama-os.firebaseapp.com",
       projectId: "kdrama-os",
       storageBucket: "kdrama-os.firebasestorage.app",
       messagingSenderId: "155346177779",
       appId: "1:155346177779:web:19b2c8437fe1857fc4f186"
-    };
+    });
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const OWNER_PIN = "261213";
-    const KEYS = {
-      ACCOUNTS: "kdrama_os_seoul_accounts_v1",
-      POSTS: "kdrama_os_seoul_posts_v1",
-      PLAYLISTS: "kdrama_os_seoul_playlists_v1",
-      SESSION_EMAIL: "kdrama_os_seoul_session_email_v1",
-      THEME: "kdrama_os_seoul_theme_v1",
-      WALLPAPER: "kdrama_os_seoul_wp_v1",
-      CUSTOM_WP: "kdrama_os_seoul_custom_wp_v1",
-      DARK: "kdrama_os_seoul_dark_v1"
-    };
+    // ==================== CLIENT-SIDE UI PROTECTION ====================
+    document.addEventListener("contextmenu", (e) => {
+      if (!["INPUT", "TEXTAREA"].includes(e.target.tagName)) {
+        e.preventDefault();
+      }
+    });
 
-    function createPosterArtwork(title, genre) {
+    document.addEventListener("keydown", (e) => {
+      const key = (e.key || "").toUpperCase();
+      const isDevShortcut =
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C", "K"].includes(key)) ||
+        (e.metaKey && e.altKey && ["I", "J", "C"].includes(key)) ||
+        ((e.ctrlKey || e.metaKey) && ["U", "S"].includes(key));
+
+      if (isDevShortcut) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+
+    const KEYS = Object.freeze({
+      PROFILES: "kdrama_os_seoul_profiles_v2",
+      POSTS: "kdrama_os_seoul_posts_v2",
+      PLAYLISTS: "kdrama_os_seoul_playlists_v2",
+      THEME: "kdrama_os_seoul_theme_v2",
+      WALLPAPER: "kdrama_os_seoul_wp_v2",
+      CUSTOM_WP: "kdrama_os_seoul_custom_wp_v2",
+      DARK: "kdrama_os_seoul_dark_v2"
+    });
+
+    function createPosterArtwork(title, subtitle) {
       const safeTitle = String(title || "K-Drama").slice(0, 26).replace(/[<>&"]/g, "");
-      const safeGenre = String(genre || "Seoul Series").slice(0, 24).replace(/[<>&"]/g, "");
+      const safeSub = String(subtitle || "Drama Korea").slice(0, 24).replace(/[<>&"]/g, "");
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="580" viewBox="0 0 400 580">
         <defs>
-          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stop-color="#f472b6"/>
-            <stop offset="52%" stop-color="#a855f7"/>
+            <stop offset="50%" stop-color="#a855f7"/>
             <stop offset="100%" stop-color="#38bdf8"/>
           </linearGradient>
         </defs>
-        <rect width="400" height="580" fill="url(#bg)"/>
-        <circle cx="330" cy="105" r="95" fill="rgba(255,255,255,0.2)"/>
-        <circle cx="75" cy="495" r="110" fill="rgba(255,255,255,0.16)"/>
-        <rect x="28" y="205" width="344" height="182" rx="24" fill="rgba(255,255,255,0.88)"/>
-        <text x="200" y="272" text-anchor="middle" fill="#1e1b4b" font-family="Poppins, Arial, sans-serif" font-size="22" font-weight="700">${safeTitle}</text>
-        <text x="200" y="314" text-anchor="middle" fill="#6d28d9" font-family="Poppins, Arial, sans-serif" font-size="13" font-weight="600">${safeGenre}</text>
-        <text x="200" y="356" text-anchor="middle" fill="#db2777" font-family="Poppins, Arial, sans-serif" font-size="12" font-weight="700">K-DRAMA OS • SEOUL</text>
+        <rect width="400" height="580" fill="url(#g)"/>
+        <circle cx="320" cy="110" r="105" fill="rgba(255,255,255,0.22)"/>
+        <circle cx="85" cy="480" r="120" fill="rgba(254,240,138,0.25)"/>
+        <rect x="30" y="205" width="340" height="175" rx="26" fill="rgba(255,255,255,0.88)"/>
+        <text x="200" y="270" text-anchor="middle" fill="#1e293b" font-family="Poppins, Arial, sans-serif" font-size="23" font-weight="700">${safeTitle}</text>
+        <text x="200" y="310" text-anchor="middle" fill="#db2777" font-family="Poppins, Arial, sans-serif" font-size="14" font-weight="600">${safeSub}</text>
+        <text x="200" y="348" text-anchor="middle" fill="#0284c7" font-family="Poppins, Arial, sans-serif" font-size="12" font-weight="700">K-DRAMA OS SEOUL</text>
       </svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
     }
@@ -1152,10 +1158,10 @@
       }
     ];
 
-    const DEFAULT_USERS = [
+    // Public profiles directory (NO passwords stored anywhere in client)
+    const DEFAULT_PROFILES = [
       {
         email: "jiyeon@seoulmail.kr",
-        password: "user123",
         name: "Ji-yeon Kim",
         handle: "@jiyeonseoul",
         bio: "Nonton rom-com ceria, kafe estetik, & OST manis",
@@ -1165,7 +1171,6 @@
       },
       {
         email: "junho@seoulmail.kr",
-        password: "user123",
         name: "Jun-ho Park",
         handle: "@junhoscreen",
         bio: "Suka drama remaja, musik band, & film Korea",
@@ -1175,7 +1180,6 @@
       },
       {
         email: "mina@seoulmail.kr",
-        password: "user123",
         name: "Mina Choi",
         handle: "@minacherry",
         bio: "Koleksi review drama favorit & screenshot adegan",
@@ -1197,6 +1201,7 @@
         isFavorite: true,
         review: "Ceritanya manis, emosional, dan bikin susah berhenti nonton! Banyak adegan ikonik yang berkesan.",
         screenshot: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80",
+        authorEmail: "jiyeon@seoulmail.kr",
         authorName: "Ji-yeon Kim",
         authorHandle: "@jiyeonseoul",
         authorAvatar: createAvatarArtwork("Ji-yeon Kim"),
@@ -1224,6 +1229,7 @@
         isFavorite: true,
         review: "Energinya cerah banget! Cerita band anak muda dan persahabatannya hangat sekali.",
         screenshot: "",
+        authorEmail: "junho@seoulmail.kr",
         authorName: "Jun-ho Park",
         authorHandle: "@junhoscreen",
         authorAvatar: createAvatarArtwork("Jun-ho Park"),
@@ -1242,6 +1248,7 @@
         isFavorite: true,
         review: "Ringan, lucu, dan penuh semangat anak kampus. Selalu cocok buat mood booster!",
         screenshot: "",
+        authorEmail: "mina@seoulmail.kr",
         authorName: "Mina Choi",
         authorHandle: "@minacherry",
         authorAvatar: createAvatarArtwork("Mina Choi"),
@@ -1252,7 +1259,7 @@
     ];
 
     const state = {
-      accounts: [],
+      profiles: [],
       currentUser: null,
       posts: [],
       playlists: [],
@@ -1261,7 +1268,9 @@
       rating: 5,
       customPosterDataUrl: "",
       screenshotDataUrl: "",
-      firestoreActive: false
+      firestoreActive: false,
+      unsubPosts: null,
+      unsubUsers: null
     };
 
     function sanitizeHandle(rawHandle, fallbackEmail) {
@@ -1275,32 +1284,36 @@
       return clean.length > 1 ? clean : "@seoulfan";
     }
 
-    function saveAccountsLocal() {
+    function saveProfilesLocal() {
       try {
-        localStorage.setItem(KEYS.ACCOUNTS, JSON.stringify(state.accounts));
-      } catch (e) {
-        showToast("Penyimpanan lokal penuh untuk gambar besar.", "error");
-      }
+        // Strip any sensitive fields defensively
+        const safeList = state.profiles.map((p) => ({
+          email: p.email,
+          name: p.name,
+          handle: p.handle,
+          bio: p.bio || "",
+          avatar: p.avatar || "",
+          favorites: Array.isArray(p.favorites) ? p.favorites : [],
+          friends: Array.isArray(p.friends) ? p.friends : []
+        }));
+        localStorage.setItem(KEYS.PROFILES, JSON.stringify(safeList));
+      } catch (e) {}
     }
 
     function savePostsLocal() {
       try {
         localStorage.setItem(KEYS.POSTS, JSON.stringify(state.posts));
-      } catch (e) {
-        showToast("Gagal menyimpan data ulasan secara lokal.", "error");
-      }
+      } catch (e) {}
     }
 
     function savePlaylistsLocal() {
       try {
         localStorage.setItem(KEYS.PLAYLISTS, JSON.stringify(state.playlists));
-      } catch (e) {
-        showToast("Gagal menyimpan watching list secara lokal.", "error");
-      }
+      } catch (e) {}
     }
 
     async function syncPlaylistToFirestore(plObj) {
-      if (!plObj || !plObj.id) return;
+      if (!plObj || !plObj.id || !auth.currentUser) return;
       try {
         await setDoc(doc(db, "kdrama_playlists", plObj.id), plObj, { merge: true });
         state.firestoreActive = true;
@@ -1311,7 +1324,7 @@
     }
 
     async function syncPostToFirestore(postObj) {
-      if (!postObj || !postObj.id) return;
+      if (!postObj || !postObj.id || !auth.currentUser) return;
       try {
         await setDoc(doc(db, "kdrama_posts", postObj.id), postObj, { merge: true });
         state.firestoreActive = true;
@@ -1322,7 +1335,7 @@
     }
 
     async function syncUserToFirestore(userObj) {
-      if (!userObj || !userObj.email) return;
+      if (!userObj || !userObj.email || !auth.currentUser) return;
       const emailKey = userObj.email.toLowerCase();
       try {
         await setDoc(doc(db, "kdrama_users", emailKey), {
@@ -1351,9 +1364,22 @@
       }
     }
 
+    function stopFirestoreListeners() {
+      if (typeof state.unsubPosts === "function") {
+        state.unsubPosts();
+        state.unsubPosts = null;
+      }
+      if (typeof state.unsubUsers === "function") {
+        state.unsubUsers();
+        state.unsubUsers = null;
+      }
+    }
+
     function startFirestoreListeners() {
+      if (!auth.currentUser) return;
+      stopFirestoreListeners();
       try {
-        onSnapshot(collection(db, "kdrama_posts"), (snap) => {
+        state.unsubPosts = onSnapshot(collection(db, "kdrama_posts"), (snap) => {
           const remotePosts = [];
           snap.forEach((d) => {
             const val = d.data();
@@ -1376,7 +1402,7 @@
           updateCloudPill(false);
         });
 
-        onSnapshot(collection(db, "kdrama_users"), (snap) => {
+        state.unsubUsers = onSnapshot(collection(db, "kdrama_users"), (snap) => {
           const remoteUsers = [];
           snap.forEach((d) => {
             const val = d.data();
@@ -1384,21 +1410,20 @@
           });
           if (remoteUsers.length > 0) {
             remoteUsers.forEach((ru) => {
-              const idx = state.accounts.findIndex((a) => a.email.toLowerCase() === ru.email.toLowerCase());
+              const idx = state.profiles.findIndex((a) => a.email.toLowerCase() === ru.email.toLowerCase());
               if (idx >= 0) {
-                state.accounts[idx] = {
-                  ...state.accounts[idx],
-                  name: ru.name || state.accounts[idx].name,
-                  handle: ru.handle || state.accounts[idx].handle,
-                  bio: ru.bio !== undefined ? ru.bio : state.accounts[idx].bio,
-                  avatar: ru.avatar || state.accounts[idx].avatar,
-                  favorites: Array.isArray(ru.favorites) ? ru.favorites : state.accounts[idx].favorites,
-                  friends: Array.isArray(ru.friends) ? ru.friends : state.accounts[idx].friends
+                state.profiles[idx] = {
+                  ...state.profiles[idx],
+                  name: ru.name || state.profiles[idx].name,
+                  handle: ru.handle || state.profiles[idx].handle,
+                  bio: ru.bio !== undefined ? ru.bio : state.profiles[idx].bio,
+                  avatar: ru.avatar || state.profiles[idx].avatar,
+                  favorites: Array.isArray(ru.favorites) ? ru.favorites : state.profiles[idx].favorites,
+                  friends: Array.isArray(ru.friends) ? ru.friends : state.profiles[idx].friends
                 };
               } else {
-                state.accounts.push({
+                state.profiles.push({
                   email: ru.email.toLowerCase(),
-                  password: "user123",
                   name: ru.name || ru.email.split("@")[0],
                   handle: ru.handle || sanitizeHandle("", ru.email),
                   bio: ru.bio || "",
@@ -1409,11 +1434,10 @@
               }
             });
             if (state.currentUser) {
-              const updatedCurrent = state.accounts.find((a) => a.email.toLowerCase() === state.currentUser.email.toLowerCase());
+              const updatedCurrent = state.profiles.find((a) => a.email.toLowerCase() === state.currentUser.email.toLowerCase());
               if (updatedCurrent) state.currentUser = updatedCurrent;
             }
-            saveAccountsLocal();
-            renderQuickAccountChips();
+            saveProfilesLocal();
             refreshVisibleViews();
           }
         }, () => {
@@ -1425,19 +1449,25 @@
     }
 
     function loadStoredState() {
+      // Remove legacy storage key that might contain plain credentials
       try {
-        const rawAcc = localStorage.getItem(KEYS.ACCOUNTS);
-        if (rawAcc) {
-          const parsedAcc = JSON.parse(rawAcc);
-          if (Array.isArray(parsedAcc) && parsedAcc.length > 0) {
-            state.accounts = parsedAcc;
+        localStorage.removeItem("kdrama_os_seoul_accounts_v1");
+        localStorage.removeItem("kdrama_os_seoul_session_v1");
+      } catch (e) {}
+
+      try {
+        const rawProf = localStorage.getItem(KEYS.PROFILES);
+        if (rawProf) {
+          const parsedProf = JSON.parse(rawProf);
+          if (Array.isArray(parsedProf) && parsedProf.length > 0) {
+            state.profiles = parsedProf;
           }
         }
       } catch (e) {}
 
-      if (!state.accounts.length) {
-        state.accounts = DEFAULT_USERS.map((u) => ({ ...u, favorites: [...u.favorites], friends: [...u.friends] }));
-        saveAccountsLocal();
+      if (!state.profiles.length) {
+        state.profiles = DEFAULT_PROFILES.map((u) => ({ ...u, favorites: [...u.favorites], friends: [...u.friends] }));
+        saveProfilesLocal();
       }
 
       try {
@@ -1492,14 +1522,6 @@
       if (!state.activePlaylistId && state.playlists.length > 0) {
         state.activePlaylistId = state.playlists[0].id;
       }
-
-      const savedSessionEmail = (localStorage.getItem(KEYS.SESSION_EMAIL) || "").trim().toLowerCase();
-      if (savedSessionEmail) {
-        const foundUser = state.accounts.find((a) => a.email.toLowerCase() === savedSessionEmail);
-        if (foundUser) {
-          state.currentUser = foundUser;
-        }
-      }
     }
 
     // ==================== TOAST NOTIFICATIONS ====================
@@ -1528,56 +1550,7 @@
       }, 2800);
     };
 
-    window.openOwnerPinAccess = function () {
-      const modal = document.getElementById("secret-owner-modal");
-      const input = document.getElementById("secret-owner-pin-input");
-      if (!modal || !input) return;
-      input.value = "";
-      modal.classList.remove("hidden");
-      setTimeout(() => input.focus(), 50);
-    };
-
-    window.handleSecretBrandClick = function () {
-      window.openOwnerPinAccess();
-    };
-
-    window.closeSecretOwnerModal = function () {
-      const modal = document.getElementById("secret-owner-modal");
-      const input = document.getElementById("secret-owner-pin-input");
-      if (input) input.value = "";
-      if (modal) modal.classList.add("hidden");
-    };
-
-    window.submitSecretOwnerPin = async function (event) {
-      event.preventDefault();
-      const entered = document.getElementById("secret-owner-pin-input").value.trim();
-      if (entered !== OWNER_PIN) {
-        showToast("PIN tidak cocok.", "error");
-        return;
-      }
-
-      let ownerAcc = state.accounts.find((a) => a.email === "owner@kdrama.os" || a.handle === "@owner");
-      if (!ownerAcc) {
-        ownerAcc = {
-          email: "owner@kdrama.os",
-          password: OWNER_PIN,
-          name: "Owner K-Drama OS",
-          handle: "@owner",
-          bio: "Pemilik & kurator drama Korea favorit",
-          avatar: createAvatarArtwork("Owner"),
-          favorites: ["Queen of Tears", "Lovely Runner", "Moving"],
-          friends: ["@jiyeonseoul", "@junhoscreen", "@minacherry"]
-        };
-        state.accounts.unshift(ownerAcc);
-        saveAccountsLocal();
-      }
-
-      closeSecretOwnerModal();
-      await enterDesktopSession(ownerAcc);
-      showToast("Akses khusus dibuka.", "success");
-    };
-
-    // ==================== EMAIL & PASSWORD AUTH ====================
+    // ==================== STRICT FIREBASE AUTHENTICATION ====================
     window.switchAuthTab = function (tab) {
       const btnLogin = document.getElementById("auth-btn-login");
       const btnReg = document.getElementById("auth-btn-register");
@@ -1597,59 +1570,56 @@
       }
     };
 
-    function renderQuickAccountChips() {
-      const container = document.getElementById("quick-accounts-grid");
-      if (!container) return;
-      const items = state.accounts.filter((a) => a.email !== "owner@kdrama.os").slice(0, 2);
-      container.innerHTML = items
-        .map(
-          (acc) => `
-        <button type="button" onclick="fillQuickAccount('${acc.email}', '${acc.password}')" class="p-2 rounded-xl bg-pink-50/80 dark:bg-slate-800 hover:bg-pink-100/80 dark:hover:bg-slate-700 border border-pink-200/60 dark:border-slate-700 text-left transition">
-          <p class="text-[11px] font-bold truncate">${acc.name}</p>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">${acc.email}</p>
-        </button>
-      `
-        )
-        .join("");
+    function mapFirebaseAuthError(code) {
+      switch (code) {
+        case "auth/invalid-credential":
+        case "auth/user-not-found":
+        case "auth/wrong-password":
+          return "Email atau password salah.";
+        case "auth/email-already-in-use":
+          return "Email sudah terdaftar. Silakan masuk di tab Masuk.";
+        case "auth/weak-password":
+          return "Password minimal 6 karakter.";
+        case "auth/invalid-email":
+          return "Format email tidak valid.";
+        case "auth/too-many-requests":
+          return "Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.";
+        default:
+          return "Gagal memverifikasi akun. Periksa koneksi internet kamu.";
+      }
     }
-
-    window.fillQuickAccount = function (email, password) {
-      switchAuthTab("login");
-      document.getElementById("input-login-email").value = email;
-      document.getElementById("input-login-password").value = password;
-    };
 
     window.processEmailPasswordLogin = async function (event) {
       event.preventDefault();
       const email = document.getElementById("input-login-email").value.trim().toLowerCase();
       const password = document.getElementById("input-login-password").value;
+      const btn = document.getElementById("btn-submit-login");
 
-      // Attempt Firebase Auth sign-in first when available
+      btn.disabled = true;
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        const snap = await getDoc(doc(db, "kdrama_users", email));
-        let userRecord = state.accounts.find((a) => a.email.toLowerCase() === email);
-        if (snap.exists()) {
-          const remote = snap.data();
-          userRecord = {
-            email,
-            password,
-            name: remote.name || userRecord?.name || email.split("@")[0],
-            handle: remote.handle || userRecord?.handle || sanitizeHandle("", email),
-            bio: remote.bio !== undefined ? remote.bio : (userRecord?.bio || ""),
-            avatar: remote.avatar || userRecord?.avatar || createAvatarArtwork(remote.name || email),
-            favorites: Array.isArray(remote.favorites) ? remote.favorites : (userRecord?.favorites || []),
-            friends: Array.isArray(remote.friends) ? remote.friends : (userRecord?.friends || [])
-          };
-          const idx = state.accounts.findIndex((a) => a.email.toLowerCase() === email);
-          if (idx >= 0) state.accounts[idx] = userRecord;
-          else state.accounts.unshift(userRecord);
-          saveAccountsLocal();
-        }
+        document.getElementById("input-login-password").value = "";
+
+        let userRecord = state.profiles.find((a) => a.email.toLowerCase() === email);
+        try {
+          const snap = await getDoc(doc(db, "kdrama_users", email));
+          if (snap.exists()) {
+            const remote = snap.data();
+            userRecord = {
+              email,
+              name: remote.name || userRecord?.name || email.split("@")[0],
+              handle: remote.handle || userRecord?.handle || sanitizeHandle("", email),
+              bio: remote.bio !== undefined ? remote.bio : (userRecord?.bio || ""),
+              avatar: remote.avatar || userRecord?.avatar || createAvatarArtwork(remote.name || email),
+              favorites: Array.isArray(remote.favorites) ? remote.favorites : (userRecord?.favorites || []),
+              friends: Array.isArray(remote.friends) ? remote.friends : (userRecord?.friends || [])
+            };
+          }
+        } catch (e) {}
+
         if (!userRecord) {
           userRecord = {
             email,
-            password,
             name: email.split("@")[0],
             handle: sanitizeHandle("", email),
             bio: "Anggota K-Drama OS",
@@ -1657,30 +1627,20 @@
             favorites: [],
             friends: []
           };
-          state.accounts.unshift(userRecord);
-          saveAccountsLocal();
         }
-        document.getElementById("input-login-password").value = "";
+
+        const idx = state.profiles.findIndex((a) => a.email.toLowerCase() === email);
+        if (idx >= 0) state.profiles[idx] = userRecord;
+        else state.profiles.unshift(userRecord);
+        saveProfilesLocal();
+
         await enterDesktopSession(userRecord);
         showToast(`Selamat datang kembali, ${userRecord.name}!`, "success");
-        return;
       } catch (firebaseErr) {
-        // Fallback to local stored account record
+        showToast(mapFirebaseAuthError(firebaseErr.code), "error");
+      } finally {
+        btn.disabled = false;
       }
-
-      const localUser = state.accounts.find((a) => a.email.toLowerCase() === email);
-      if (!localUser) {
-        showToast("Email belum terdaftar. Silakan tab Daftar Baru.", "error");
-        return;
-      }
-      if (localUser.password !== password) {
-        showToast("Password salah. Periksa kembali password kamu.", "error");
-        return;
-      }
-
-      document.getElementById("input-login-password").value = "";
-      await enterDesktopSession(localUser);
-      showToast(`Halo, ${localUser.name}!`, "success");
     };
 
     window.processEmailPasswordRegister = async function (event) {
@@ -1692,47 +1652,48 @@
       );
       const email = document.getElementById("input-reg-email").value.trim().toLowerCase();
       const password = document.getElementById("input-reg-password").value;
+      const btn = document.getElementById("btn-submit-register");
 
-      if (state.accounts.some((a) => a.email.toLowerCase() === email)) {
-        showToast("Email sudah terdaftar. Silakan masuk.", "error");
-        return;
-      }
-
-      const newAccount = {
-        email,
-        password,
-        name: name || email.split("@")[0],
-        handle,
-        bio: "Penggemar drama Korea & film seru",
-        avatar: createAvatarArtwork(name || email),
-        favorites: [],
-        friends: []
-      };
-
+      btn.disabled = true;
       try {
         await createUserWithEmailAndPassword(auth, email, password);
-      } catch (firebaseErr) {
-        // Continue smoothly with local persistence if Auth provider or network is offline
-      }
 
-      state.accounts.unshift(newAccount);
-      saveAccountsLocal();
-      document.getElementById("auth-form-register").reset();
-      await enterDesktopSession(newAccount);
-      showToast(`Akun ${newAccount.name} (${newAccount.handle}) siap dipakai!`, "success");
+        const newProfile = {
+          email,
+          name: name || email.split("@")[0],
+          handle,
+          bio: "Penggemar drama Korea & film seru",
+          avatar: createAvatarArtwork(name || email),
+          favorites: [],
+          friends: []
+        };
+
+        const idx = state.profiles.findIndex((a) => a.email.toLowerCase() === email);
+        if (idx >= 0) state.profiles[idx] = newProfile;
+        else state.profiles.unshift(newProfile);
+        saveProfilesLocal();
+
+        document.getElementById("auth-form-register").reset();
+        await enterDesktopSession(newProfile);
+        showToast(`Akun ${newProfile.name} (${newProfile.handle}) berhasil terdaftar!`, "success");
+      } catch (firebaseErr) {
+        showToast(mapFirebaseAuthError(firebaseErr.code), "error");
+      } finally {
+        btn.disabled = false;
+      }
     };
 
     async function enterDesktopSession(userRecord) {
       state.currentUser = userRecord;
-      localStorage.setItem(KEYS.SESSION_EMAIL, userRecord.email.toLowerCase());
       document.getElementById("auth-gate-overlay").classList.add("hidden");
+      startFirestoreListeners();
       refreshVisibleViews();
       await syncUserToFirestore(userRecord);
     }
 
     window.signOutAccount = async function () {
+      stopFirestoreListeners();
       state.currentUser = null;
-      localStorage.removeItem(KEYS.SESSION_EMAIL);
       try {
         await signOut(auth);
       } catch (e) {}
@@ -1763,7 +1724,7 @@
     }
 
     window.openAppWindow = function (winId) {
-      if (!state.currentUser) {
+      if (!state.currentUser || !auth.currentUser) {
         document.getElementById("auth-gate-overlay").classList.remove("hidden");
         return;
       }
@@ -1890,7 +1851,7 @@
       setInterval(update, 15000);
     }
 
-    // ==================== AUTO-LOOKUP DRAMA/MOVIE (CATALOG + FREE PUBLIC API) ====================
+    // ==================== AUTO-LOOKUP DRAMA/MOVIE ====================
     function stripHtmlTags(rawHtml) {
       return String(rawHtml || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
     }
@@ -1946,6 +1907,7 @@
     };
 
     let lookupTimer = null;
+    let latestLookupList = [];
     window.onDramaSearchInput = function (query) {
       clearTimeout(lookupTimer);
       const menu = document.getElementById("drama-search-suggestions");
@@ -2007,9 +1969,7 @@
               items = [...items, ...apiItems];
             }
           }
-        } catch (err) {
-          // Keep built-in & generated items seamlessly
-        }
+        } catch (err) {}
 
         spinner.classList.add("hidden");
         if (!items.length) {
@@ -2022,6 +1982,7 @@
           }];
         }
 
+        latestLookupList = items;
         menu.innerHTML = items
           .map(
             (it, idx) => `
@@ -2037,14 +1998,12 @@
           )
           .join("");
 
-        window.__latestLookupList = items;
         menu.classList.remove("hidden");
       }, 240);
     };
 
     window.pickLookupResult = function (index) {
-      const list = window.__latestLookupList || [];
-      const chosen = list[index];
+      const chosen = latestLookupList[index];
       if (!chosen) return;
       document.getElementById("drama-auto-search").value = chosen.title;
       populateFormWithMetadata(chosen, true);
@@ -2099,7 +2058,7 @@
     };
 
     window.publishDramaReview = async function () {
-      if (!state.currentUser) return;
+      if (!state.currentUser || !auth.currentUser) return;
       const title = (document.getElementById("form-drama-title").value || document.getElementById("drama-auto-search").value || "").trim();
       if (!title) {
         showToast("Silakan isi judul drama atau film terlebih dahulu.", "error");
@@ -2124,6 +2083,7 @@
         isFavorite,
         review,
         screenshot: state.screenshotDataUrl || "",
+        authorEmail: state.currentUser.email,
         authorName: state.currentUser.name,
         authorHandle: state.currentUser.handle,
         authorAvatar: state.currentUser.avatar,
@@ -2706,7 +2666,7 @@
       }
 
       state.currentUser.friends.push(handle);
-      saveAccountsLocal();
+      saveProfilesLocal();
       if (input && !specificHandle) input.value = "";
       refreshVisibleViews();
       renderFriendsView();
@@ -2717,7 +2677,7 @@
     window.removeFriendByHandle = async function (handle) {
       if (!state.currentUser) return;
       state.currentUser.friends = (state.currentUser.friends || []).filter((h) => h !== handle);
-      saveAccountsLocal();
+      saveProfilesLocal();
       refreshVisibleViews();
       renderFriendsView();
       await syncUserToFirestore(state.currentUser);
@@ -2729,7 +2689,7 @@
       if (!box || !state.currentUser) return;
       const q = (document.getElementById("friend-handle-search")?.value || "").trim().toLowerCase().replace(/^@/, "");
 
-      const others = state.accounts.filter((a) => a.handle.toLowerCase() !== state.currentUser.handle.toLowerCase());
+      const others = state.profiles.filter((a) => a.handle.toLowerCase() !== state.currentUser.handle.toLowerCase());
       const matches = q
         ? others.filter((a) => a.handle.toLowerCase().includes(q) || a.name.toLowerCase().includes(q))
         : others;
@@ -2777,7 +2737,7 @@
       } else {
         addedEl.innerHTML = friends
           .map((handle) => {
-            const match = state.accounts.find((a) => a.handle.toLowerCase() === handle.toLowerCase());
+            const match = state.profiles.find((a) => a.handle.toLowerCase() === handle.toLowerCase());
             const displayName = match ? match.name : handle.slice(1);
             const av = match?.avatar || createAvatarArtwork(displayName);
             return `
@@ -2852,7 +2812,7 @@
       reader.onload = async function (e) {
         state.currentUser.avatar = e.target.result;
         document.getElementById("settings-avatar-preview").src = e.target.result;
-        saveAccountsLocal();
+        saveProfilesLocal();
         refreshVisibleViews();
         await syncUserToFirestore(state.currentUser);
         showToast("Foto profil diperbarui!", "success");
@@ -2883,7 +2843,7 @@
         state.currentUser.avatar = createAvatarArtwork(state.currentUser.name);
       }
 
-      saveAccountsLocal();
+      saveProfilesLocal();
       refreshVisibleViews();
       await syncUserToFirestore(state.currentUser);
       showToast("Profil & Top 3 Favorit tersimpan!", "success");
@@ -2949,18 +2909,32 @@
       runLiveClock();
       loadStoredState();
       resetAddFormState();
-      renderQuickAccountChips();
       updateCloudPill(false);
-      startFirestoreListeners();
 
-      onAuthStateChanged(auth, (fbUser) => {
+      // Single source of truth: Firebase Auth session state
+      onAuthStateChanged(auth, async (fbUser) => {
         if (fbUser && fbUser.email) {
           const emailLower = fbUser.email.toLowerCase();
-          let matched = state.accounts.find((a) => a.email.toLowerCase() === emailLower);
+          let matched = state.profiles.find((a) => a.email.toLowerCase() === emailLower);
+          try {
+            const snap = await getDoc(doc(db, "kdrama_users", emailLower));
+            if (snap.exists()) {
+              const remote = snap.data();
+              matched = {
+                email: emailLower,
+                name: remote.name || matched?.name || emailLower.split("@")[0],
+                handle: remote.handle || matched?.handle || sanitizeHandle("", emailLower),
+                bio: remote.bio !== undefined ? remote.bio : (matched?.bio || ""),
+                avatar: remote.avatar || matched?.avatar || createAvatarArtwork(remote.name || emailLower),
+                favorites: Array.isArray(remote.favorites) ? remote.favorites : (matched?.favorites || []),
+                friends: Array.isArray(remote.friends) ? remote.friends : (matched?.friends || [])
+              };
+            }
+          } catch (e) {}
+
           if (!matched) {
             matched = {
               email: emailLower,
-              password: "",
               name: emailLower.split("@")[0],
               handle: sanitizeHandle("", emailLower),
               bio: "Anggota K-Drama OS",
@@ -2968,22 +2942,20 @@
               favorites: [],
               friends: []
             };
-            state.accounts.unshift(matched);
-            saveAccountsLocal();
           }
-          state.currentUser = matched;
-          localStorage.setItem(KEYS.SESSION_EMAIL, emailLower);
-          document.getElementById("auth-gate-overlay").classList.add("hidden");
-          refreshVisibleViews();
+
+          const idx = state.profiles.findIndex((a) => a.email.toLowerCase() === emailLower);
+          if (idx >= 0) state.profiles[idx] = matched;
+          else state.profiles.unshift(matched);
+          saveProfilesLocal();
+
+          await enterDesktopSession(matched);
+        } else {
+          stopFirestoreListeners();
+          state.currentUser = null;
+          document.getElementById("auth-gate-overlay").classList.remove("hidden");
         }
       });
-
-      if (state.currentUser) {
-        document.getElementById("auth-gate-overlay").classList.add("hidden");
-        refreshVisibleViews();
-      } else {
-        document.getElementById("auth-gate-overlay").classList.remove("hidden");
-      }
     });
   </script>
 </body>
