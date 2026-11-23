@@ -2984,8 +2984,8 @@
             </div>
             <div class="p-2.5 flex-1 flex flex-col justify-between gap-2">
               <p class="text-[11px] text-slate-600 dark:text-slate-300 line-clamp-2">"${post.review}"</p>
-              <div class="flex items-center justify-between pt-1.5 border-t border-slate-200/70 dark:border-slate-700/70 text-[10px] text-slate-500 dark:text-slate-400">
-                <span class="font-medium truncate">${post.authorHandle || post.authorName}</span>
+			  <div class="flex items-center justify-between pt-1.5 border-t border-slate-200/70 dark:border-slate-700/70 text-[10px] text-slate-500 dark:text-slate-400">
+                <span class="font-medium truncate">${getLiveAuthorHandle(post) || post.authorName}</span>
                 <span><i class="fa-regular fa-comment mr-0.5"></i>${(post.comments || []).length}</span>
               </div>
             </div>
@@ -3013,6 +3013,15 @@
         })
         .join("");
       return `<div class="flex flex-wrap items-center gap-1.5 pt-1">${chips}</div>`;
+    }
+
+function getLiveAuthorHandle(post) {
+      const email = (post?.authorEmail || "").trim().toLowerCase();
+      if (email) {
+        const prof = state.profiles.find((p) => (p.email || "").trim().toLowerCase() === email);
+        if (prof && prof.handle) return prof.handle;
+      }
+      return post?.authorHandle || "";
     }
 
     window.renderCommunityPosts = function () {
@@ -3046,7 +3055,7 @@
           caption.textContent = "Page 1 (Teman): Ulasan & update dari teman (@username) dan kamu sendiri.";
         }
         visiblePosts = state.posts.filter((p) => {
-          const h = (p.authorHandle || "").toLowerCase();
+          const h = (getLiveAuthorHandle(p) || p.authorHandle || "").toLowerCase();
           return friendSet.has(h) || (myHandle && h === myHandle);
         });
       }
@@ -3066,12 +3075,13 @@
           const posterUrl = ensurePostPoster(post);
           const fallbackPoster = createPosterArtwork(post.title, post.genre);
           const fallbackAvatar = createAvatarArtwork(post.authorName);
-          const isFriend = friendSet.has((post.authorHandle || "").toLowerCase());
+          const liveHandle = getLiveAuthorHandle(post);
+          const isFriend = friendSet.has((liveHandle || "").toLowerCase());
           const isWallUpdate = post.postType === "wall_update";
           const actorsHtml = renderActorChipsHtml(post.actors);
-          const safeAuthorTarget = (post.authorHandle || post.authorEmail || post.authorName || "").replace(/'/g, "\\'");
-		  
-		  const isOwner =
+          const safeAuthorTarget = (liveHandle || post.authorEmail || post.authorName || "").replace(/'/g, "\\'");
+
+          const isOwner =
             state.currentUser &&
             (post.authorEmail || "").trim().toLowerCase() === (state.currentUser.email || "").trim().toLowerCase();
           const canManagePost = isOwner || state.isSuperAdmin;
@@ -3084,7 +3094,7 @@
                 <div class="min-w-0">
                   <div class="flex items-center gap-1.5 flex-wrap">
                     <span class="text-xs font-semibold truncate group-hover:text-pink-500 transition">${post.authorName}</span>
-                    <span class="text-[11px] font-medium text-pink-600 dark:text-pink-400">${post.authorHandle || ""}</span>
+                    <span class="text-[11px] font-medium text-pink-600 dark:text-pink-400">${liveHandle}</span>
                     ${isFriend
                       ? `<span class="text-[9px] px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-700 dark:text-violet-300 font-medium">Teman</span>`
                       : `<span class="text-[9px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-700 dark:text-sky-300 font-medium">Publik</span>`
@@ -3131,7 +3141,7 @@
                   <i class="fa-regular fa-comment mr-1"></i>${(post.comments || []).length} Komentar
                 </span>
               </div>
-			  ${
+${
                 canManagePost
                   ? `<div class="flex items-center gap-3">
                        ${!isWallUpdate ? `<button type="button" onclick="openDramaDetailOverlay('${post.id}', true)" class="text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i>Edit Detail / Rate</button>` : ""}
@@ -3139,12 +3149,6 @@
                      </div>`
                   : ""
               }
-              <div class="flex items-center gap-3">
-                ${!isWallUpdate ? `<button type="button" onclick="openDramaDetailOverlay('${post.id}', true)" class="text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i>Edit Detail / Rate</button>` : ""}
-                <button type="button" onclick="deleteSavedDramaReview('${post.id}')" class="text-[11px] font-medium text-rose-600 dark:text-rose-400 hover:underline">
-                  <i class="fa-solid fa-trash mr-1"></i>Hapus
-                </button>
-              </div>
             </div>
 
             <div class="space-y-2 pl-2.5 border-l-2 border-pink-300 dark:border-pink-500/50">
@@ -3221,41 +3225,59 @@
       state.editDraftRating = Number(post.rating || 5);
       state.editDraftPoster = post.poster || "";
       state.editDraftScreenshot = post.screenshot || "";
+	  
+	  const isOwner =
+        Boolean(state.currentUser?.email) &&
+        Boolean(post.authorEmail) &&
+        (post.authorEmail || "").trim().toLowerCase() === (state.currentUser.email || "").trim().toLowerCase();
+      const canManagePost = isOwner || Boolean(state.isSuperAdmin);
+
+      const editBtn = document.getElementById("detail-toggle-edit-btn");
+      const delBtn = document.getElementById("detail-delete-review-btn");
+      if (editBtn) editBtn.classList.toggle("hidden", !canManagePost);
+      if (delBtn) delBtn.classList.toggle("hidden", !canManagePost);
+	  
       renderDramaDetailOverlayContent();
       document.getElementById("drama-detail-overlay").classList.remove("hidden");
     };
 
 	window.deleteSavedDramaReview = async function (explicitPostId) {
-	  const targetId = explicitPostId || state.detailPostId;
-	  const post = state.posts.find((p) => p.id === targetId);
-	  if (!post || !state.currentUser) return;
+      const targetId = explicitPostId || state.detailPostId;
+      const post = state.posts.find((p) => p.id === targetId);
+      if (!post) return;
 
-	  const myEmail = (state.currentUser.email || "").trim().toLowerCase();
-	  const ownerEmail = (post.authorEmail || "").trim().toLowerCase();
-	  const isOwner = ownerEmail && ownerEmail === myEmail;
+      if (!state.currentUser) {
+        showToast("Silakan masuk terlebih dahulu.", "error");
+        return;
+      }
 
-	  if (!isOwner && !state.isSuperAdmin) {
-		showToast("Kamu hanya bisa menghapus postingan milikmu sendiri.", "error");
-		return;
-	  }
+      const myEmail = (state.currentUser.email || "").trim().toLowerCase();
+      const ownerEmail = (post.authorEmail || "").trim().toLowerCase();
+      const isOwner = Boolean(myEmail && ownerEmail && myEmail === ownerEmail);
 
-	  const ok = await askCustomConfirm(
-		"Hapus Postingan",
-		`Hapus "${post.title}"? Data akan dihapus dari daftar.`,
-		"Hapus"
-	  );
-	  if (!ok) return;
+      // Hanya pemilik asli atau Super Admin yang sedang aktif yang boleh menghapus
+      if (!isOwner && !state.isSuperAdmin) {
+        showToast("Kamu tidak bisa menghapus postingan milik pengguna lain.", "error");
+        return;
+      }
 
-	  state.posts = state.posts.filter((p) => p.id !== targetId);
-	  savePostsLocal();
+      const ok = await askCustomConfirm(
+        "Hapus Postingan",
+        `Hapus "${post.title}"? Data akan dihapus dari daftar.`,
+        "Hapus"
+      );
+      if (!ok) return;
 
-	  if (state.detailPostId === targetId) {
-		closeDramaDetailOverlay();
-	  }
-	  refreshVisibleViews();
-	  await deletePostFromFirestore(targetId);
-	  showToast(`"${post.title}" berhasil dihapus.`, "info");
-	};
+      state.posts = state.posts.filter((p) => p.id !== targetId);
+      savePostsLocal();
+
+      if (state.detailPostId === targetId) {
+        closeDramaDetailOverlay();
+      }
+      refreshVisibleViews();
+      await deletePostFromFirestore(targetId);
+      showToast(`"${post.title}" berhasil dihapus.`, "info");
+    };
 
     window.toggleDramaEditMode = function () {
       const post = state.posts.find((p) => p.id === state.detailPostId);
@@ -4618,11 +4640,36 @@
         state.currentUser.avatar = createAvatarArtwork(state.currentUser.name);
       }
 
-      saveProfilesLocal();
+	  saveProfilesLocal();
+
+      // [BARU - SINKRONKAN @USERNAME, NAMA & AVATAR KE SEMUA REVIEW MILIK KAMU]
+      const myEmail = (state.currentUser.email || "").trim().toLowerCase();
+      const updatedUserPosts = state.posts.filter(
+        (p) => (p.authorEmail || "").trim().toLowerCase() === myEmail
+      );
+
+      updatedUserPosts.forEach((p) => {
+        p.authorName = state.currentUser.name;
+        p.authorHandle = state.currentUser.handle;
+        p.authorAvatar = state.currentUser.avatar;
+      });
+
+      if (updatedUserPosts.length > 0) {
+        savePostsLocal();
+        for (const p of updatedUserPosts) {
+          await syncPostToFirestore(p);
+        }
+      }
+
+      refreshVisibleViews();
+      await syncUserToFirestore(state.currentUser);
+      showToast("Profil & @username pada review berhasil diperbarui!", "success");
+	  
       refreshVisibleViews();
       await syncUserToFirestore(state.currentUser);
       showToast("Profil & Top 3 Favorit tersimpan!", "success");
     };
+	
 
     function refreshVisibleViews() {
       const u = state.currentUser;
@@ -4658,7 +4705,12 @@
       }
 
       renderLibraryCollection();
-      renderCommunityPosts();
+      <img src="${post.authorAvatar || fallbackAvatar}" alt="${post.authorName}" onerror="this.src='${fallbackAvatar}'" class="w-9 h-9 rounded-full object-cover bg-white shrink-0" />
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-xs font-semibold truncate group-hover:text-pink-500 transition">${post.authorName}</span>
+                    <span class="text-[11px] font-medium text-pink-600 dark:text-pink-400">${getLiveAuthorHandle(post)}</span>
+                    ${isFriend();
       renderPlaylistsWorkspace();
       renderMessagesWorkspace();
       if (state.isSuperAdmin) renderSuperAdminDashboard();
