@@ -1655,6 +1655,34 @@
       return clean.length > 1 ? clean : "@drakorfan";
     }
 
+	// [TAMBAHAN - OTOMATIS SESUAIKAN @USERNAME SAAT LOGIN]
+    function resolveLoginUsername(email, preferredHandle, displayName) {
+      const emailLower = String(email || "").trim().toLowerCase();
+      let candidate = sanitizeHandle(preferredHandle || displayName || "", emailLower);
+
+      // Cek apakah @username sudah dipakai oleh akun email lain
+      const takenByOther = state.profiles.some(
+        (p) => p.handle.toLowerCase() === candidate.toLowerCase() && p.email.toLowerCase() !== emailLower
+      );
+
+      if (takenByOther || !candidate || candidate === "@") {
+        const basePrefix = (emailLower.split("@")[0] || "drakorfan").replace(/[^a-z0-9_]/g, "") || "drakorfan";
+        let suffixNum = 1;
+        let nextHandle = `@${basePrefix}_${suffixNum}`;
+        while (
+          state.profiles.some(
+            (p) => p.handle.toLowerCase() === nextHandle.toLowerCase() && p.email.toLowerCase() !== emailLower
+          )
+        ) {
+          suffixNum += 1;
+          nextHandle = `@${basePrefix}_${suffixNum}`;
+        }
+        candidate = nextHandle;
+      }
+
+      return candidate;
+    }
+
     function ensurePostPoster(post) {
       if (!post) return createPosterArtwork("DRAKORIN", "Drama Korea");
       if (post.poster && String(post.poster).trim()) return post.poster;
@@ -2228,6 +2256,19 @@
             friends: []
           };
         }
+		
+			// [TAMBAHAN - PASTIKAN @USERNAME OTOMATIS TER-UPDATE SAAT MASUK]
+		const finalHandle = resolveLoginUsername(
+		  email,
+		  userRecord?.handle,
+		  userRecord?.name
+		);
+		const previousHandle = userRecord.handle;
+		userRecord.handle = finalHandle;
+
+		if (previousHandle && previousHandle.toLowerCase() !== finalHandle.toLowerCase()) {
+		  showToast(`Username otomatis disesuaikan menjadi ${finalHandle}`, "info");
+		}
 
         const idx = state.profiles.findIndex((a) => a.email.toLowerCase() === email);
         if (idx >= 0) state.profiles[idx] = userRecord;
@@ -4434,6 +4475,19 @@
               friends: []
             };
           }
+		  
+			  // [TAMBAHAN - PASTIKAN @USERNAME OTOMATIS TER-UPDATE SAAT MASUK]
+		const finalHandle = resolveLoginUsername(
+		  email,
+		  userRecord?.handle,
+		  userRecord?.name
+		);
+		const previousHandle = userRecord.handle;
+		userRecord.handle = finalHandle;
+
+		if (previousHandle && previousHandle.toLowerCase() !== finalHandle.toLowerCase()) {
+		  showToast(`Username otomatis disesuaikan menjadi ${finalHandle}`, "info");
+		}
 
           const idx = state.profiles.findIndex((a) => a.email.toLowerCase() === emailLower);
           if (idx >= 0) state.profiles[idx] = matched;
