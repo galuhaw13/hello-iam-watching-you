@@ -3070,6 +3070,11 @@
           const isWallUpdate = post.postType === "wall_update";
           const actorsHtml = renderActorChipsHtml(post.actors);
           const safeAuthorTarget = (post.authorHandle || post.authorEmail || post.authorName || "").replace(/'/g, "\\'");
+		  
+		  const isOwner =
+            state.currentUser &&
+            (post.authorEmail || "").trim().toLowerCase() === (state.currentUser.email || "").trim().toLowerCase();
+          const canManagePost = isOwner || state.isSuperAdmin;
 
           return `
           <article class="p-4 sm:p-5 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-pink-100 dark:border-slate-700 shadow-sm space-y-3.5">
@@ -3126,6 +3131,14 @@
                   <i class="fa-regular fa-comment mr-1"></i>${(post.comments || []).length} Komentar
                 </span>
               </div>
+			  ${
+                canManagePost
+                  ? `<div class="flex items-center gap-3">
+                       ${!isWallUpdate ? `<button type="button" onclick="openDramaDetailOverlay('${post.id}', true)" class="text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i>Edit Detail / Rate</button>` : ""}
+                       <button type="button" onclick="deleteSavedDramaReview('${post.id}')" class="text-[11px] font-medium text-rose-600 dark:text-rose-400 hover:underline"><i class="fa-solid fa-trash mr-1"></i>Hapus</button>
+                     </div>`
+                  : ""
+              }
               <div class="flex items-center gap-3">
                 ${!isWallUpdate ? `<button type="button" onclick="openDramaDetailOverlay('${post.id}', true)" class="text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i>Edit Detail / Rate</button>` : ""}
                 <button type="button" onclick="deleteSavedDramaReview('${post.id}')" class="text-[11px] font-medium text-rose-600 dark:text-rose-400 hover:underline">
@@ -3212,28 +3225,37 @@
       document.getElementById("drama-detail-overlay").classList.remove("hidden");
     };
 
-    window.deleteSavedDramaReview = async function (explicitPostId) {
-      const targetId = explicitPostId || state.detailPostId;
-      const post = state.posts.find((p) => p.id === targetId);
-      if (!post) return;
+	window.deleteSavedDramaReview = async function (explicitPostId) {
+	  const targetId = explicitPostId || state.detailPostId;
+	  const post = state.posts.find((p) => p.id === targetId);
+	  if (!post || !state.currentUser) return;
 
-      const ok = await askCustomConfirm(
-        "Hapus Postingan",
-        `Hapus "${post.title}"? Data akan dihapus dari daftar.`,
-        "Hapus"
-      );
-      if (!ok) return;
+	  const myEmail = (state.currentUser.email || "").trim().toLowerCase();
+	  const ownerEmail = (post.authorEmail || "").trim().toLowerCase();
+	  const isOwner = ownerEmail && ownerEmail === myEmail;
 
-      state.posts = state.posts.filter((p) => p.id !== targetId);
-      savePostsLocal();
+	  if (!isOwner && !state.isSuperAdmin) {
+		showToast("Kamu hanya bisa menghapus postingan milikmu sendiri.", "error");
+		return;
+	  }
 
-      if (state.detailPostId === targetId) {
-        closeDramaDetailOverlay();
-      }
-      refreshVisibleViews();
-      await deletePostFromFirestore(targetId);
-      showToast(`"${post.title}" berhasil dihapus.`, "info");
-    };
+	  const ok = await askCustomConfirm(
+		"Hapus Postingan",
+		`Hapus "${post.title}"? Data akan dihapus dari daftar.`,
+		"Hapus"
+	  );
+	  if (!ok) return;
+
+	  state.posts = state.posts.filter((p) => p.id !== targetId);
+	  savePostsLocal();
+
+	  if (state.detailPostId === targetId) {
+		closeDramaDetailOverlay();
+	  }
+	  refreshVisibleViews();
+	  await deletePostFromFirestore(targetId);
+	  showToast(`"${post.title}" berhasil dihapus.`, "info");
+	};
 
     window.toggleDramaEditMode = function () {
       const post = state.posts.find((p) => p.id === state.detailPostId);
