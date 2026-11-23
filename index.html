@@ -332,7 +332,7 @@
     </div>
   </div>
 
-  <!-- ==================== FORGOT PASSWORD EMAIL MODAL (FIREBASE sendPasswordResetEmail) ==================== -->
+  <!-- ==================== FORGOT PASSWORD EMAIL MODAL ==================== -->
   <div id="forgot-password-modal" class="hidden fixed inset-0 z-[10075] flex items-center justify-center p-4 bg-slate-950/65 backdrop-blur-xl">
     <div class="w-full max-w-sm rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/85 dark:border-white/15 shadow-2xl p-5 sm:p-6 space-y-4 animate-win-pop">
       <div class="flex items-center justify-between">
@@ -365,7 +365,7 @@
     </div>
   </div>
 
-  <!-- ==================== MANUAL SUPER ADMIN PASSWORD MODAL (261213 — NEVER AUTO-FILLED) ==================== -->
+  <!-- ==================== MANUAL SUPER ADMIN PASSWORD MODAL ==================== -->
   <div id="manual-pin-modal" class="hidden fixed inset-0 z-[10070] flex items-center justify-center p-4 bg-slate-950/65 backdrop-blur-xl">
     <div class="w-full max-w-xs rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/85 dark:border-white/15 shadow-2xl p-5 space-y-4 animate-win-pop">
       <div class="flex items-center justify-between">
@@ -394,7 +394,7 @@
     </div>
   </div>
 
-  <!-- ==================== CUSTOM CONFIRMATION MODAL (REPLACES BROWSER CONFIRM) ==================== -->
+  <!-- ==================== CUSTOM CONFIRMATION MODAL ==================== -->
   <div id="custom-confirm-modal" class="hidden fixed inset-0 z-[10078] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md">
     <div class="w-full max-w-sm rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/85 dark:border-white/15 shadow-2xl p-5 space-y-4 animate-win-pop">
       <div class="flex items-center gap-2.5">
@@ -417,7 +417,6 @@
 
   <!-- ==================== 2. TOP MENU BAR (macOS) ==================== -->
   <header class="glass-bar fixed top-0 left-0 right-0 h-8 px-3 sm:px-4 z-[9990] flex items-center justify-between text-xs font-medium bg-white/75 dark:bg-slate-900/80 border-b border-white/75 dark:border-white/10 text-slate-800 dark:text-slate-100">
-    <!-- Left -->
     <div class="flex items-center gap-3 sm:gap-4 min-w-0">
       <button type="button" onclick="registerPinTriggerClick()" title="DRAKORIN" class="flex items-center gap-1.5 font-medium hover:opacity-80 transition focus:outline-none">
         <i class="fa-brands fa-apple text-sm text-pink-500"></i>
@@ -429,6 +428,11 @@
         <button type="button" onclick="openAppWindow('add')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">+ Tambah Drama</button>
         <button type="button" onclick="openAppWindow('community')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Komunitas</button>
         <button type="button" onclick="openAppWindow('friends')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Teman</button>
+        <!-- [BARU - MENU PESAN DI TOPBAR] -->
+        <button type="button" onclick="openAppWindow('messages')" class="hover:text-pink-600 dark:hover:text-pink-300 transition inline-flex items-center gap-1">
+          <span>Pesan</span>
+          <span id="topbar-unread-badge" class="hidden px-1.5 py-0.2 rounded-full text-[10px] bg-pink-500 text-white">0</span>
+        </button>
         <button type="button" onclick="openAppWindow('settings')" class="hover:text-pink-600 dark:hover:text-pink-300 transition">Profil &amp; Tema</button>
         <button type="button" id="menubar-superadmin-btn" onclick="openAppWindow('superadmin')" class="hidden px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-300 font-medium hover:bg-rose-500/25 transition">
           Super Admin
@@ -436,7 +440,6 @@
       </nav>
     </div>
 
-    <!-- Right -->
     <div class="flex items-center gap-2 sm:gap-3 shrink-0">
       <span id="superadmin-active-badge" class="hidden items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-rose-500 text-white shadow-sm">
         <i class="fa-solid fa-crown"></i> Super Admin
@@ -499,6 +502,14 @@
         <span class="mt-1.5 text-[11px] font-medium text-slate-800 dark:text-white bg-white/80 dark:bg-slate-900/75 px-2 py-0.5 rounded-full shadow-sm leading-tight">Teman</span>
       </button>
 
+      <!-- [BARU - SHORTCUT DESKTOP MENU PESAN] -->
+      <button type="button" onclick="openAppWindow('messages')" class="group flex flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/40 dark:hover:bg-white/10 transition focus:outline-none">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-indigo-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
+          <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <span class="mt-1.5 text-[11px] font-medium text-slate-800 dark:text-white bg-white/80 dark:bg-slate-900/75 px-2 py-0.5 rounded-full shadow-sm leading-tight">Pesan</span>
+      </button>
+
       <button type="button" onclick="openAppWindow('settings')" class="group flex flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/40 dark:hover:bg-white/10 transition focus:outline-none">
         <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-pink-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
           <i class="fa-solid fa-palette"></i>
@@ -506,7 +517,6 @@
         <span class="mt-1.5 text-[11px] font-medium text-slate-800 dark:text-white bg-white/80 dark:bg-slate-900/75 px-2 py-0.5 rounded-full shadow-sm leading-tight">Tema &amp; Profil</span>
       </button>
 
-      <!-- Desktop Shortcut Only Visible After Super Admin PIN Verification -->
       <button type="button" id="desktop-superadmin-shortcut" onclick="openAppWindow('superadmin')" class="hidden group flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/40 dark:hover:bg-white/10 transition focus:outline-none">
         <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-amber-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
           <i class="fa-solid fa-shield-halved"></i>
@@ -538,18 +548,6 @@
           <span id="widget-count-friends" class="block font-semibold text-sm text-sky-600 dark:text-sky-400">0</span>
           <span class="text-[10px] font-normal text-slate-500 dark:text-slate-400">Teman</span>
         </button>
-		<!-- [TAMBAHAN - SHORTCUT DESKTOP MENU PESAN] -->
-		<button type="button" onclick="openAppWindow('messages')" class="group flex flex-col items-center text-center w-20 p-1.5 rounded-2xl hover:bg-white/40 dark:hover:bg-white/10 transition focus:outline-none">
-        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-indigo-500 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-105 transition">
-          <i class="fa-solid fa-paper-plane"></i>
-        </div>
-        <span class="mt-1.5 text-[11px] font-medium text-slate-800 dark:text-white bg-white/80 dark:bg-slate-900/75 px-2 py-0.5 rounded-full shadow-sm leading-tight">Pesan</span>
-      </button>
-		<!-- [TAMBAHAN - MENU PESAN DI TOPBAR] -->
-        <button type="button" onclick="openAppWindow('messages')" class="hover:text-pink-600 dark:hover:text-pink-300 transition inline-flex items-center gap-1">
-          <span>Pesan</span>
-          <span id="topbar-unread-badge" class="hidden px-1.5 py-0.2 rounded-full text-[10px] bg-pink-500 text-white">0</span>
-        </button>
       </div>
 
       <div class="pt-2.5 border-t border-slate-200/80 dark:border-slate-700/80">
@@ -563,7 +561,7 @@
       </div>
     </aside>
 
-    <!-- ==================== WINDOW 1: KOLEKSI DRAMA & FILM ==================== -->
+    <!-- ==================== WINDOW 1: KOLEKSI ==================== -->
     <section id="win-library" class="hidden mac-workspace-win bg-white/92 dark:bg-slate-900/92 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
       <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
         <div class="flex items-center gap-2">
@@ -582,7 +580,6 @@
         </button>
       </div>
 
-      <!-- Filter & Search -->
       <div class="p-3.5 border-b border-slate-200/75 dark:border-slate-800/75 flex flex-wrap items-center justify-between gap-2.5 bg-pink-50/45 dark:bg-slate-900/45 shrink-0">
         <div class="flex flex-wrap items-center gap-1.5">
           <button type="button" id="filter-chip-all" onclick="setLibraryFilterMode('all')" class="px-3 py-1.5 rounded-xl text-xs font-medium accent-btn text-white shadow">Semua</button>
@@ -604,7 +601,6 @@
         </div>
       </div>
 
-      <!-- Cards Grid -->
       <div id="library-collection-grid" class="flex-1 overflow-y-auto p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 content-start"></div>
     </section>
 
@@ -627,8 +623,6 @@
 
       <div class="flex-1 overflow-y-auto p-4 sm:p-6">
         <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-          <!-- Left: Create / Edit Custom Playlist -->
           <div class="lg:col-span-5 space-y-4">
             <div class="p-4 sm:p-5 rounded-2xl bg-pink-50/75 dark:bg-slate-800/85 border border-pink-200/75 dark:border-slate-700 space-y-3">
               <div class="flex items-center justify-between">
@@ -658,7 +652,6 @@
               </button>
             </div>
 
-            <!-- Playlists List -->
             <div class="p-4 rounded-2xl bg-sky-50/70 dark:bg-slate-800/85 border border-sky-200/70 dark:border-slate-700 space-y-2.5">
               <div class="flex items-center justify-between">
                 <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Daftar Playlist Kamu</h3>
@@ -668,13 +661,11 @@
             </div>
           </div>
 
-          <!-- Right: Active Playlist Items & Quick Add Drama -->
           <div class="lg:col-span-7 space-y-4">
             <div id="active-playlist-detail-card" class="p-5 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-pink-200/80 dark:border-slate-700 shadow-sm space-y-4">
               <p class="text-xs text-slate-500">Memuat watching list...</p>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -698,8 +689,6 @@
 
       <div class="flex-1 overflow-y-auto p-4 sm:p-6">
         <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-          <!-- Left: Title Lookup & Poster Cover -->
           <div class="lg:col-span-5 space-y-4">
             <div class="relative">
               <label for="drama-auto-search" class="block text-xs font-medium mb-1.5">1. Ketik atau Pilih Judul Drama / Film</label>
@@ -713,7 +702,6 @@
               <div id="drama-search-suggestions" class="hidden absolute left-0 right-0 mt-1.5 max-h-64 overflow-y-auto rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-2xl z-40 divide-y divide-slate-100 dark:divide-slate-700/70"></div>
             </div>
 
-            <!-- Poster Box -->
             <div class="p-4 rounded-2xl bg-pink-50/70 dark:bg-slate-800/80 border border-pink-200/70 dark:border-slate-700 space-y-3">
               <div class="flex items-center justify-between gap-2">
                 <span class="text-xs font-medium">Poster Sampul Otomatis</span>
@@ -738,7 +726,6 @@
             </div>
           </div>
 
-          <!-- Right: Metadata, Rating, Review & Screenshot -->
           <div class="lg:col-span-7 space-y-4">
             <div class="p-4 rounded-2xl bg-sky-50/60 dark:bg-slate-800/80 border border-sky-200/70 dark:border-slate-700 space-y-3">
               <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
@@ -756,13 +743,18 @@
                 </div>
               </div>
 
+              <!-- [BARU - INPUT TAG ACTOR DI FORM TAMBAH DRAMA] -->
+              <div>
+                <label for="form-drama-actors" class="block text-[11px] font-medium mb-1">Tag Actor / Pemeran (pisahkan dengan koma)</label>
+                <input type="text" id="form-drama-actors" placeholder="Contoh: Kim Soo-hyun, Kim Ji-won, Byeon Woo-seok" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700" />
+              </div>
+
               <div>
                 <label for="form-drama-synopsis" class="block text-[11px] font-medium mb-1">Sinopsis Otomatis</label>
                 <textarea id="form-drama-synopsis" rows="3" placeholder="Sinopsis otomatis muncul saat judul dipilih atau diketik..." class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 leading-relaxed"></textarea>
               </div>
             </div>
 
-            <!-- Rating & Favorite -->
             <div class="flex flex-wrap items-center justify-between gap-3 px-1">
               <div>
                 <span class="block text-xs font-medium mb-1">2. Rating (1 - 5 Bintang)</span>
@@ -782,13 +774,11 @@
               </label>
             </div>
 
-            <!-- Review -->
             <div>
               <label for="form-drama-review" class="block text-xs font-medium mb-1">3. Review Kamu</label>
               <textarea id="form-drama-review" rows="3" placeholder="Ceritakan kesan nonton, adegan seru, atau rekomendasi untuk komunitas..." class="w-full px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
             </div>
 
-            <!-- Screenshot Attachment -->
             <div>
               <span class="block text-xs font-medium mb-1">4. Foto / Screenshot Adegan (Opsional)</span>
               <div class="flex items-center gap-3">
@@ -813,12 +803,11 @@
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- ==================== WINDOW 3: KOMUNITAS TERBUKA (2 HALAMAN: TEMAN & PUBLIK) ==================== -->
+    <!-- ==================== WINDOW 3: KOMUNITAS + WALL UPDATE TEKS & GAMBAR ==================== -->
     <section id="win-community" class="hidden mac-workspace-win bg-white/92 dark:bg-slate-900/92 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
       <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
         <div class="flex items-center gap-2">
@@ -835,7 +824,6 @@
         <button type="button" onclick="openAppWindow('add')" class="px-3 py-1.5 rounded-xl accent-btn text-white text-xs font-medium shadow">+ Review</button>
       </div>
 
-      <!-- 2-Page Switcher Bar: Page 1 (Teman) & Page 2 (Publik) -->
       <div class="px-4 sm:px-6 py-3 bg-pink-50/55 dark:bg-slate-900/55 border-b border-slate-200/75 dark:border-slate-800/75 flex flex-wrap items-center justify-between gap-3 shrink-0">
         <div class="inline-flex p-1 rounded-2xl bg-white/90 dark:bg-slate-800 border border-pink-200/75 dark:border-slate-700 shadow-sm">
           <button type="button" id="comm-page-tab-friends" onclick="setCommunityPage('friends')" class="px-4 py-1.5 rounded-xl text-xs font-medium accent-btn text-white shadow transition flex items-center gap-1.5">
@@ -854,6 +842,34 @@
       </div>
 
       <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+        <!-- [BARU - WALL UPDATE TEKS & GAMBAR DI KOMUNITAS] -->
+        <div class="max-w-4xl mx-auto mb-5 p-4 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-pink-200/80 dark:border-slate-700 shadow-sm space-y-3">
+          <div class="flex items-center gap-2 text-xs font-semibold text-pink-600 dark:text-pink-400">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Wall Komunitas — Update Status Teks &amp; Gambar</span>
+          </div>
+          <textarea id="wall-feed-text-input" rows="2" placeholder="Tulis update status, kesan nonton, atau cerita seru kamu..." class="w-full px-3.5 py-2 rounded-xl text-xs bg-pink-50/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
+
+          <div id="wall-feed-img-preview-box" class="hidden relative inline-block">
+            <img id="wall-feed-img-preview" src="" alt="Preview Gambar Wall" class="max-h-40 rounded-xl object-cover border border-slate-200 dark:border-slate-700" />
+            <button type="button" onclick="clearWallFeedImage()" class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-rose-500 text-white text-[10px] flex items-center justify-center shadow">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div class="flex items-center justify-between gap-2 pt-1">
+            <label class="px-3 py-1.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 text-sky-700 dark:text-sky-300 text-xs font-medium cursor-pointer transition flex items-center gap-1.5">
+              <i class="fa-solid fa-image"></i>
+              <span>Tambah Gambar</span>
+              <input type="file" id="wall-feed-img-input" accept="image/*" onchange="onWallFeedImageUpload(event)" class="hidden" />
+            </label>
+            <button type="button" onclick="publishCommunityWallUpdate()" class="px-4 py-1.5 rounded-xl accent-btn text-white text-xs font-medium shadow hover:opacity-95 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Posting Update</span>
+            </button>
+          </div>
+        </div>
+
         <div id="community-feed-list" class="max-w-4xl mx-auto space-y-5"></div>
       </div>
     </section>
@@ -877,8 +893,6 @@
 
       <div class="flex-1 overflow-y-auto p-4 sm:p-6">
         <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-          <!-- Search / Add Friend + Friends List -->
           <div class="lg:col-span-5 space-y-4">
             <div class="p-4 rounded-2xl bg-pink-50/70 dark:bg-slate-800/80 border border-pink-200/70 dark:border-slate-700 space-y-3">
               <h3 class="text-xs font-semibold uppercase tracking-wider text-pink-600 dark:text-pink-400">Cari &amp; Tambah Teman (@username)</h3>
@@ -900,7 +914,6 @@
             </div>
           </div>
 
-          <!-- Highlighted Friends Posts -->
           <div class="lg:col-span-7 space-y-3.5">
             <div class="p-3.5 rounded-2xl bg-gradient-to-r from-pink-500/15 via-violet-500/15 to-sky-500/15 border border-pink-300/40 dark:border-white/10 flex items-center justify-between">
               <div>
@@ -911,7 +924,48 @@
             </div>
             <div id="friends-highlighted-feed" class="space-y-4"></div>
           </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- ==================== [BARU - WINDOW 4B: MENU PESAN SESAMA TEMAN] ==================== -->
+    <section id="win-messages" class="hidden mac-workspace-win bg-white/94 dark:bg-slate-900/94 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
+      <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeAppWindow('messages')" title="Tutup" class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:brightness-90 flex items-center justify-center text-[9px] text-black/75 transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e]/90"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></span>
+        </div>
+        <div class="flex items-center gap-2 text-xs sm:text-sm font-semibold">
+          <i class="fa-solid fa-paper-plane text-pink-500"></i>
+          <span>Pesan Teman (@username)</span>
+        </div>
+        <div class="w-10"></div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 h-full">
+          <div class="lg:col-span-4 p-3.5 rounded-2xl bg-pink-50/65 dark:bg-slate-800/80 border border-pink-200/70 dark:border-slate-700 space-y-2.5">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-pink-600 dark:text-pink-400">Chat Teman</h3>
+            <div id="dm-friends-list" class="space-y-2"></div>
+          </div>
+
+          <div class="lg:col-span-8 p-4 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-slate-200 dark:border-slate-700 flex flex-col justify-between min-h-[380px]">
+            <div id="dm-chat-header" class="pb-3 border-b border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500">Pilih teman di sebelah kiri untuk mulai ngobrol</span>
+            </div>
+
+            <div id="dm-chat-messages" class="flex-1 overflow-y-auto py-3 space-y-2.5 max-h-[340px]"></div>
+
+            <div class="pt-3 border-t border-slate-200/80 dark:border-slate-700/80 flex items-center gap-2">
+              <input type="text" id="dm-message-input" onkeydown="if(event.key==='Enter') sendDirectMessage()" placeholder="Tulis pesan untuk teman..." class="flex-1 px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
+              <button type="button" onclick="sendDirectMessage()" class="px-4 py-2 rounded-xl accent-btn text-white text-xs font-medium shadow">
+                Kirim
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -937,8 +991,6 @@
 
       <div class="flex-1 overflow-y-auto p-4 sm:p-6">
         <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-          <!-- Profile & Favorites Editor -->
           <div class="lg:col-span-7 p-5 rounded-2xl bg-pink-50/65 dark:bg-slate-800/80 border border-pink-200/70 dark:border-slate-700 space-y-4">
             <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Profil &amp; Top 3 Drama Favorit</h3>
 
@@ -985,11 +1037,9 @@
             </div>
           </div>
 
-          <!-- Theme & Wallpaper Customizer -->
           <div class="lg:col-span-5 p-5 rounded-2xl bg-sky-50/60 dark:bg-slate-800/80 border border-sky-200/70 dark:border-slate-700 space-y-4">
             <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Tema &amp; Wallpaper</h3>
 
-            <!-- Visual Themes -->
             <div class="space-y-2">
               <span class="block text-xs font-medium">Tema Warna</span>
               <div class="grid grid-cols-1 gap-2 text-xs font-medium">
@@ -1008,7 +1058,6 @@
               </div>
             </div>
 
-            <!-- Preset Wallpapers -->
             <div class="space-y-2">
               <span class="block text-xs font-medium">Wallpaper Ceria</span>
               <div class="grid grid-cols-2 gap-2">
@@ -1031,7 +1080,6 @@
               </div>
             </div>
 
-            <!-- Upload & Delete Custom Wallpaper -->
             <div class="pt-2 border-t border-slate-200 dark:border-slate-700 space-y-2">
               <span class="block text-xs font-medium">Wallpaper Upload Sendiri</span>
               <p id="wallpaper-upload-status" class="text-[11px] text-slate-500 dark:text-slate-400">Belum ada gambar wallpaper kustom.</p>
@@ -1046,12 +1094,11 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- ==================== WINDOW 6: SUPER ADMIN PANEL (READ-ONLY USERS + PRE-LAUNCH CLEANUP) ==================== -->
+    <!-- ==================== WINDOW 6: SUPER ADMIN PANEL ==================== -->
     <section id="win-superadmin" class="hidden mac-workspace-win bg-white/95 dark:bg-slate-900/95 border border-rose-300/80 dark:border-rose-500/30 flex flex-col overflow-hidden z-20 animate-win-pop">
       <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-rose-50/90 dark:bg-slate-800/90 border-b border-rose-200/80 dark:border-slate-700 shrink-0">
         <div class="flex items-center gap-2">
@@ -1081,7 +1128,6 @@
         </div>
 
         <div id="superadmin-dashboard-body" class="hidden max-w-6xl mx-auto space-y-6">
-          <!-- Top Summary & Bulk Clear -->
           <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-rose-500/10 via-amber-500/10 to-pink-500/10 border border-rose-200/80 dark:border-rose-500/25 flex flex-wrap items-center justify-between gap-4">
             <div>
               <h3 class="text-sm font-semibold text-rose-700 dark:text-rose-300">Persiapan Launching DRAKORIN</h3>
@@ -1096,7 +1142,6 @@
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- Left: Community Posts & Comments Moderation -->
             <div class="lg:col-span-7 p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-3.5">
               <div class="flex items-center justify-between">
                 <h4 class="text-xs font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-400">
@@ -1107,9 +1152,7 @@
               <div id="superadmin-posts-list" class="space-y-3"></div>
             </div>
 
-            <!-- Right: Read-Only Users Directory + Friend Suggestions & Lists Cleanup -->
             <div class="lg:col-span-5 space-y-4">
-              <!-- Read-Only Users Inspection Card -->
               <div class="p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-3">
                 <div class="flex items-center justify-between gap-2">
                   <h4 class="text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
@@ -1125,7 +1168,6 @@
                 <div id="superadmin-users-readonly-list" class="space-y-2.5 max-h-72 overflow-y-auto pr-1"></div>
               </div>
 
-              <!-- Friend Suggestions & Connections Cleanup Card -->
               <div class="p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 space-y-2.5">
                 <div class="flex items-center justify-between gap-2">
                   <h4 class="text-xs font-semibold uppercase tracking-wider text-violet-600 dark:text-violet-400">
@@ -1163,96 +1205,8 @@
         <div id="detail-overlay-body" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
       </div>
     </div>
-	
-	<!-- [TAMBAHAN - WINDOW PESAN SESAMA TEMAN] -->
-    <section id="win-messages" class="hidden mac-workspace-win bg-white/94 dark:bg-slate-900/94 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
-      <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="closeAppWindow('messages')" title="Tutup" class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:brightness-90 flex items-center justify-center text-[9px] text-black/75 transition">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-          <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e]/90"></span>
-          <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></span>
-        </div>
-        <div class="flex items-center gap-2 text-xs sm:text-sm font-semibold">
-          <i class="fa-solid fa-paper-plane text-pink-500"></i>
-          <span>Pesan Teman (@username)</span>
-        </div>
-        <div class="w-10"></div>
-      </div>
 
-      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
-        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 h-full">
-          <!-- Daftar Teman yang Bisa Dichat -->
-          <div class="lg:col-span-4 p-3.5 rounded-2xl bg-pink-50/65 dark:bg-slate-800/80 border border-pink-200/70 dark:border-slate-700 space-y-2.5">
-            <h3 class="text-xs font-semibold uppercase tracking-wider text-pink-600 dark:text-pink-400">Chat Teman</h3>
-            <div id="dm-friends-list" class="space-y-2"></div>
-          </div>
-
-          <!-- Ruang Obrolan -->
-          <div class="lg:col-span-8 p-4 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-slate-200 dark:border-slate-700 flex flex-col justify-between min-h-[380px]">
-            <div id="dm-chat-header" class="pb-3 border-b border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between">
-              <span class="text-xs font-semibold text-slate-500">Pilih teman di sebelah kiri untuk mulai ngobrol</span>
-            </div>
-
-            <div id="dm-chat-messages" class="flex-1 overflow-y-auto py-3 space-y-2.5 max-h-[340px]"></div>
-
-            <div class="pt-3 border-t border-slate-200/80 dark:border-slate-700/80 flex items-center gap-2">
-              <input type="text" id="dm-message-input" onkeydown="if(event.key==='Enter') sendDirectMessage()" placeholder="Tulis pesan untuk teman..." class="flex-1 px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
-              <button type="button" onclick="sendDirectMessage()" class="px-4 py-2 rounded-xl accent-btn text-white text-xs font-medium shadow">
-                Kirim
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-<!-- [TAMBAHAN - WINDOW PESAN SESAMA TEMAN] -->
-    <section id="win-messages" class="hidden mac-workspace-win bg-white/94 dark:bg-slate-900/94 border border-white/80 dark:border-white/15 flex flex-col overflow-hidden z-20 animate-win-pop">
-      <div class="h-12 px-4 sm:px-5 flex items-center justify-between bg-white/75 dark:bg-slate-800/80 border-b border-slate-200/75 dark:border-slate-700/75 shrink-0">
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="closeAppWindow('messages')" title="Tutup" class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:brightness-90 flex items-center justify-center text-[9px] text-black/75 transition">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-          <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e]/90"></span>
-          <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></span>
-        </div>
-        <div class="flex items-center gap-2 text-xs sm:text-sm font-semibold">
-          <i class="fa-solid fa-paper-plane text-pink-500"></i>
-          <span>Pesan Teman (@username)</span>
-        </div>
-        <div class="w-10"></div>
-      </div>
-
-      <div class="flex-1 overflow-y-auto p-4 sm:p-6">
-        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 h-full">
-          <!-- Daftar Teman yang Bisa Dichat -->
-          <div class="lg:col-span-4 p-3.5 rounded-2xl bg-pink-50/65 dark:bg-slate-800/80 border border-pink-200/70 dark:border-slate-700 space-y-2.5">
-            <h3 class="text-xs font-semibold uppercase tracking-wider text-pink-600 dark:text-pink-400">Chat Teman</h3>
-            <div id="dm-friends-list" class="space-y-2"></div>
-          </div>
-
-          <!-- Ruang Obrolan -->
-          <div class="lg:col-span-8 p-4 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-slate-200 dark:border-slate-700 flex flex-col justify-between min-h-[380px]">
-            <div id="dm-chat-header" class="pb-3 border-b border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between">
-              <span class="text-xs font-semibold text-slate-500">Pilih teman di sebelah kiri untuk mulai ngobrol</span>
-            </div>
-
-            <div id="dm-chat-messages" class="flex-1 overflow-y-auto py-3 space-y-2.5 max-h-[340px]"></div>
-
-            <div class="pt-3 border-t border-slate-200/80 dark:border-slate-700/80 flex items-center gap-2">
-              <input type="text" id="dm-message-input" onkeydown="if(event.key==='Enter') sendDirectMessage()" placeholder="Tulis pesan untuk teman..." class="flex-1 px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-400" />
-              <button type="button" onclick="sendDirectMessage()" class="px-4 py-2 rounded-xl accent-btn text-white text-xs font-medium shadow">
-                Kirim
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- [TAMBAHAN - MODAL LIHAT PROFIL USER & TULIS WALL TEMAN] -->
+    <!-- ==================== [BARU - MODAL LIHAT PROFIL USER & WALL TEMAN] ==================== -->
     <div id="user-profile-modal" class="hidden fixed inset-0 z-[10025] flex items-center justify-center p-4 bg-slate-950/55 backdrop-blur-md">
       <div class="w-full max-w-2xl max-h-[88vh] rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/80 dark:border-white/15 shadow-2xl flex flex-col overflow-hidden animate-win-pop">
         <div class="h-11 px-4 flex items-center justify-between bg-pink-50/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 shrink-0">
@@ -1264,7 +1218,20 @@
         <div id="user-profile-modal-body" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
       </div>
     </div>
-	
+
+    <!-- ==================== [BARU - MODAL TAG ACTOR & LINK GOOGLE DRAMA] ==================== -->
+    <div id="actor-info-modal" class="hidden fixed inset-0 z-[10030] flex items-center justify-center p-4 bg-slate-950/55 backdrop-blur-md">
+      <div class="w-full max-w-lg rounded-3xl glass-bar bg-white/95 dark:bg-slate-900/95 border border-white/80 dark:border-white/15 shadow-2xl overflow-hidden animate-win-pop">
+        <div class="h-11 px-4 flex items-center justify-between bg-pink-50/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700">
+          <span id="actor-modal-title" class="text-xs font-semibold truncate">Profil Aktor</span>
+          <button type="button" onclick="closeActorInfoModal()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-sm">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div id="actor-modal-body" class="p-5 space-y-4 max-h-[80vh] overflow-y-auto"></div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ==================== 4. FLOATING macOS DOCK ==================== -->
@@ -1310,8 +1277,8 @@
         </div>
         <span id="dock-indicator-friends" class="w-1.5 h-1.5 rounded-full bg-transparent mt-1"></span>
       </button>
-	  
-	  <!-- [TAMBAHAN - DOCK ICON PESAN] -->
+
+      <!-- [BARU - DOCK ICON PESAN] -->
       <button type="button" onclick="openAppWindow('messages')" class="dock-app-btn group relative flex flex-col items-center focus:outline-none">
         <span class="hidden sm:block absolute -top-8 px-2.5 py-0.5 rounded-lg bg-slate-900/90 text-white text-[10px] font-medium opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Pesan</span>
         <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-indigo-500 text-white flex items-center justify-center text-lg shadow-lg border border-white/50">
@@ -1343,7 +1310,6 @@
 
   <!-- Toast Area -->
   <div id="os-toast-container" class="fixed top-11 right-4 z-[10080] space-y-2 pointer-events-none"></div>
-
   <!-- ==================== FIREBASE SDK v13.4.0 + APP CHECK + DRAKORIN ENGINE ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
@@ -1381,20 +1347,16 @@
     const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LcpDy4uAAAAALDh4aljxO7BrijRu_eXs22byJm7";
     const SUPER_ADMIN_PASSWORD = String(261213);
 
-    // Initialize Firebase App
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Initialize Firebase App Check with reCAPTCHA Enterprise provider
     try {
       initializeAppCheck(app, {
         provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
         isTokenAutoRefreshEnabled: true
       });
-    } catch (appCheckErr) {
-      // Safe fallback if environment blocks App Check token exchange
-    }
+    } catch (appCheckErr) {}
 
     const STORAGE_KEYS = Object.freeze({
       PROFILES: "drakorin_seoul_profiles_v5",
@@ -1405,6 +1367,7 @@
       WALLPAPER: "drakorin_seoul_wp_v5",
       CUSTOM_WP: "drakorin_seoul_custom_wp_v5",
       DARK: "drakorin_seoul_dark_v5",
+      // [BARU - STORAGE KEYS PESAN & WALL TEMAN]
       MESSAGES: "drakorin_seoul_messages_v5",
       WALLS: "drakorin_seoul_walls_v5"
     });
@@ -1451,12 +1414,12 @@
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
     }
 
-    // Tier 1 Local K-Drama & Movie Catalog
     const LOCAL_DRAMA_CATALOG = [
       {
         title: "Queen of Tears",
         year: "2024",
         genre: "Romansa, Drama, Komedi",
+        actors: ["Kim Soo-hyun", "Kim Ji-won"],
         poster: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=500&q=80",
         synopsis: "Hong Hae-in, pewaris department store penuh pesona, dan Baek Hyun-woo, pengacara berhati hangat, menghadapi krisis rumah tangga hingga cinta mereka tumbuh kembali."
       },
@@ -1464,6 +1427,7 @@
         title: "Lovely Runner",
         year: "2024",
         genre: "Romansa, Fantasi, Perjalanan Waktu",
+        actors: ["Byeon Woo-seok", "Kim Hye-yoon"],
         poster: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80",
         synopsis: "Im Sol kembali ke masa SMA yang penuh warna demi menyelamatkan Ryu Sun-jae, idola yang selalu menjadi penyemangat hidupnya."
       },
@@ -1471,6 +1435,7 @@
         title: "Moving",
         year: "2023",
         genre: "Aksi, Fiksi Ilmiah, Remaja",
+        actors: ["Go Youn-jung", "Lee Jung-ha", "Jo In-sung", "Han Hyo-joo"],
         poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=500&q=80",
         synopsis: "Para remaja berbakat istimewa dan orang tua mereka saling menjaga rahasia dan keluarga saat menghadapi ancaman tak terduga."
       },
@@ -1478,6 +1443,7 @@
         title: "Twinkling Watermelon",
         year: "2023",
         genre: "Remaja, Musik, Fantasi",
+        actors: ["Ryeoun", "Choi Hyun-wook", "Seol In-ah", "Shin Eun-soo"],
         poster: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=500&q=80",
         synopsis: "Eun-gyeol yang mencintai musik terlempar ke tahun 1995 dan membentuk band penuh semangat bersama versi muda ayahnya."
       },
@@ -1485,6 +1451,7 @@
         title: "Crash Landing on You",
         year: "2019",
         genre: "Romansa, Komedi, Melodrama",
+        actors: ["Hyun Bin", "Son Ye-jin", "Kim Jung-hyun", "Seo Ji-hye"],
         poster: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80",
         synopsis: "Yoon Se-ri mengalami pendaratan darurat akibat angin kencang dan bertemu Ri Jeong-hyeok yang melindunginya di tengah situasi tak biasa."
       },
@@ -1492,6 +1459,7 @@
         title: "Reply 1988",
         year: "2015",
         genre: "Slice of Life, Keluarga, Komedi",
+        actors: ["Lee Hye-ri", "Park Bo-gum", "Go Kyung-pyo", "Ryu Jun-yeol"],
         poster: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=500&q=80",
         synopsis: "Kisah persahabatan ceria dan hangat lima sahabat serta keluarga mereka di gang Ssangmun-dong pada tahun 1988."
       },
@@ -1499,6 +1467,7 @@
         title: "Weightlifting Fairy Kim Bok-joo",
         year: "2016",
         genre: "Romansa, Olahraga, Komedi Kampus",
+        actors: ["Lee Sung-kyung", "Nam Joo-hyuk"],
         poster: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=500&q=80",
         synopsis: "Atlet angkat besi ceria Kim Bok-joo mengejar mimpi, persahabatan, dan kisah cinta manis di lingkungan kampus olahraga."
       },
@@ -1506,6 +1475,7 @@
         title: "Train to Busan",
         year: "2016",
         genre: "Film, Thriller, Aksi",
+        actors: ["Gong Yoo", "Ma Dong-seok", "Jung Yu-mi", "Kim Su-an"],
         poster: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=500&q=80",
         synopsis: "Penumpang kereta ekspres menuju Busan berjuang saling membantu saat wabah mendadak menyebar di sepanjang perjalanan."
       }
@@ -1544,9 +1514,11 @@
     const SEED_POSTS = [
       {
         id: "seed-post-1",
+        postType: "review",
         title: "Queen of Tears",
         year: "2024",
         genre: "Romansa, Drama, Komedi",
+        actors: ["Kim Soo-hyun", "Kim Ji-won"],
         poster: LOCAL_DRAMA_CATALOG[0].poster,
         synopsis: LOCAL_DRAMA_CATALOG[0].synopsis,
         rating: 5,
@@ -1572,9 +1544,11 @@
       },
       {
         id: "seed-post-2",
+        postType: "review",
         title: "Twinkling Watermelon",
         year: "2023",
         genre: "Remaja, Musik, Fantasi",
+        actors: ["Ryeoun", "Choi Hyun-wook"],
         poster: LOCAL_DRAMA_CATALOG[3].poster,
         synopsis: LOCAL_DRAMA_CATALOG[3].synopsis,
         rating: 5,
@@ -1591,9 +1565,11 @@
       },
       {
         id: "seed-post-3",
+        postType: "review",
         title: "Weightlifting Fairy Kim Bok-joo",
         year: "2016",
         genre: "Romansa, Olahraga, Komedi Kampus",
+        actors: ["Lee Sung-kyung", "Nam Joo-hyuk"],
         poster: LOCAL_DRAMA_CATALOG[6].poster,
         synopsis: LOCAL_DRAMA_CATALOG[6].synopsis,
         rating: 5,
@@ -1623,6 +1599,9 @@
       communityPage: "friends",
       rating: 5,
       customPosterDataUrl: "",
+      // [BARU - SIMPAN URL POSTER HASIL PENCARIAN & GAMBAR WALL KOMUNITAS]
+      selectedLookupPoster: "",
+      wallFeedImageDataUrl: "",
       screenshotDataUrl: "",
       detailPostId: "",
       detailEditMode: false,
@@ -1635,9 +1614,9 @@
       unsubPosts: null,
       unsubUsers: null,
       unsubPlaylists: null,
-	  // [TAMBAHAN - STATE PESAN, PROFIL & WALL]
+      // [BARU - STATE PESAN, PROFIL & WALL TEMAN]
       messages: [],
-      walls: {}, // key: "@handle" (lowercase) -> array of wall posts
+      walls: {},
       activeChatHandle: "",
       viewingProfileHandle: "",
       unsubMessages: null,
@@ -1655,12 +1634,11 @@
       return clean.length > 1 ? clean : "@drakorfan";
     }
 
-	// [TAMBAHAN - OTOMATIS SESUAIKAN @USERNAME SAAT LOGIN]
+    // [BARU - OTOMATIS MENYESUAIKAN @USERNAME AGAR TETAP BISA MASUK TANPA BENTROK]
     function resolveLoginUsername(email, preferredHandle, displayName) {
       const emailLower = String(email || "").trim().toLowerCase();
       let candidate = sanitizeHandle(preferredHandle || displayName || "", emailLower);
 
-      // Cek apakah @username sudah dipakai oleh akun email lain
       const takenByOther = state.profiles.some(
         (p) => p.handle.toLowerCase() === candidate.toLowerCase() && p.email.toLowerCase() !== emailLower
       );
@@ -1685,6 +1663,7 @@
 
     function ensurePostPoster(post) {
       if (!post) return createPosterArtwork("DRAKORIN", "Drama Korea");
+      if (post.postType === "wall_update") return "";
       if (post.poster && String(post.poster).trim()) return post.poster;
       const hit = LOCAL_DRAMA_CATALOG.find((d) => d.title.toLowerCase() === String(post.title || "").toLowerCase());
       const resolved = hit ? hit.poster : createPosterArtwork(post.title, post.genre);
@@ -1695,6 +1674,7 @@
     function normalizeAllPostsPosters() {
       let changed = false;
       state.posts.forEach((p) => {
+        if (p.postType === "wall_update") return;
         if (!p.poster || !String(p.poster).trim()) {
           p.poster = ensurePostPoster(p);
           changed = true;
@@ -1702,6 +1682,11 @@
         if (!p.synopsis || !String(p.synopsis).trim()) {
           const hit = LOCAL_DRAMA_CATALOG.find((d) => d.title.toLowerCase() === String(p.title || "").toLowerCase());
           p.synopsis = hit ? hit.synopsis : `Kisah drama/film "${p.title}" dengan cerita yang berkesan.`;
+          changed = true;
+        }
+        if (!Array.isArray(p.actors)) {
+          const hit = LOCAL_DRAMA_CATALOG.find((d) => d.title.toLowerCase() === String(p.title || "").toLowerCase());
+          p.actors = hit && Array.isArray(hit.actors) ? [...hit.actors] : [];
           changed = true;
         }
       });
@@ -1723,6 +1708,36 @@
     function savePlaylistsLocal() {
       try {
         localStorage.setItem(STORAGE_KEYS.PLAYLISTS, JSON.stringify(state.playlists));
+      } catch (e) {}
+    }
+
+    function saveMessagesLocal() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(state.messages));
+      } catch (e) {}
+    }
+
+    function saveWallsLocal() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.WALLS, JSON.stringify(state.walls));
+      } catch (e) {}
+    }
+
+    function loadMessagesAndWallsLocal() {
+      try {
+        const rawMsg = localStorage.getItem(STORAGE_KEYS.MESSAGES);
+        if (rawMsg) {
+          const parsed = JSON.parse(rawMsg);
+          if (Array.isArray(parsed)) state.messages = parsed;
+        }
+      } catch (e) {}
+
+      try {
+        const rawWalls = localStorage.getItem(STORAGE_KEYS.WALLS);
+        if (rawWalls) {
+          const parsedWalls = JSON.parse(rawWalls);
+          if (parsedWalls && typeof parsedWalls === "object") state.walls = parsedWalls;
+        }
       } catch (e) {}
     }
 
@@ -1802,6 +1817,14 @@
         state.unsubPlaylists();
         state.unsubPlaylists = null;
       }
+      if (typeof state.unsubMessages === "function") {
+        state.unsubMessages();
+        state.unsubMessages = null;
+      }
+      if (typeof state.unsubWalls === "function") {
+        state.unsubWalls();
+        state.unsubWalls = null;
+      }
     }
 
     function startFirestoreListeners() {
@@ -1812,7 +1835,7 @@
           const remotePosts = [];
           snap.forEach((d) => {
             const val = d.data();
-            if (val && val.title) {
+            if (val && (val.title || val.review || val.screenshot)) {
               remotePosts.push({ id: d.id, ...val });
             }
           });
@@ -1885,6 +1908,41 @@
             state.playlists = Array.from(mergedPl.values()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
             savePlaylistsLocal();
             renderPlaylistsWorkspace();
+          }
+        }, () => {});
+
+        state.unsubMessages = onSnapshot(collection(db, "kdrama_messages"), (snap) => {
+          const remoteMsgs = [];
+          snap.forEach((d) => {
+            const val = d.data();
+            if (val && val.text && val.senderHandle && val.receiverHandle) {
+              remoteMsgs.push({ id: d.id, ...val });
+            }
+          });
+          if (remoteMsgs.length > 0) {
+            const map = new Map();
+            state.messages.forEach((m) => map.set(m.id, m));
+            remoteMsgs.forEach((m) => map.set(m.id, m));
+            state.messages = Array.from(map.values()).sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+            saveMessagesLocal();
+            renderMessagesWorkspace();
+          }
+        }, () => {});
+
+        state.unsubWalls = onSnapshot(collection(db, "kdrama_walls"), (snap) => {
+          let updated = false;
+          snap.forEach((d) => {
+            const val = d.data();
+            if (val && val.handle && Array.isArray(val.posts)) {
+              state.walls[String(val.handle).toLowerCase()] = val.posts;
+              updated = true;
+            }
+          });
+          if (updated) {
+            saveWallsLocal();
+            if (state.viewingProfileHandle && !document.getElementById("user-profile-modal")?.classList.contains("hidden")) {
+              openUserProfileModal(state.viewingProfileHandle);
+            }
           }
         }, () => {});
       } catch (err) {
@@ -2012,7 +2070,7 @@
       }, 2800);
     };
 
-    // ==================== MANUAL SUPER ADMIN PASSWORD (261213 — NEVER AUTO-FILLED) ====================
+    // ==================== MANUAL SUPER ADMIN PASSWORD ====================
     window.registerPinTriggerClick = function () {
       state.pinClickCount += 1;
       clearTimeout(state.pinClickTimer);
@@ -2256,19 +2314,14 @@
             friends: []
           };
         }
-		
-			// [TAMBAHAN - PASTIKAN @USERNAME OTOMATIS TER-UPDATE SAAT MASUK]
-		const finalHandle = resolveLoginUsername(
-		  email,
-		  userRecord?.handle,
-		  userRecord?.name
-		);
-		const previousHandle = userRecord.handle;
-		userRecord.handle = finalHandle;
 
-		if (previousHandle && previousHandle.toLowerCase() !== finalHandle.toLowerCase()) {
-		  showToast(`Username otomatis disesuaikan menjadi ${finalHandle}`, "info");
-		}
+        // [BARU - OTOMATIS SESUAIKAN @USERNAME SAAT LOGIN]
+        const finalHandle = resolveLoginUsername(email, userRecord?.handle, userRecord?.name);
+        const previousHandle = userRecord.handle;
+        userRecord.handle = finalHandle;
+        if (previousHandle && previousHandle.toLowerCase() !== finalHandle.toLowerCase()) {
+          showToast(`Username otomatis disesuaikan menjadi ${finalHandle}`, "info");
+        }
 
         const idx = state.profiles.findIndex((a) => a.email.toLowerCase() === email);
         if (idx >= 0) state.profiles[idx] = userRecord;
@@ -2292,9 +2345,12 @@
               favorites: [],
               friends: []
             };
-            state.profiles.unshift(fallbackUser);
-            saveProfilesLocal();
           }
+          fallbackUser.handle = resolveLoginUsername(email, fallbackUser.handle, fallbackUser.name);
+          const idx = state.profiles.findIndex((a) => a.email.toLowerCase() === email);
+          if (idx >= 0) state.profiles[idx] = fallbackUser;
+          else state.profiles.unshift(fallbackUser);
+          saveProfilesLocal();
           await enterDesktopSession(fallbackUser, true);
           showToast("Masuk dalam mode lokal.", "info");
         } else {
@@ -2308,11 +2364,12 @@
     window.processEmailPasswordRegister = async function (event) {
       event.preventDefault();
       const name = document.getElementById("input-reg-name").value.trim();
-      const handle = sanitizeHandle(
-        document.getElementById("input-reg-handle").value,
-        document.getElementById("input-reg-email").value
-      );
       const email = document.getElementById("input-reg-email").value.trim().toLowerCase();
+      const handle = resolveLoginUsername(
+        email,
+        document.getElementById("input-reg-handle").value,
+        name
+      );
       const password = document.getElementById("input-reg-password").value;
       const btn = document.getElementById("btn-submit-register");
 
@@ -2399,7 +2456,7 @@
       add: "+ Tambah Drama",
       community: "Komunitas DRAKORIN",
       friends: "Teman (@username)",
-	  messages: "Pesan Teman (@username)", // [TAMBAHAN - NAMA WINDOW PESAN]
+      messages: "Pesan Teman (@username)", // [BARU]
       settings: "Profil, Tema & Wallpaper",
       superadmin: "Super Admin DRAKORIN"
     };
@@ -2440,7 +2497,7 @@
       if (winId === "playlists") renderPlaylistsWorkspace();
       if (winId === "community") renderCommunityPosts();
       if (winId === "friends") renderFriendsView();
-	  if (winId === "messages") renderMessagesWorkspace(); // [TAMBAHAN - BUKA WINDOW PESAN]
+      if (winId === "messages") renderMessagesWorkspace(); // [BARU]
       if (winId === "settings") fillSettingsInputs();
       if (winId === "superadmin") {
         updateSuperAdminVisibility();
@@ -2562,11 +2619,14 @@
     function resetAddFormState() {
       state.rating = 5;
       state.customPosterDataUrl = "";
+      state.selectedLookupPoster = "";
       state.screenshotDataUrl = "";
       setReviewRating(5);
       document.getElementById("form-drama-poster-img").src = createPosterArtwork("Ketik Judul Drama", "Auto Poster");
       document.getElementById("form-screenshot-preview-box").classList.add("hidden");
       document.getElementById("form-screenshot-preview-img").src = "";
+      const actorInput = document.getElementById("form-drama-actors");
+      if (actorInput) actorInput.value = "";
     }
 
     window.setReviewRating = function (stars) {
@@ -2582,11 +2642,15 @@
     function populateFormWithMetadata(meta, closeMenu) {
       state.customPosterDataUrl = "";
       const resolvedPoster = meta.poster || createPosterArtwork(meta.title, meta.genre);
+      state.selectedLookupPoster = resolvedPoster; // [PERBAIKAN POSTER SINKRON]
       document.getElementById("form-drama-title").value = meta.title;
       document.getElementById("form-drama-year").value = meta.year || String(new Date().getFullYear());
       document.getElementById("form-drama-genre").value = meta.genre || "Drama Korea";
       document.getElementById("form-drama-synopsis").value = meta.synopsis || "";
       document.getElementById("form-drama-poster-img").src = resolvedPoster;
+      if (meta.actors && document.getElementById("form-drama-actors")) {
+        document.getElementById("form-drama-actors").value = Array.isArray(meta.actors) ? meta.actors.join(", ") : meta.actors;
+      }
       if (closeMenu) {
         document.getElementById("drama-search-suggestions").classList.add("hidden");
       }
@@ -2599,7 +2663,9 @@
       if (hit) {
         populateFormWithMetadata(hit, false);
       } else if (!state.customPosterDataUrl) {
-        document.getElementById("form-drama-poster-img").src = createPosterArtwork(trimmed, document.getElementById("form-drama-genre").value || "Drama");
+        const autoArt = createPosterArtwork(trimmed, document.getElementById("form-drama-genre").value || "Drama");
+        state.selectedLookupPoster = autoArt;
+        document.getElementById("form-drama-poster-img").src = autoArt;
       }
     };
 
@@ -2607,11 +2673,13 @@
       const q = query.trim();
       const lower = q.toLowerCase();
       const localMatches = LOCAL_DRAMA_CATALOG.filter(
-        (d) => d.title.toLowerCase().includes(lower) || d.genre.toLowerCase().includes(lower)
+        (d) =>
+          d.title.toLowerCase().includes(lower) ||
+          d.genre.toLowerCase().includes(lower) ||
+          (Array.isArray(d.actors) && d.actors.some((a) => a.toLowerCase().includes(lower)))
       );
       const apiMatches = [];
 
-      // Tier 2a: TVMaze API
       try {
         const tvResp = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(q)}`);
         if (tvResp.ok) {
@@ -2624,13 +2692,12 @@
               const genre = (Array.isArray(show.genres) && show.genres.length > 0) ? show.genres.join(", ") : "Drama";
               const poster = (show.image && (show.image.medium || show.image.original)) || createPosterArtwork(name, genre);
               const synopsis = stripHtmlTags(show.summary) || `Sinopsis otomatis untuk "${name}" dari TVMaze.`;
-              apiMatches.push({ title: name, year, genre, poster, synopsis, source: "TVMaze" });
+              apiMatches.push({ title: name, year, genre, actors: [], poster, synopsis, source: "TVMaze" });
             });
           }
         }
       } catch (e) {}
 
-      // Tier 2b: iTunes Search API
       try {
         const itResp = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&media=tvShow&limit=3`);
         if (itResp.ok) {
@@ -2644,7 +2711,7 @@
                 ? item.artworkUrl100.replace("100x100bb", "600x600bb")
                 : createPosterArtwork(name, genre);
               const synopsis = item.longDescription || item.shortDescription || `Sinopsis otomatis untuk "${name}" dari iTunes.`;
-              apiMatches.push({ title: name, year, genre, poster, synopsis, source: "iTunes" });
+              apiMatches.push({ title: name, year, genre, actors: [], poster, synopsis, source: "iTunes" });
             });
           }
         }
@@ -2653,12 +2720,12 @@
       const combined = [...localMatches.map((m) => ({ ...m, source: "Katalog" })), ...apiMatches];
       if (combined.length > 0) return combined;
 
-      // Tier 3: Automatic Fallback
       const currentYear = String(new Date().getFullYear());
       return [{
         title: q,
         year: currentYear,
         genre: "Drama Korea",
+        actors: [],
         poster: createPosterArtwork(q, "Drama Korea"),
         synopsis: `Catatan dan sinopsis otomatis untuk "${q}" (${currentYear}). Kamu bisa menyesuaikan detail atau mengunggah poster sendiri.`,
         source: "Otomatis"
@@ -2685,7 +2752,9 @@
       if (exactLocal && !state.customPosterDataUrl) {
         populateFormWithMetadata(exactLocal, false);
       } else if (!state.customPosterDataUrl) {
-        document.getElementById("form-drama-poster-img").src = createPosterArtwork(q, document.getElementById("form-drama-genre").value || "Drama Korea");
+        const fallbackPoster = createPosterArtwork(q, document.getElementById("form-drama-genre").value || "Drama Korea");
+        state.selectedLookupPoster = fallbackPoster;
+        document.getElementById("form-drama-poster-img").src = fallbackPoster;
         if (!document.getElementById("form-drama-synopsis").value.trim()) {
           document.getElementById("form-drama-synopsis").value = `Kisah drama/film "${q}" dengan alur cerita menarik dan karakter berkesan.`;
         }
@@ -2729,7 +2798,7 @@
       if (!chosen) return;
       document.getElementById("drama-auto-search").value = chosen.title;
       populateFormWithMetadata(chosen, true);
-      showToast(`Data "${chosen.title}" otomatis dimuat!`, "success");
+      showToast(`Data & poster "${chosen.title}" dimuat!`, "success");
     };
 
     window.syncPosterAutomatically = async function () {
@@ -2743,7 +2812,9 @@
           return;
         }
       }
-      document.getElementById("form-drama-poster-img").src = computeDefaultPoster();
+      const nextPoster = computeDefaultPoster();
+      state.selectedLookupPoster = nextPoster;
+      document.getElementById("form-drama-poster-img").src = nextPoster;
       showToast("Poster otomatis disinkronkan!", "success");
     };
 
@@ -2792,13 +2863,21 @@
       const synopsis = document.getElementById("form-drama-synopsis").value.trim() || `Kisah drama/film "${title}" yang seru dan berkesan.`;
       const review = document.getElementById("form-drama-review").value.trim() || "Wajib banget masuk daftar tontonan!";
       const isFavorite = document.getElementById("form-drama-favorite").checked;
-      const poster = state.customPosterDataUrl || computeDefaultPoster();
+
+      const rawActors = (document.getElementById("form-drama-actors")?.value || "").trim();
+      const actors = rawActors ? rawActors.split(",").map((a) => a.trim()).filter(Boolean) : [];
+
+      const previewSrc = document.getElementById("form-drama-poster-img")?.src || "";
+      const validPreview = previewSrc && !previewSrc.includes("Ketik%20Judul%20Drama") ? previewSrc : "";
+      const poster = state.customPosterDataUrl || state.selectedLookupPoster || validPreview || computeDefaultPoster();
 
       const newPost = {
         id: "post-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
+        postType: "review",
         title,
         year,
         genre,
+        actors,
         poster,
         synopsis,
         rating: state.rating,
@@ -2826,11 +2905,10 @@
       document.getElementById("form-drama-favorite").checked = false;
       resetAddFormState();
 
-      // Switch Community tab to Page 2: Publik so the newly published review immediately appears in Community
       state.communityPage = "public";
       refreshVisibleViews();
       await syncPostToFirestore(newPost);
-      showToast(`"${title}" tersimpan & langsung muncul di Komunitas!`, "success");
+      showToast(`"${title}" & posternya tersimpan ke Komunitas!`, "success");
       openAppWindow("community");
     };
 
@@ -2857,6 +2935,7 @@
       const friendSet = new Set((state.currentUser?.friends || []).map((h) => h.toLowerCase()));
 
       let filtered = state.posts.filter((p) => {
+        if (p.postType === "wall_update") return false;
         const authorH = (p.authorHandle || "").toLowerCase();
         if (state.libraryFilter === "mine" && authorH !== myHandle) return false;
         if (state.libraryFilter === "friends" && !friendSet.has(authorH)) return false;
@@ -2864,17 +2943,18 @@
 
         if (search) {
           return (
-            p.title.toLowerCase().includes(search) ||
+            (p.title || "").toLowerCase().includes(search) ||
             (p.genre || "").toLowerCase().includes(search) ||
             (p.authorName || "").toLowerCase().includes(search) ||
-            authorH.includes(search)
+            authorH.includes(search) ||
+            (Array.isArray(p.actors) && p.actors.some((a) => a.toLowerCase().includes(search)))
           );
         }
         return true;
       });
 
       if (sort === "rating") filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-      if (sort === "title") filtered.sort((a, b) => a.title.localeCompare(b.title));
+      if (sort === "title") filtered.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
       if (sort === "newest") filtered.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
       if (!filtered.length) {
@@ -2915,11 +2995,25 @@
         .join("");
     };
 
-    // ==================== 2-PAGE COMMUNITY FEED (PAGE 1: TEMAN, PAGE 2: PUBLIK) ====================
+    // ==================== 2-PAGE COMMUNITY FEED ====================
     window.setCommunityPage = function (pageName) {
       state.communityPage = pageName === "public" ? "public" : "friends";
       renderCommunityPosts();
     };
+
+    function renderActorChipsHtml(actorsList) {
+      if (!Array.isArray(actorsList) || !actorsList.length) return "";
+      const chips = actorsList
+        .map((actor) => {
+          const safeName = String(actor).replace(/'/g, "\\'").replace(/"/g, "&quot;");
+          return `<button type="button" onclick="event.stopPropagation(); openActorInfoModal('${safeName}')" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-violet-500/15 hover:bg-violet-500/25 text-violet-700 dark:text-violet-300 border border-violet-400/30 transition">
+            <i class="fa-solid fa-user-tag text-[9px]"></i>
+            <span>${actor}</span>
+          </button>`;
+        })
+        .join("");
+      return `<div class="flex flex-wrap items-center gap-1.5 pt-1">${chips}</div>`;
+    }
 
     window.renderCommunityPosts = function () {
       const container = document.getElementById("community-feed-list");
@@ -2944,12 +3038,12 @@
       let visiblePosts = [];
       if (isPublicPage) {
         if (caption) {
-          caption.textContent = "Page 2 (Publik): Semua ulasan anggota DRAKORIN bisa dilihat meskipun belum berteman.";
+          caption.textContent = "Page 2 (Publik): Semua ulasan & update wall anggota DRAKORIN.";
         }
         visiblePosts = [...state.posts];
       } else {
         if (caption) {
-          caption.textContent = "Page 1 (Teman): Ulasan dari teman (@username) yang kamu tambahkan serta ulasanmu sendiri.";
+          caption.textContent = "Page 1 (Teman): Ulasan & update dari teman (@username) dan kamu sendiri.";
         }
         visiblePosts = state.posts.filter((p) => {
           const h = (p.authorHandle || "").toLowerCase();
@@ -2959,7 +3053,7 @@
 
       if (!visiblePosts.length) {
         container.innerHTML = isPublicPage
-          ? `<div class="p-10 rounded-2xl bg-white/85 dark:bg-slate-800/85 border border-pink-100 dark:border-slate-700 text-center text-xs text-slate-500">Belum ada postingan publik di komunitas DRAKORIN. Tambahkan ulasan pertamamu!</div>`
+          ? `<div class="p-10 rounded-2xl bg-white/85 dark:bg-slate-800/85 border border-pink-100 dark:border-slate-700 text-center text-xs text-slate-500">Belum ada postingan publik di komunitas DRAKORIN.</div>`
           : `<div class="p-10 rounded-2xl bg-white/85 dark:bg-slate-800/85 border border-pink-100 dark:border-slate-700 text-center space-y-2.5 text-xs text-slate-500">
                <p>Belum ada postingan di halaman Teman.</p>
                <button type="button" onclick="setCommunityPage('public')" class="px-3.5 py-1.5 rounded-xl accent-btn text-white text-xs font-medium shadow">Lihat Page 2: Publik</button>
@@ -2973,39 +3067,52 @@
           const fallbackPoster = createPosterArtwork(post.title, post.genre);
           const fallbackAvatar = createAvatarArtwork(post.authorName);
           const isFriend = friendSet.has((post.authorHandle || "").toLowerCase());
+          const isWallUpdate = post.postType === "wall_update";
+          const actorsHtml = renderActorChipsHtml(post.actors);
+          const safeAuthorTarget = (post.authorHandle || post.authorEmail || post.authorName || "").replace(/'/g, "\\'");
 
           return `
           <article class="p-4 sm:p-5 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-pink-100 dark:border-slate-700 shadow-sm space-y-3.5">
             <div class="flex items-center justify-between gap-2">
-              <div class="flex items-center gap-2.5 min-w-0">
+              <div onclick="openUserProfileModal('${safeAuthorTarget}')" class="flex items-center gap-2.5 min-w-0 cursor-pointer group">
                 <img src="${post.authorAvatar || fallbackAvatar}" alt="${post.authorName}" onerror="this.src='${fallbackAvatar}'" class="w-9 h-9 rounded-full object-cover bg-white shrink-0" />
                 <div class="min-w-0">
                   <div class="flex items-center gap-1.5 flex-wrap">
-                    <span class="text-xs font-semibold truncate">${post.authorName}</span>
+                    <span class="text-xs font-semibold truncate group-hover:text-pink-500 transition">${post.authorName}</span>
                     <span class="text-[11px] font-medium text-pink-600 dark:text-pink-400">${post.authorHandle || ""}</span>
                     ${isFriend
                       ? `<span class="text-[9px] px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-700 dark:text-violet-300 font-medium">Teman</span>`
                       : `<span class="text-[9px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-700 dark:text-sky-300 font-medium">Publik</span>`
                     }
                   </div>
-                  <p class="text-[10px] text-slate-400 truncate">Ulasan <b>${post.title}</b> (${post.year})</p>
+                  <p class="text-[10px] text-slate-400 truncate">${isWallUpdate ? "Update di Wall Komunitas" : `Ulasan <b>${post.title}</b> (${post.year})`}</p>
                 </div>
               </div>
-              <span class="text-amber-400 text-xs font-medium bg-amber-500/10 px-2.5 py-1 rounded-full shrink-0">${"★".repeat(post.rating || 5)}</span>
+              ${!isWallUpdate ? `<span class="text-amber-400 text-xs font-medium bg-amber-500/10 px-2.5 py-1 rounded-full shrink-0">${"★".repeat(post.rating || 5)}</span>` : ""}
             </div>
 
-            <div class="flex gap-3.5 p-3 rounded-xl bg-pink-50/60 dark:bg-slate-900/65 border border-pink-100/80 dark:border-slate-700/70">
-              <img src="${posterUrl}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" onclick="openDramaDetailOverlay('${post.id}')" class="w-16 h-24 rounded-xl object-cover cursor-pointer shrink-0 shadow" />
-              <div class="min-w-0 flex-1 space-y-1">
-                <h4 onclick="openDramaDetailOverlay('${post.id}')" class="text-sm font-semibold hover:text-pink-500 cursor-pointer truncate">${post.title}</h4>
-                <p class="text-[10px] text-slate-500">${post.genre}</p>
-                <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed">${post.review}</p>
-              </div>
-            </div>
+            ${
+              isWallUpdate
+                ? `<div class="p-3.5 rounded-xl bg-sky-50/65 dark:bg-slate-900/65 border border-sky-200/70 dark:border-slate-700/70 space-y-2">
+                     <span class="inline-block text-[10px] font-medium px-2 py-0.5 rounded-full bg-pink-500/15 text-pink-600 dark:text-pink-300">
+                       <i class="fa-solid fa-bullhorn mr-1"></i>Update Wall
+                     </span>
+                     ${post.review ? `<p class="text-xs text-slate-800 dark:text-slate-100 leading-relaxed whitespace-pre-line">${post.review}</p>` : ""}
+                   </div>`
+                : `<div class="flex gap-3.5 p-3 rounded-xl bg-pink-50/60 dark:bg-slate-900/65 border border-pink-100/80 dark:border-slate-700/70">
+                     <img src="${posterUrl}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" onclick="openDramaDetailOverlay('${post.id}')" class="w-16 h-24 rounded-xl object-cover cursor-pointer shrink-0 shadow" />
+                     <div class="min-w-0 flex-1 space-y-1">
+                       <h4 onclick="openDramaDetailOverlay('${post.id}')" class="text-sm font-semibold hover:text-pink-500 cursor-pointer truncate">${post.title}</h4>
+                       <p class="text-[10px] text-slate-500">${post.genre}</p>
+                       <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed">${post.review}</p>
+                       ${actorsHtml}
+                     </div>
+                   </div>`
+            }
 
             ${post.screenshot ? `
               <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
-                <img src="${post.screenshot}" alt="Screenshot Adegan" class="w-full max-h-72 object-cover" />
+                <img src="${post.screenshot}" alt="Gambar Postingan" class="w-full max-h-72 object-cover" />
               </div>
             ` : ""}
 
@@ -3020,11 +3127,9 @@
                 </span>
               </div>
               <div class="flex items-center gap-3">
-                <button type="button" onclick="openDramaDetailOverlay('${post.id}', true)" class="text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline">
-                  <i class="fa-solid fa-pen mr-1"></i>Edit Detail / Rate
-                </button>
+                ${!isWallUpdate ? `<button type="button" onclick="openDramaDetailOverlay('${post.id}', true)" class="text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i>Edit Detail / Rate</button>` : ""}
                 <button type="button" onclick="deleteSavedDramaReview('${post.id}')" class="text-[11px] font-medium text-rose-600 dark:text-rose-400 hover:underline">
-                  <i class="fa-solid fa-trash mr-1"></i>Hapus Review
+                  <i class="fa-solid fa-trash mr-1"></i>Hapus
                 </button>
               </div>
             </div>
@@ -3035,7 +3140,7 @@
                   (c) => `
                 <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 text-xs">
                   <div class="flex items-center justify-between">
-                    <span class="font-medium text-[11px]">${c.name} <span class="text-pink-500">${c.handle || ""}</span></span>
+                    <span onclick="openUserProfileModal('${(c.handle || c.name || "").replace(/'/g, "\\'")}')" class="font-medium text-[11px] cursor-pointer hover:text-pink-500">${c.name} <span class="text-pink-500">${c.handle || ""}</span></span>
                     <span class="text-[10px] text-slate-400">${c.time || "Baru saja"}</span>
                   </div>
                   <p class="text-xs text-slate-700 dark:text-slate-300 mt-0.5">${c.text}</p>
@@ -3093,7 +3198,7 @@
       showToast("Komentar terkirim!", "success");
     };
 
-    // ==================== DETAIL, FULL EDIT & DELETE OVERLAY FOR SAVED DRAMAS/MOVIES ====================
+    // ==================== DETAIL, FULL EDIT & DELETE OVERLAY ====================
     window.openDramaDetailOverlay = function (postId, startInEdit) {
       const post = state.posts.find((p) => p.id === postId);
       if (!post) return;
@@ -3113,9 +3218,9 @@
       if (!post) return;
 
       const ok = await askCustomConfirm(
-        "Hapus Review Drama",
-        `Hapus review "${post.title}"? Data akan dihapus dari Koleksi dan Komunitas.`,
-        "Hapus Review"
+        "Hapus Postingan",
+        `Hapus "${post.title}"? Data akan dihapus dari daftar.`,
+        "Hapus"
       );
       if (!ok) return;
 
@@ -3127,7 +3232,7 @@
       }
       refreshVisibleViews();
       await deletePostFromFirestore(targetId);
-      showToast(`Review "${post.title}" berhasil dihapus.`, "info");
+      showToast(`"${post.title}" berhasil dihapus.`, "info");
     };
 
     window.toggleDramaEditMode = function () {
@@ -3203,6 +3308,8 @@
 
       const newYear = (document.getElementById("edit-drama-year")?.value || "").trim() || post.year || String(new Date().getFullYear());
       const newGenre = (document.getElementById("edit-drama-genre")?.value || "").trim() || post.genre || "Drama Korea";
+      const rawActors = (document.getElementById("edit-drama-actors")?.value || "").trim();
+      const newActors = rawActors ? rawActors.split(",").map((a) => a.trim()).filter(Boolean) : [];
       const newSynopsis = (document.getElementById("edit-drama-synopsis")?.value || "").trim() || post.synopsis || "";
       const newReview = (document.getElementById("edit-drama-review")?.value || "").trim() || post.review || "";
       const newFav = Boolean(document.getElementById("edit-drama-favorite")?.checked);
@@ -3212,6 +3319,7 @@
       post.title = newTitle;
       post.year = newYear;
       post.genre = newGenre;
+      post.actors = newActors;
       post.synopsis = newSynopsis;
       post.rating = state.editDraftRating || 5;
       post.isFavorite = newFav;
@@ -3231,6 +3339,9 @@
       const post = state.posts.find((p) => p.id === state.detailPostId);
       if (!post) return;
       const posterUrl = ensurePostPoster(post);
+      const fallbackPoster = createPosterArtwork(post.title, post.genre);
+      const fallbackAvatar = createAvatarArtwork(post.authorName);
+      document.getElementById("detail-overlay-title").textContent = `${post.title} (${post.year})`;
 
       const toggleBtn = document.getElementById("detail-toggle-edit-btn");
       if (toggleBtn) {
@@ -3238,10 +3349,6 @@
           ? `<i class="fa-solid fa-eye mr-1"></i>Lihat Detail`
           : `<i class="fa-solid fa-pen mr-1"></i>Edit Drama`;
       }
-
-      const fallbackPoster = createPosterArtwork(post.title, post.genre);
-      const fallbackAvatar = createAvatarArtwork(post.authorName);
-      document.getElementById("detail-overlay-title").textContent = `${post.title} (${post.year})`;
 
       if (!state.detailEditMode) {
         document.getElementById("detail-overlay-body").innerHTML = `
@@ -3255,9 +3362,10 @@
               </div>
               <h2 class="font-display text-lg font-semibold">${post.title}</h2>
               <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${post.synopsis}</p>
+              ${renderActorChipsHtml(post.actors)}
               <div class="pt-2 flex items-center gap-2 text-xs">
                 <img src="${post.authorAvatar || fallbackAvatar}" alt="${post.authorName}" onerror="this.src='${fallbackAvatar}'" class="w-6 h-6 rounded-full object-cover bg-white" />
-                <span>Diulas oleh <b>${post.authorName}</b> <span class="text-pink-600 dark:text-pink-400 font-medium">${post.authorHandle || ""}</span></span>
+                <span onclick="openUserProfileModal('${(post.authorHandle || post.authorEmail || "").replace(/'/g, "\\'")}')" class="cursor-pointer hover:text-pink-500">Diulas oleh <b>${post.authorName}</b> <span class="text-pink-600 dark:text-pink-400 font-medium">${post.authorHandle || ""}</span></span>
               </div>
             </div>
           </div>
@@ -3311,6 +3419,11 @@
                   <label class="block text-[11px] font-medium mb-1">Genre</label>
                   <input type="text" id="edit-drama-genre" value="${(post.genre || "").replace(/"/g, "&quot;")}" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
                 </div>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-medium mb-1">Tag Actor (pisahkan dengan koma)</label>
+                <input type="text" id="edit-drama-actors" value="${((post.actors || []).join(", ")).replace(/"/g, "&quot;")}" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
               </div>
 
               <div>
@@ -3601,6 +3714,7 @@
 
       const activePl = state.playlists.find((p) => p.id === state.activePlaylistId) || state.playlists[0];
       const postOptions = state.posts
+        .filter((p) => p.postType !== "wall_update")
         .map((p) => `<option value="post:${p.id}">${p.title} (${p.year}) — ${p.authorHandle || p.authorName}</option>`)
         .join("");
       const builtinOptions = LOCAL_DRAMA_CATALOG
@@ -3726,10 +3840,10 @@
           const av = acc.avatar || createAvatarArtwork(acc.name);
           return `
           <div class="p-2 rounded-xl bg-white/90 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-700 flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2 min-w-0">
+            <div onclick="openUserProfileModal('${acc.handle}')" class="flex items-center gap-2 min-w-0 cursor-pointer group">
               <img src="${av}" alt="${acc.name}" onerror="this.src='${av}'" class="w-8 h-8 rounded-full object-cover shrink-0" />
               <div class="min-w-0">
-                <p class="text-xs font-medium truncate">${acc.name}</p>
+                <p class="text-xs font-medium truncate group-hover:text-pink-500 transition">${acc.name}</p>
                 <p class="text-[10px] font-medium text-pink-600 dark:text-pink-400 truncate">${acc.handle}</p>
               </div>
             </div>
@@ -3761,17 +3875,22 @@
             const displayName = match ? match.name : handle.slice(1);
             const av = match?.avatar || createAvatarArtwork(displayName);
             return `
-            <div class="p-2.5 rounded-xl bg-white/90 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-700 flex items-center justify-between">
-              <div class="flex items-center gap-2.5 min-w-0">
+            <div class="p-2.5 rounded-xl bg-white/90 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-700 flex items-center justify-between gap-2">
+              <div onclick="openUserProfileModal('${handle}')" class="flex items-center gap-2.5 min-w-0 cursor-pointer group">
                 <img src="${av}" alt="${displayName}" onerror="this.src='${av}'" class="w-8 h-8 rounded-full object-cover shrink-0" />
                 <div class="min-w-0">
-                  <p class="text-xs font-medium truncate">${displayName}</p>
+                  <p class="text-xs font-medium truncate group-hover:text-pink-500 transition">${displayName}</p>
                   <p class="text-[10px] font-medium text-violet-600 dark:text-violet-400 truncate">${handle}</p>
                 </div>
               </div>
-              <button type="button" onclick="removeFriendByHandle('${handle}')" class="text-[10px] px-2 py-1 rounded-lg bg-rose-500/15 text-rose-600 dark:text-rose-400 font-medium">
-                Hapus
-              </button>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" onclick="openDirectMessageWith('${handle}')" title="Kirim Pesan" class="text-[10px] px-2 py-1 rounded-lg bg-sky-500/15 text-sky-700 dark:text-sky-300 font-medium">
+                  Chat
+                </button>
+                <button type="button" onclick="removeFriendByHandle('${handle}')" class="text-[10px] px-2 py-1 rounded-lg bg-rose-500/15 text-rose-600 dark:text-rose-400 font-medium">
+                  Hapus
+                </button>
+              </div>
             </div>
           `;
           })
@@ -3792,14 +3911,14 @@
             return `
             <div class="p-4 rounded-2xl bg-white/92 dark:bg-slate-800/92 border border-pink-200/70 dark:border-slate-700 shadow-sm space-y-2.5">
               <div class="flex items-center justify-between">
-                <div>
-                  <span class="text-xs font-semibold">${post.authorName}</span>
+                <div onclick="openUserProfileModal('${(post.authorHandle || "").replace(/'/g, "\\'")}')" class="cursor-pointer group">
+                  <span class="text-xs font-semibold group-hover:text-pink-500 transition">${post.authorName}</span>
                   <span class="text-[11px] font-medium text-pink-600 dark:text-pink-400 ml-1">${post.authorHandle}</span>
                 </div>
                 <span class="text-amber-400 text-xs font-medium">${"★".repeat(post.rating || 5)}</span>
               </div>
               <div class="flex items-center gap-3">
-                <img src="${posterUrl}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" onclick="openDramaDetailOverlay('${post.id}')" class="w-12 h-16 rounded-xl object-cover cursor-pointer shrink-0" />
+                ${posterUrl ? `<img src="${posterUrl}" alt="${post.title}" onerror="this.src='${fallbackPoster}'" onclick="openDramaDetailOverlay('${post.id}')" class="w-12 h-16 rounded-xl object-cover cursor-pointer shrink-0" />` : ""}
                 <div class="min-w-0">
                   <h4 onclick="openDramaDetailOverlay('${post.id}')" class="text-xs font-semibold hover:text-pink-500 cursor-pointer truncate">${post.title} (${post.year})</h4>
                   <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5 line-clamp-2">"${post.review}"</p>
@@ -3812,323 +3931,7 @@
       }
     }
 
-    // ==================== SUPER ADMIN (READ-ONLY USERS + PRE-LAUNCH CLEANUP) ====================
-    window.renderSuperAdminDashboard = function () {
-      if (!state.isSuperAdmin) return;
-      const postsList = document.getElementById("superadmin-posts-list");
-      const countBadge = document.getElementById("admin-posts-count");
-      const bulkBtn = document.getElementById("btn-bulk-clear-posts");
-      const bulkLabel = document.getElementById("bulk-clear-posts-label");
-
-      if (countBadge) countBadge.textContent = `${state.posts.length} Postingan`;
-      if (bulkBtn && bulkLabel) {
-        bulkLabel.textContent = state.bulkClearArmed
-          ? "Klik Sekali Lagi untuk Kosongkan Semua!"
-          : "Kosongkan Semua Postingan";
-      }
-
-      if (!state.posts.length) {
-        postsList.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Semua postingan komunitas sudah bersih.</p>`;
-      } else {
-        postsList.innerHTML = state.posts
-          .map((post) => {
-            const commentsHtml = (post.comments || [])
-              .map(
-                (c) => `
-              <div class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
-                <div class="min-w-0">
-                  <span class="font-medium text-[11px]">${c.name} <span class="text-pink-500">${c.handle || ""}</span>:</span>
-                  <span class="text-slate-600 dark:text-slate-300 ml-1">${c.text}</span>
-                </div>
-                <button type="button" onclick="adminDeleteComment('${post.id}', '${c.id}')" class="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 text-[10px] font-medium shrink-0">
-                  Hapus Komen
-                </button>
-              </div>
-            `
-              )
-              .join("");
-
-            return `
-            <div class="p-3.5 rounded-2xl bg-rose-50/40 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-2.5">
-              <div class="flex items-start justify-between gap-2">
-                <div class="min-w-0">
-                  <h5 class="text-xs font-semibold truncate">${post.title} <span class="text-slate-400 font-normal">(${post.year})</span></h5>
-                  <p class="text-[10px] text-slate-500">Oleh ${post.authorName} (${post.authorHandle || "-"}) • ${(post.comments || []).length} komentar</p>
-                  <p class="text-xs text-slate-700 dark:text-slate-300 mt-1 line-clamp-2">"${post.review}"</p>
-                </div>
-                <button type="button" onclick="adminDeletePost('${post.id}')" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-medium shadow shrink-0">
-                  <i class="fa-solid fa-trash mr-1"></i>Hapus
-                </button>
-              </div>
-              ${commentsHtml ? `<div class="space-y-1.5 pt-1">${commentsHtml}</div>` : ""}
-            </div>
-          `;
-          })
-          .join("");
-      }
-
-      // Read-only users list (Super Admin can only view, NO edit/delete/modify user accounts)
-      const readonlyUsersBox = document.getElementById("superadmin-users-readonly-list");
-      readonlyUsersBox.innerHTML = state.profiles
-        .map((prof) => {
-          const av = prof.avatar || createAvatarArtwork(prof.name);
-          const favList = (prof.favorites || []).slice(0, 3).join(", ") || "-";
-          const friendsCount = (prof.friends || []).length;
-          return `
-          <div class="p-3 rounded-xl bg-sky-50/50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 space-y-1.5 text-xs">
-            <div class="flex items-center justify-between gap-2">
-              <div class="flex items-center gap-2 min-w-0">
-                <img src="${av}" alt="${prof.name}" onerror="this.src='${av}'" class="w-8 h-8 rounded-full object-cover shrink-0 bg-white" />
-                <div class="min-w-0">
-                  <p class="font-medium truncate">${prof.name} <span class="text-pink-500">${prof.handle}</span></p>
-                  <p class="text-[10px] text-slate-500 truncate">${prof.email}</p>
-                </div>
-              </div>
-              <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">
-                ${friendsCount} Teman
-              </span>
-            </div>
-            <p class="text-[11px] text-slate-600 dark:text-slate-300 truncate">${prof.bio || "Tidak ada bio"}</p>
-            <p class="text-[10px] text-slate-400 truncate">Favorit: ${favList}</p>
-          </div>
-        `;
-        })
-        .join("");
-
-      // Friend suggestions & connections cleanup
-      const friendLinksBox = document.getElementById("superadmin-friend-links");
-      const allFriendPairs = [];
-      state.profiles.forEach((prof) => {
-        (prof.friends || []).forEach((targetHandle) => {
-          allFriendPairs.push({ ownerEmail: prof.email, ownerHandle: prof.handle, targetHandle });
-        });
-      });
-
-      if (!allFriendPairs.length) {
-        friendLinksBox.innerHTML = `<p class="text-xs text-slate-500 italic">Tidak ada relasi atau saran teman tersimpan.</p>`;
-      } else {
-        friendLinksBox.innerHTML = allFriendPairs
-          .map(
-            (pair) => `
-          <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
-            <span class="truncate"><b>${pair.ownerHandle}</b> → <span class="text-violet-600 dark:text-violet-400 font-medium">${pair.targetHandle}</span></span>
-            <button type="button" onclick="adminRemoveFriendLink('${pair.ownerEmail}', '${pair.targetHandle}')" class="px-2.5 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 text-[10px] font-medium shrink-0">
-              Putuskan
-            </button>
-          </div>
-        `
-          )
-          .join("");
-      }
-    };
-
-    window.adminClearAllFriendSuggestions = async function () {
-      if (!state.isSuperAdmin) return;
-      state.profiles.forEach((p) => {
-        p.friends = [];
-      });
-      if (state.currentUser) {
-        state.currentUser.friends = [];
-      }
-      saveProfilesLocal();
-      refreshVisibleViews();
-      renderFriendsView();
-      renderSuperAdminDashboard();
-      if (state.currentUser) {
-        await syncUserToFirestore(state.currentUser);
-      }
-      showToast("Semua daftar & saran teman telah dibersihkan.", "success");
-    };
-
-    window.adminDeletePost = async function (postId) {
-      if (!state.isSuperAdmin) return;
-      state.posts = state.posts.filter((p) => p.id !== postId);
-      savePostsLocal();
-      refreshVisibleViews();
-      renderSuperAdminDashboard();
-      await deletePostFromFirestore(postId);
-      showToast("Postingan komunitas dihapus.", "success");
-    };
-
-    window.adminDeleteComment = async function (postId, commentId) {
-      if (!state.isSuperAdmin) return;
-      const post = state.posts.find((p) => p.id === postId);
-      if (!post) return;
-      post.comments = (post.comments || []).filter((c) => c.id !== commentId);
-      savePostsLocal();
-      refreshVisibleViews();
-      renderSuperAdminDashboard();
-      await syncPostToFirestore(post);
-      showToast("Komentar dihapus.", "success");
-    };
-
-    window.triggerBulkClearCommunityPosts = async function () {
-      if (!state.isSuperAdmin) return;
-      if (!state.bulkClearArmed) {
-        state.bulkClearArmed = true;
-        renderSuperAdminDashboard();
-        showToast("Klik tombol merah sekali lagi untuk mengosongkan semua postingan.", "info");
-        clearTimeout(state.bulkClearTimer);
-        state.bulkClearTimer = setTimeout(() => {
-          state.bulkClearArmed = false;
-          renderSuperAdminDashboard();
-        }, 5000);
-        return;
-      }
-
-      const oldIds = state.posts.map((p) => p.id);
-      state.posts = [];
-      state.bulkClearArmed = false;
-      savePostsLocal();
-      refreshVisibleViews();
-      renderSuperAdminDashboard();
-      for (const id of oldIds) {
-        await deletePostFromFirestore(id);
-      }
-      showToast("Semua postingan komunitas telah dibersihkan!", "success");
-    };
-
-    window.adminRemoveFriendLink = async function (ownerEmail, targetHandle) {
-      if (!state.isSuperAdmin) return;
-      const prof = state.profiles.find((p) => p.email.toLowerCase() === ownerEmail.toLowerCase());
-      if (!prof) return;
-      prof.friends = (prof.friends || []).filter((h) => h.toLowerCase() !== targetHandle.toLowerCase());
-      saveProfilesLocal();
-      refreshVisibleViews();
-      renderFriendsView();
-      renderSuperAdminDashboard();
-      await syncUserToFirestore(prof);
-      showToast(`Relasi ${prof.handle} → ${targetHandle} dihapus.`, "info");
-    };
-
-    // ==================== PROFILE & SETTINGS ====================
-    function fillSettingsInputs() {
-      if (!state.currentUser) return;
-      const u = state.currentUser;
-      document.getElementById("settings-avatar-preview").src = u.avatar || createAvatarArtwork(u.name);
-      document.getElementById("settings-display-name").value = u.name || "";
-      document.getElementById("settings-user-handle").value = u.handle || "";
-      document.getElementById("settings-user-bio").value = u.bio || "";
-      document.getElementById("settings-fav-1").value = (u.favorites && u.favorites[0]) || "";
-      document.getElementById("settings-fav-2").value = (u.favorites && u.favorites[1]) || "";
-      document.getElementById("settings-fav-3").value = (u.favorites && u.favorites[2]) || "";
-    }
-
-    window.onProfileAvatarChange = async function (event) {
-      if (!state.currentUser) return;
-      const file = event.target.files && event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = async function (e) {
-        state.currentUser.avatar = e.target.result;
-        document.getElementById("settings-avatar-preview").src = e.target.result;
-        saveProfilesLocal();
-        refreshVisibleViews();
-        await syncUserToFirestore(state.currentUser);
-        showToast("Foto profil diperbarui!", "success");
-      };
-      reader.readAsDataURL(file);
-      event.target.value = "";
-    };
-
-    window.saveProfileSettings = async function () {
-      if (!state.currentUser) return;
-      const name = document.getElementById("settings-display-name").value.trim();
-      const handle = sanitizeHandle(
-        document.getElementById("settings-user-handle").value,
-        state.currentUser.email
-      );
-      const bio = document.getElementById("settings-user-bio").value.trim();
-      const favs = [
-        document.getElementById("settings-fav-1").value.trim(),
-        document.getElementById("settings-fav-2").value.trim(),
-        document.getElementById("settings-fav-3").value.trim()
-      ].filter(Boolean);
-
-      if (name) state.currentUser.name = name;
-      state.currentUser.handle = handle;
-      state.currentUser.bio = bio || "Pecinta K-Drama & Film";
-      state.currentUser.favorites = favs;
-      if (!state.currentUser.avatar) {
-        state.currentUser.avatar = createAvatarArtwork(state.currentUser.name);
-      }
-
-      saveProfilesLocal();
-      refreshVisibleViews();
-      await syncUserToFirestore(state.currentUser);
-      showToast("Profil & Top 3 Favorit tersimpan!", "success");
-    };
-
-    function refreshVisibleViews() {
-      const u = state.currentUser;
-      if (!u) return;
-
-      const av = u.avatar || createAvatarArtwork(u.name);
-      document.getElementById("top-user-avatar").src = av;
-      document.getElementById("top-user-handle").textContent = u.handle;
-
-      document.getElementById("widget-profile-avatar").src = av;
-      document.getElementById("widget-profile-name").textContent = u.name;
-      document.getElementById("widget-profile-handle").textContent = u.handle;
-      document.getElementById("widget-profile-bio").textContent = u.bio || "";
-      document.getElementById("widget-count-posts").textContent = String(state.posts.length);
-      document.getElementById("widget-count-friends").textContent = String((u.friends || []).length);
-
-      const top3Box = document.getElementById("widget-top3-favorites");
-      const favs = u.favorites || [];
-      if (!favs.length) {
-        top3Box.innerHTML = `<p class="text-[11px] text-slate-400 italic">Belum ada drama favorit.</p>`;
-      } else {
-        top3Box.innerHTML = favs
-          .slice(0, 3)
-          .map(
-            (title, idx) => `
-          <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-pink-50/80 dark:bg-slate-800/80 border border-pink-200/50 dark:border-slate-700/60">
-            <span class="w-4 h-4 rounded-full accent-btn text-white text-[10px] font-medium flex items-center justify-center shrink-0">${idx + 1}</span>
-            <span class="text-[11px] font-medium truncate">${title}</span>
-          </div>
-        `
-          )
-          .join("");
-      }
-
-      renderLibraryCollection();
-      renderCommunityPosts();
-      renderPlaylistsWorkspace();
-      if (state.isSuperAdmin) renderSuperAdminDashboard();
-    }
-
-	// ==================== [TAMBAHAN - MENU PESAN, PROFIL USER & WALL TEMAN] ====================
-    function saveMessagesLocal() {
-      try {
-        localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(state.messages));
-      } catch (e) {}
-    }
-
-    function saveWallsLocal() {
-      try {
-        localStorage.setItem(STORAGE_KEYS.WALLS, JSON.stringify(state.walls));
-      } catch (e) {}
-    }
-
-    function loadMessagesAndWallsLocal() {
-      try {
-        const rawMsg = localStorage.getItem(STORAGE_KEYS.MESSAGES);
-        if (rawMsg) {
-          const parsed = JSON.parse(rawMsg);
-          if (Array.isArray(parsed)) state.messages = parsed;
-        }
-      } catch (e) {}
-
-      try {
-        const rawWalls = localStorage.getItem(STORAGE_KEYS.WALLS);
-        if (rawWalls) {
-          const parsedWalls = JSON.parse(rawWalls);
-          if (parsedWalls && typeof parsedWalls === "object") state.walls = parsedWalls;
-        }
-      } catch (e) {}
-    }
-
+    // ==================== [BARU - MENU PESAN, PROFIL USER & WALL TEMAN] ====================
     function getThreadId(handleA, handleB) {
       return [String(handleA || "").toLowerCase(), String(handleB || "").toLowerCase()].sort().join("__");
     }
@@ -4322,7 +4125,6 @@
           </div>
         </div>
 
-        <!-- Wall Teman -->
         <div class="p-4 rounded-2xl bg-sky-50/60 dark:bg-slate-800/80 border border-sky-200/70 dark:border-slate-700 space-y-3">
           <div class="flex items-center justify-between">
             <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-200">
@@ -4414,6 +4216,432 @@
       }
     };
 
+    // ==================== [BARU - MODAL INFO AKTOR & LINK GOOGLE] ====================
+    window.openActorInfoModal = function (actorName) {
+      const cleanActor = String(actorName || "").trim();
+      if (!cleanActor) return;
+
+      const googleBioUrl = `https://www.google.com/search?q=${encodeURIComponent(cleanActor + " Korean actor drama list")}`;
+      const googleMoviesUrl = `https://www.google.com/search?q=${encodeURIComponent("Drama dan film yang dibintangi " + cleanActor)}`;
+
+      const relatedPosts = state.posts.filter((p) =>
+        p.postType !== "wall_update" &&
+        Array.isArray(p.actors) &&
+        p.actors.some((a) => a.toLowerCase().includes(cleanActor.toLowerCase()))
+      );
+
+      const relatedHtml = relatedPosts.length
+        ? relatedPosts
+            .map((p) => {
+              const posterUrl = ensurePostPoster(p);
+              return `
+              <div onclick="closeActorInfoModal(); openDramaDetailOverlay('${p.id}')" class="p-2.5 rounded-xl bg-pink-50/70 dark:bg-slate-800/80 border border-pink-200/60 dark:border-slate-700 flex items-center gap-3 cursor-pointer hover:border-pink-400 transition">
+                <img src="${posterUrl}" alt="${p.title}" class="w-10 h-14 rounded-lg object-cover shrink-0" />
+                <div class="min-w-0 flex-1">
+                  <p class="text-xs font-semibold truncate">${p.title} (${p.year})</p>
+                  <p class="text-[10px] text-slate-500 truncate">${p.genre}</p>
+                </div>
+                <span class="text-amber-400 text-xs">${"★".repeat(p.rating || 5)}</span>
+              </div>
+            `;
+            })
+            .join("")
+        : `<p class="text-xs text-slate-500 italic">Belum ada drama lain di koleksi DRAKORIN yang menandai ${cleanActor}.</p>`;
+
+      document.getElementById("actor-modal-title").textContent = `Aktor: ${cleanActor}`;
+      document.getElementById("actor-modal-body").innerHTML = `
+        <div class="p-4 rounded-2xl bg-gradient-to-r from-violet-500/15 via-pink-500/15 to-sky-500/15 border border-violet-300/40 dark:border-slate-700 space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl accent-btn text-white flex items-center justify-center text-lg shadow shrink-0">
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <div>
+              <h3 class="font-display text-base font-semibold">${cleanActor}</h3>
+              <p class="text-[11px] text-slate-600 dark:text-slate-300">Lihat profil lengkap dan daftar drama/film yang dibintangi di Google</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <a href="${googleBioUrl}" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl accent-btn text-white text-xs font-medium text-center shadow hover:opacity-95 transition flex items-center justify-center gap-1.5">
+              <i class="fa-brands fa-google"></i>
+              <span>Profil &amp; Drama di Google</span>
+            </a>
+            <a href="${googleMoviesUrl}" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-center hover:border-pink-400 transition flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-film text-pink-500"></i>
+              <span>Filmografi Lengkap</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+            Drama ${cleanActor} di DRAKORIN (${relatedPosts.length})
+          </h4>
+          <div class="space-y-2">${relatedHtml}</div>
+        </div>
+      `;
+
+      document.getElementById("actor-info-modal").classList.remove("hidden");
+    };
+
+    window.closeActorInfoModal = function () {
+      document.getElementById("actor-info-modal").classList.add("hidden");
+    };
+
+    // ==================== [BARU - WALL UPDATE TEKS & GAMBAR DI KOMUNITAS] ====================
+    window.onWallFeedImageUpload = function (event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        state.wallFeedImageDataUrl = e.target.result;
+        const img = document.getElementById("wall-feed-img-preview");
+        const box = document.getElementById("wall-feed-img-preview-box");
+        if (img && box) {
+          img.src = e.target.result;
+          box.classList.remove("hidden");
+        }
+      };
+      reader.readAsDataURL(file);
+      event.target.value = "";
+    };
+
+    window.clearWallFeedImage = function () {
+      state.wallFeedImageDataUrl = "";
+      const img = document.getElementById("wall-feed-img-preview");
+      const box = document.getElementById("wall-feed-img-preview-box");
+      if (img) img.src = "";
+      if (box) box.classList.add("hidden");
+    };
+
+    window.publishCommunityWallUpdate = async function () {
+      if (!state.currentUser) return;
+      const textInput = document.getElementById("wall-feed-text-input");
+      const text = (textInput?.value || "").trim();
+      const image = state.wallFeedImageDataUrl || "";
+
+      if (!text && !image) {
+        showToast("Tulis teks atau pilih gambar terlebih dahulu.", "error");
+        return;
+      }
+
+      const wallPost = {
+        id: "wallfeed-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
+        postType: "wall_update",
+        title: "Update Wall",
+        year: String(new Date().getFullYear()),
+        genre: "Status Komunitas",
+        actors: [],
+        poster: "",
+        synopsis: "",
+        rating: 5,
+        isFavorite: false,
+        review: text,
+        screenshot: image,
+        authorEmail: state.currentUser.email,
+        authorName: state.currentUser.name,
+        authorHandle: state.currentUser.handle,
+        authorAvatar: state.currentUser.avatar,
+        likes: 1,
+        createdAt: Date.now(),
+        comments: []
+      };
+
+      state.posts.unshift(wallPost);
+      savePostsLocal();
+      if (textInput) textInput.value = "";
+      clearWallFeedImage();
+
+      refreshVisibleViews();
+      await syncPostToFirestore(wallPost);
+      showToast("Update wall berhasil diposting ke Komunitas!", "success");
+    };
+
+    // ==================== SUPER ADMIN ====================
+    window.renderSuperAdminDashboard = function () {
+      if (!state.isSuperAdmin) return;
+      const postsList = document.getElementById("superadmin-posts-list");
+      const countBadge = document.getElementById("admin-posts-count");
+      const bulkBtn = document.getElementById("btn-bulk-clear-posts");
+      const bulkLabel = document.getElementById("bulk-clear-posts-label");
+
+      if (countBadge) countBadge.textContent = `${state.posts.length} Postingan`;
+      if (bulkBtn && bulkLabel) {
+        bulkLabel.textContent = state.bulkClearArmed
+          ? "Klik Sekali Lagi untuk Kosongkan Semua!"
+          : "Kosongkan Semua Postingan";
+      }
+
+      if (!state.posts.length) {
+        postsList.innerHTML = `<p class="text-xs text-slate-500 py-6 text-center">Semua postingan komunitas sudah bersih.</p>`;
+      } else {
+        postsList.innerHTML = state.posts
+          .map((post) => {
+            const commentsHtml = (post.comments || [])
+              .map(
+                (c) => `
+              <div class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
+                <div class="min-w-0">
+                  <span class="font-medium text-[11px]">${c.name} <span class="text-pink-500">${c.handle || ""}</span>:</span>
+                  <span class="text-slate-600 dark:text-slate-300 ml-1">${c.text}</span>
+                </div>
+                <button type="button" onclick="adminDeleteComment('${post.id}', '${c.id}')" class="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 text-[10px] font-medium shrink-0">
+                  Hapus Komen
+                </button>
+              </div>
+            `
+              )
+              .join("");
+
+            return `
+            <div class="p-3.5 rounded-2xl bg-rose-50/40 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-2.5">
+              <div class="flex items-start justify-between gap-2">
+                <div class="min-w-0">
+                  <h5 class="text-xs font-semibold truncate">${post.title} <span class="text-slate-400 font-normal">(${post.year})</span></h5>
+                  <p class="text-[10px] text-slate-500">Oleh ${post.authorName} (${post.authorHandle || "-"}) • ${(post.comments || []).length} komentar</p>
+                  <p class="text-xs text-slate-700 dark:text-slate-300 mt-1 line-clamp-2">"${post.review}"</p>
+                </div>
+                <button type="button" onclick="adminDeletePost('${post.id}')" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-medium shadow shrink-0">
+                  <i class="fa-solid fa-trash mr-1"></i>Hapus
+                </button>
+              </div>
+              ${commentsHtml ? `<div class="space-y-1.5 pt-1">${commentsHtml}</div>` : ""}
+            </div>
+          `;
+          })
+          .join("");
+      }
+
+      const readonlyUsersBox = document.getElementById("superadmin-users-readonly-list");
+      readonlyUsersBox.innerHTML = state.profiles
+        .map((prof) => {
+          const av = prof.avatar || createAvatarArtwork(prof.name);
+          const favList = (prof.favorites || []).slice(0, 3).join(", ") || "-";
+          const friendsCount = (prof.friends || []).length;
+          return `
+          <div class="p-3 rounded-xl bg-sky-50/50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 space-y-1.5 text-xs">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <img src="${av}" alt="${prof.name}" onerror="this.src='${av}'" class="w-8 h-8 rounded-full object-cover shrink-0 bg-white" />
+                <div class="min-w-0">
+                  <p class="font-medium truncate">${prof.name} <span class="text-pink-500">${prof.handle}</span></p>
+                  <p class="text-[10px] text-slate-500 truncate">${prof.email}</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">
+                ${friendsCount} Teman
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-600 dark:text-slate-300 truncate">${prof.bio || "Tidak ada bio"}</p>
+            <p class="text-[10px] text-slate-400 truncate">Favorit: ${favList}</p>
+          </div>
+        `;
+        })
+        .join("");
+
+      const friendLinksBox = document.getElementById("superadmin-friend-links");
+      const allFriendPairs = [];
+      state.profiles.forEach((prof) => {
+        (prof.friends || []).forEach((targetHandle) => {
+          allFriendPairs.push({ ownerEmail: prof.email, ownerHandle: prof.handle, targetHandle });
+        });
+      });
+
+      if (!allFriendPairs.length) {
+        friendLinksBox.innerHTML = `<p class="text-xs text-slate-500 italic">Tidak ada relasi atau saran teman tersimpan.</p>`;
+      } else {
+        friendLinksBox.innerHTML = allFriendPairs
+          .map(
+            (pair) => `
+          <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
+            <span class="truncate"><b>${pair.ownerHandle}</b> → <span class="text-violet-600 dark:text-violet-400 font-medium">${pair.targetHandle}</span></span>
+            <button type="button" onclick="adminRemoveFriendLink('${pair.ownerEmail}', '${pair.targetHandle}')" class="px-2.5 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 text-[10px] font-medium shrink-0">
+              Putuskan
+            </button>
+          </div>
+        `
+          )
+          .join("");
+      }
+    };
+
+    window.adminClearAllFriendSuggestions = async function () {
+      if (!state.isSuperAdmin) return;
+      state.profiles.forEach((p) => {
+        p.friends = [];
+      });
+      if (state.currentUser) {
+        state.currentUser.friends = [];
+      }
+      saveProfilesLocal();
+      refreshVisibleViews();
+      renderFriendsView();
+      renderSuperAdminDashboard();
+      if (state.currentUser) {
+        await syncUserToFirestore(state.currentUser);
+      }
+      showToast("Semua daftar & saran teman telah dibersihkan.", "success");
+    };
+
+    window.adminDeletePost = async function (postId) {
+      if (!state.isSuperAdmin) return;
+      state.posts = state.posts.filter((p) => p.id !== postId);
+      savePostsLocal();
+      refreshVisibleViews();
+      renderSuperAdminDashboard();
+      await deletePostFromFirestore(postId);
+      showToast("Postingan komunitas dihapus.", "success");
+    };
+
+    window.adminDeleteComment = async function (postId, commentId) {
+      if (!state.isSuperAdmin) return;
+      const post = state.posts.find((p) => p.id === postId);
+      if (!post) return;
+      post.comments = (post.comments || []).filter((c) => c.id !== commentId);
+      savePostsLocal();
+      refreshVisibleViews();
+      renderSuperAdminDashboard();
+      await syncPostToFirestore(post);
+      showToast("Komentar dihapus.", "success");
+    };
+
+    window.triggerBulkClearCommunityPosts = async function () {
+      if (!state.isSuperAdmin) return;
+      if (!state.bulkClearArmed) {
+        state.bulkClearArmed = true;
+        renderSuperAdminDashboard();
+        showToast("Klik tombol merah sekali lagi untuk mengosongkan semua postingan.", "info");
+        clearTimeout(state.bulkClearTimer);
+        state.bulkClearTimer = setTimeout(() => {
+          state.bulkClearArmed = false;
+          renderSuperAdminDashboard();
+        }, 5000);
+        return;
+      }
+
+      const oldIds = state.posts.map((p) => p.id);
+      state.posts = [];
+      state.bulkClearArmed = false;
+      savePostsLocal();
+      refreshVisibleViews();
+      renderSuperAdminDashboard();
+      for (const id of oldIds) {
+        await deletePostFromFirestore(id);
+      }
+      showToast("Semua postingan komunitas telah dibersihkan!", "success");
+    };
+
+    window.adminRemoveFriendLink = async function (ownerEmail, targetHandle) {
+      if (!state.isSuperAdmin) return;
+      const prof = state.profiles.find((p) => p.email.toLowerCase() === ownerEmail.toLowerCase());
+      if (!prof) return;
+      prof.friends = (prof.friends || []).filter((h) => h.toLowerCase() !== targetHandle.toLowerCase());
+      saveProfilesLocal();
+      refreshVisibleViews();
+      renderFriendsView();
+      renderSuperAdminDashboard();
+      await syncUserToFirestore(prof);
+      showToast(`Relasi ${prof.handle} → ${targetHandle} dihapus.`, "info");
+    };
+
+    // ==================== PROFILE & SETTINGS ====================
+    function fillSettingsInputs() {
+      if (!state.currentUser) return;
+      const u = state.currentUser;
+      document.getElementById("settings-avatar-preview").src = u.avatar || createAvatarArtwork(u.name);
+      document.getElementById("settings-display-name").value = u.name || "";
+      document.getElementById("settings-user-handle").value = u.handle || "";
+      document.getElementById("settings-user-bio").value = u.bio || "";
+      document.getElementById("settings-fav-1").value = (u.favorites && u.favorites[0]) || "";
+      document.getElementById("settings-fav-2").value = (u.favorites && u.favorites[1]) || "";
+      document.getElementById("settings-fav-3").value = (u.favorites && u.favorites[2]) || "";
+    }
+
+    window.onProfileAvatarChange = async function (event) {
+      if (!state.currentUser) return;
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async function (e) {
+        state.currentUser.avatar = e.target.result;
+        document.getElementById("settings-avatar-preview").src = e.target.result;
+        saveProfilesLocal();
+        refreshVisibleViews();
+        await syncUserToFirestore(state.currentUser);
+        showToast("Foto profil diperbarui!", "success");
+      };
+      reader.readAsDataURL(file);
+      event.target.value = "";
+    };
+
+    window.saveProfileSettings = async function () {
+      if (!state.currentUser) return;
+      const name = document.getElementById("settings-display-name").value.trim();
+      const handle = sanitizeHandle(
+        document.getElementById("settings-user-handle").value,
+        state.currentUser.email
+      );
+      const bio = document.getElementById("settings-user-bio").value.trim();
+      const favs = [
+        document.getElementById("settings-fav-1").value.trim(),
+        document.getElementById("settings-fav-2").value.trim(),
+        document.getElementById("settings-fav-3").value.trim()
+      ].filter(Boolean);
+
+      if (name) state.currentUser.name = name;
+      state.currentUser.handle = handle;
+      state.currentUser.bio = bio || "Pecinta K-Drama & Film";
+      state.currentUser.favorites = favs;
+      if (!state.currentUser.avatar) {
+        state.currentUser.avatar = createAvatarArtwork(state.currentUser.name);
+      }
+
+      saveProfilesLocal();
+      refreshVisibleViews();
+      await syncUserToFirestore(state.currentUser);
+      showToast("Profil & Top 3 Favorit tersimpan!", "success");
+    };
+
+    function refreshVisibleViews() {
+      const u = state.currentUser;
+      if (!u) return;
+
+      const av = u.avatar || createAvatarArtwork(u.name);
+      document.getElementById("top-user-avatar").src = av;
+      document.getElementById("top-user-handle").textContent = u.handle;
+
+      document.getElementById("widget-profile-avatar").src = av;
+      document.getElementById("widget-profile-name").textContent = u.name;
+      document.getElementById("widget-profile-handle").textContent = u.handle;
+      document.getElementById("widget-profile-bio").textContent = u.bio || "";
+      document.getElementById("widget-count-posts").textContent = String(state.posts.filter((p) => p.postType !== "wall_update").length);
+      document.getElementById("widget-count-friends").textContent = String((u.friends || []).length);
+
+      const top3Box = document.getElementById("widget-top3-favorites");
+      const favs = u.favorites || [];
+      if (!favs.length) {
+        top3Box.innerHTML = `<p class="text-[11px] text-slate-400 italic">Belum ada drama favorit.</p>`;
+      } else {
+        top3Box.innerHTML = favs
+          .slice(0, 3)
+          .map(
+            (title, idx) => `
+          <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-pink-50/80 dark:bg-slate-800/80 border border-pink-200/50 dark:border-slate-700/60">
+            <span class="w-4 h-4 rounded-full accent-btn text-white text-[10px] font-medium flex items-center justify-center shrink-0">${idx + 1}</span>
+            <span class="text-[11px] font-medium truncate">${title}</span>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      renderLibraryCollection();
+      renderCommunityPosts();
+      renderPlaylistsWorkspace();
+      renderMessagesWorkspace();
+      if (state.isSuperAdmin) renderSuperAdminDashboard();
+    }
+
     // ==================== INITIALIZATION ====================
     window.addEventListener("DOMContentLoaded", function () {
       const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || "theme-seoul-pop";
@@ -4435,6 +4663,7 @@
 
       runLiveClock();
       loadStoredState();
+      loadMessagesAndWallsLocal(); // [BARU]
       resetAddFormState();
       updateCloudPill(false);
       updateSuperAdminVisibility();
@@ -4475,19 +4704,14 @@
               friends: []
             };
           }
-		  
-			  // [TAMBAHAN - PASTIKAN @USERNAME OTOMATIS TER-UPDATE SAAT MASUK]
-		const finalHandle = resolveLoginUsername(
-		  email,
-		  userRecord?.handle,
-		  userRecord?.name
-		);
-		const previousHandle = userRecord.handle;
-		userRecord.handle = finalHandle;
 
-		if (previousHandle && previousHandle.toLowerCase() !== finalHandle.toLowerCase()) {
-		  showToast(`Username otomatis disesuaikan menjadi ${finalHandle}`, "info");
-		}
+          // [BARU - OTOMATIS SESUAIKAN @USERNAME SAAT LOGIN]
+          const finalHandle = resolveLoginUsername(emailLower, matched?.handle, matched?.name);
+          const previousHandle = matched.handle;
+          matched.handle = finalHandle;
+          if (previousHandle && previousHandle.toLowerCase() !== finalHandle.toLowerCase()) {
+            showToast(`Username otomatis disesuaikan menjadi ${finalHandle}`, "info");
+          }
 
           const idx = state.profiles.findIndex((a) => a.email.toLowerCase() === emailLower);
           if (idx >= 0) state.profiles[idx] = matched;
